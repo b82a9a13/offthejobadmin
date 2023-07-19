@@ -53,6 +53,12 @@ echo $OUTPUT->header();
 if($errorTxt != ''){
     echo("<h1 class='text-error'>$errorTxt</h1>");
 } else {
-
+    $template = (Object)[
+        'fullname' => $fullname,
+        'coursename' => $lib->get_course_fullname($cid),
+        'cid' => $cid,
+        'uid' => $uid
+    ];
+    echo $OUTPUT->render_from_template('local_offthejobadmin/trainingplan', $template);
 }
 echo $OUTPUT->footer();
