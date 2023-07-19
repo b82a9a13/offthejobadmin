@@ -1,0 +1,58 @@
+<?php
+/**
+ * @package     local_offthejobadmin
+ * @author      Robert Tyrone Cullen
+ * @var stdClass $plugin
+ */
+
+require_once(__DIR__.'/../../config.php');
+require_login();
+$context = context_system::instance();
+require_capability('local/offthejobadmin:admin', $context);
+use local_offthejobadmin\lib;
+$lib = new lib;
+
+$errorTxt = '';
+$cid = $_GET['cid'];
+$uid = $_GET['uid'];
+$fullname = '';
+if($_GET['cid']){
+    if(!preg_match("/^[0-9]*$/", $cid) || empty($cid)){
+        $errorTxt = 'Invalid course id provided.';
+    } else {
+        if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
+            $errorTxt = 'Invalid user id provided.';
+        } else {
+            //Check if the user is enrolled as a learner in the course selected
+            $fullname = $lib->check_learner_enrolment($cid, $uid);
+            if($fullname == false){
+                $errorTxt = 'Selected user is not enrolled as a learner in the course selected.';
+            } else {
+                //Check if the user has a initial setup complete
+                if(!$lib->check_setup_exists($cid, $uid)){
+                    $errorTxt = 'Initial setup does not exist for the user id and course id provided.';
+                } else {
+                    if(!$lib->check_trainplan_exists($cid, $uid)){
+                        $errorTxt = 'Training plan does not exist.';
+                    }
+                }
+            }
+        }
+    }
+} else {
+    $errorTxt = 'No course id provided';
+}
+
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/local/offthejobadmin/admin.php'));
+$PAGE->set_title('Admin - Training Plan');
+$PAGE->set_heading('Admin - Training Plan');
+$PAGE->set_pagelayout('admin');
+
+echo $OUTPUT->header();
+if($errorTxt != ''){
+    echo("<h1 class='text-error'>$errorTxt</h1>");
+} else {
+
+}
+echo $OUTPUT->footer();

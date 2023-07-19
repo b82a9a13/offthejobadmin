@@ -1,0 +1,20 @@
+<link rel="stylesheet" type="text/css" href="./classes/css/style.css">
+<div class='inner-div'>
+    <form action="" id="pick_form">
+        <h2>Pick a Learner and Course</h2>
+        <h3 class='text-danger' style="display:none;" id="pick_error"></h3>
+        <select id="pick_select">
+            <option value="" disabled hidden selected>Pick a learner and course</option>
+            {{#users_array}}
+                <option value="{{0}}-{{2}}">{{1}} - {{3}}</option>
+            {{/users_array}}
+        </select>
+        <button type="submit" class='btn btn-primary mb-2 mr-2 p-2'>Submit</button>
+    </form>
+</div>
+<br>
+<div class='inner-div'>
+    <h2>Click The Icon For Reports</h2>
+    <img src="./classes/img/Report.png" onclick="window.location.href='./admin_reports.php'" class='img-style'>
+</div>
+<script src="./classes/js/menu.js" defer></script>

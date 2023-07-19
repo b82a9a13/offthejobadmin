@@ -1,0 +1,23 @@
+<link rel="stylesheet" type="text/css" href="./classes/css/style.css">
+<link rel="stylesheet" type="text/css" href="./classes/css/reports.css">
+<button class='btn btn-primary mb-2 mr-2 p-2' onclick="window.location.href='./admin.php'">Back to menu</button>
+<button class='btn btn-primary mb-2 mr-2 p-2' onclick="window.location.reload()">Reset Page</button>
+<h1 class='text-center'>Off The Job - Reports</h1>
+<div class='d-flex justify-content-center'>
+    <div class='mb-2 mr-2 p-2 ml-2 c-pointer' id="tables_div">
+        <h2 class='text-center'>Tables</h2>
+        <img class='img-style' src="./classes/img/Table.png">
+    </div>
+    <div class='mb-2 mr-2 p-2 ml-2 c-pointer' id="charts_div">
+        <h2 class='text-center'>Charts</h2>
+        <img class='img-style' src="./classes/img/Chart.png">
+    </div>
+    <div class='mb-2 mr-2 p-2 ml-2 c-pointer' id="progress_div">
+        <h2 class='text-center'>Progress</h2>
+        <img class='img-style' src="./classes/img/TrackingClock.png">
+    </div>
+</div>
+<div id="tables_div_content" style="display:none;" class='inner-div'></div>
+<div id="charts_div_content" style="display:none;" class='inner-div'></div>
+<div id="progress_div_content" style="display:none;" class='inner-div'></div>
+<script src="./classes/js/reports.js" defer></script>
