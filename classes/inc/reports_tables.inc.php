@@ -11,12 +11,7 @@ if($_SESSION['otj_adminreport']){
         <button class='btn btn-primary mb-2 mr-2 p-2' onclick='table_btn_clicked(`ldms`)' id='ldms_btn'>Show <b>Learners Documents Missing Signatures</b></button>
         <button class='btn btn-primary mb-2 mr-2 p-2' onclick='table_btn_clicked(`lwap`)' id='lwap_btn'>Show <b>Learners Without A Plan</b></button>
         <h4 class='text-error' id='table_error' style='display:none;'></h4>
-        <div id='ac_div' class='inside-div' style='display:none;'></div>
-        <div id='lwis_div' class='inside-div' style='display:none;'></div>
-        <div id='lwcs_div' class='inside-div' style='display:none;'></div>
-        <div id='lbt_div' class='inside-div' style='display:none;'></div>
-        <div id='ldms_div' class='inside-div' style='display:none;'></div>
-        <div id='lwap_div' class='inside-div' style='display:none;'></div>
+        <div id='table_div' class='inside-div' style='display:none;'></div>
     ";
     $return = str_replace("  ","",$return);
     $returnText->return = $return;

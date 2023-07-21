@@ -13,7 +13,7 @@ use local_offthejobadmin\lib;
 $lib = new lib;
 
 $PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/offthejobadmin/admin.php'));
+$PAGE->set_url(new moodle_url('/local/offthejobadmin/admin_reports.php'));
 $PAGE->set_title('Off The Job - Admin Reports');
 $PAGE->set_heading('Off The Job - Admin Reports');
 $PAGE->set_pagelayout('admin');

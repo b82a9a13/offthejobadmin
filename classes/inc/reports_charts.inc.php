@@ -9,10 +9,7 @@ if($_SESSION['otj_adminreport']){
         <button class='btn btn-primary mb-2 mr-2 p-2' onclick='charts_btn_clicked(`sc`)' id='sc_btn'>Show <b>Setup Completion</b></button>
         <button class='btn btn-primary mb-2 mr-2 p-2' onclick='charts_btn_clicked(`pu`)' id='pu_btn'>Show <b>Plan Utilization</b></button>
         <h4 class='text-error' id='chart_error' style='display:none;'></h4>
-        <div id='hlt_div' class='inside-div' style='display:none;'></div>
-        <div id='cct_div' class='inside-div' style='display:none;'></div>
-        <div id='sc_div' class='inside-div' style='display:none;'></div>
-        <div id='pu_div' class='inside-div' style='display:none;'></div>
+        <div id='chart_div' class='inside-div' style='display:none;'></div>
     ";
     $return = str_replace("  ","",$return);
     $returnText->return = $return;

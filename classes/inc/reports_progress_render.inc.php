@@ -60,36 +60,37 @@ if($_SESSION['otj_adminreport']){
             $return = "";
             $script = "";
             foreach($array as $arra){
-                for($i = 1; $i < count($arra); $i++){
-                    $arr = $arra[$i][0];
-                    $return .= "
-                        <div class='inside-div w-100 mt-1 mb-1'>
-                            <h4>$arr[0] - $arr[1]</h4>
-                            <div class='d-flex'>
-                                <div class='w-50'>
-                                    <h5>Hours Log</h5>
-                                    <div class='d-flex'>
-                                        <canvas id='prog_canvas_hour_$arr[4]-$arr[5]' class='prog-canvas' width='120px' height='120px'></canvas>
-                                        <div>
-                                            <p>Progress: ".$arr[2][0]."%</p>
-                                            <p>Expected: ".$arr[2][1]."%</p>
+                foreach($arra as $ar){
+                    foreach($ar as $arr){
+                        $return .= "
+                            <div class='inside-div w-100 mt-1 mb-1'>
+                                <h4>$arr[0] - $arr[1]</h4>
+                                <div class='d-flex'>
+                                    <div class='w-50'>
+                                        <h5>Hours Log</h5>
+                                        <div class='d-flex'>
+                                            <canvas id='prog_canvas_hour_$arr[4]-$arr[5]' class='prog-canvas' width='120px' height='120px'></canvas>
+                                            <div>
+                                                <p>Progress: ".$arr[2][0]."%</p>
+                                                <p>Expected: ".$arr[2][1]."%</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class='w-50'>
-                                    <h5>Modules</h5>
-                                    <div class='d-flex'>
-                                        <canvas id='prog_canvas_mod_$arr[4]-$arr[5]' class='prog-canvas' width='120px' height='120px'></canvas>
-                                        <div>
-                                            <p>Progress: ".$arr[3][0]."%</p>
-                                            <p>Expected: ".$arr[3][1]."%</p>
+                                    <div class='w-50'>
+                                        <h5>Modules</h5>
+                                        <div class='d-flex'>
+                                            <canvas id='prog_canvas_mod_$arr[4]-$arr[5]' class='prog-canvas' width='120px' height='120px'></canvas>
+                                            <div>
+                                                <p>Progress: ".$arr[3][0]."%</p>
+                                                <p>Expected: ".$arr[3][1]."%</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ";
-                    $script .= "create_prog_circle('hour_$arr[4]-$arr[5]',".$arr[2][0].",".$arr[2][1].");create_prog_circle('mod_$arr[4]-$arr[5]',".$arr[3][0].",".$arr[3][1].");";
+                        ";
+                        $script .= "create_prog_circle('hour_$arr[4]-$arr[5]',".$arr[2][0].",".$arr[2][1].");create_prog_circle('mod_$arr[4]-$arr[5]',".$arr[3][0].",".$arr[3][1].");";
+                    }
                 }
             }
             $returnText->return = str_replace("  ","",$return);

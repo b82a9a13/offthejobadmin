@@ -767,4 +767,118 @@ class lib{
             return false;
         }
     }
+
+    //Get all training plan data for a sepcific course id and user id
+    public function get_trainplan_data($cid, $uid, $datetype){
+        global $DB;
+        $record = $DB->get_record_sql('SELECT * FROM {trainingplan_plans} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
+        $planid = $record->id;
+        $plansArray = [
+            $record->name, 
+            $record->employer, 
+            $record->startdate, 
+            $record->plannedendd,
+            $record->lengthoprog,
+            $record->otjh,
+            $record->epao,
+            $record->fundsource,
+            $record->bksbrm,
+            $record->bksbre,
+            $record->learnstyle,
+            $record->sslearnr,
+            $record->ssemployr,
+            $record->apprenhpw,
+            $record->weekop,
+            $record->annuall,
+            $record->pdhours,
+            $record->areaostren,
+            $record->longtgoal,
+            $record->shorttgoal,
+            $record->iag,
+            $record->recopl,
+            $record->addsa
+        ];
+        $records = $DB->get_records_sql('SELECT * FROM {trainingplan_plans_modules} WHERE plansid = ?',[$planid]);
+        $modArray = [];
+        $total = [0,0];
+        foreach($records as $rec){
+            $tmp = [];
+            array_push($tmp, 
+                $rec->modpos,
+                $rec->modname,
+                date($datetype, $rec->modpsd)
+            );
+            $tmpVal = ($rec->modrsd == 0) ? '' : date($datetype,$rec->modrsd);
+            array_push($tmp, $tmpVal);
+            array_push($tmp, date($datetype,$rec->modped));
+            $tmpVal = ($rec->modred == 0) ? '' : date($datetype, $rec->modred);
+            array_push($tmp, $tmpVal);
+            array_push($tmp, 
+                $rec->modw,
+                $rec->modotjh,
+                $rec->modmod,
+                $rec->modotjt,
+                $rec->modaotjhc
+            );
+            array_push($modArray, $tmp);
+            $total[0] += $rec->modw;
+            $total[1] += $rec->modotjh;
+        }
+        asort($modArray);
+        $modArray = [$modArray, $total];
+        $records = $DB->get_records_sql('SELECT * FROM {trainingplan_plans_fs} WHERE plansid = ?',[$planid]);
+        $fsArray = [];
+        foreach($records as $rec){
+            $tmp = [];
+            array_push($tmp, 
+                $rec->fspos,
+                $rec->fsname
+            );
+            $tmpVal = ($rec->fslevel == 0) ? '' : $rec->fslevel;
+            array_push($tmp, $tmpVal);
+            $tmpVal = ($rec->fssd == 0) ? '' : date($datetype, $rec->fssd);
+            array_push($tmp, $rec->fsmod, $tmpVal);
+            $tmpVal = ($rec->fsped == 0) ? '' : date($datetype, $rec->fsped);
+            array_push($tmp, $tmpVal);
+            $tmpVal = ($rec->fsaed == 0) ? '' : date($datetype, $rec->fsaed);
+            array_push($tmp, $tmpVal);
+            $tmpVal = ($rec->fsaead == 0) ? '' : date($datetype, $rec->fsaead);
+            array_push($tmp, $tmpVal);
+            array_push($fsArray, $tmp);
+        }
+        asort($fsArray);
+        $records = $DB->get_records_sql('SELECT * FROM {trainingplan_plans_pr} WHERE plansid = ?',[$planid]);
+        $prArray = [];
+        foreach($records as $rec){
+            $tmp = [];
+            array_push($tmp, $rec->prpos);
+            $tmpVal = $rec->prtor;
+            if($tmpVal == 'Learner'){
+                $tmp[2] = 'selected';
+                $tmp[6] = 'readonly disabled';
+            } elseif($tmpVal == 'Employer'){
+                $tmp[3] = 'selected';
+                $tmp[6] = 'readonly disabled';
+            } else {
+                $tmp[1] = 'selected';
+            }
+            $tmpVal = ($rec->prpr == 0) ? '' : date($datetype, $rec->prpr);
+            $tmp[4] = $tmpVal;
+            $tmpVal = ($rec->prar == 0) ? '' : date($datetype, $rec->prar);
+            $tmp[5] = $tmpVal;
+            array_push($prArray, $tmp);
+        }
+        asort($prArray);
+        $records = $DB->get_records_sql('SELECT * FROM {trainingplan_plans_log} WHERE plansid = ?',[$planid]);
+        $logArray = [];
+        foreach($records as $rec){
+            array_push($logArray, [
+                date($datetype, $rec->dateofc),
+                $rec->log,
+                'disabled'
+            ]);
+        }
+        asort($logArray);
+        return [$plansArray, $modArray, $fsArray, $prArray, $logArray];
+    }
 }

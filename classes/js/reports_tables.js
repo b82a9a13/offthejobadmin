@@ -1,7 +1,10 @@
 function table_btn_clicked(type){
     const btn = document.getElementById(`${type}_btn`);
-    const div = document.getElementById(`${type}_div`);
+    const div = document.getElementById(`table_div`);
     if(btn.innerHTML.includes('Show')){
+        ['ac', 'lwis', 'lwcs', 'lbt', 'ldms', 'lwap'].forEach((item)=>{
+            document.getElementById(`${item}_btn`).innerHTML = document.getElementById(`${item}_btn`).innerHTML.replace('Hide', 'Show');
+        })
         btn.innerHTML = btn.innerHTML.replace('Show', 'Hide');
         const errorTxt = document.getElementById('table_error');
         errorTxt.style.display = 'none';

@@ -19,14 +19,14 @@
         </thead>
         <tbody>
             <tr>
-                <td id="td_name"><input class='w-100' type='text' id="name" {{new_plan}} value="{{learnername}}" {{default_readonly}}></td>
-                <td id="td_employer"><input class='w-100' type='text' id="employer" {{new_plan}} value="{{employer}}" {{default_readonly}}></td>
-                <td id="td_startdate"><input class='w-100' type="date" id="startdate" {{new_plan}} value="{{startdate}}" {{default_readonly}}></td>
-                <td id="td_planenddate"><input class='w-100' type="date" id="planenddate" {{new_plan}} value="{{plannedendd}}" {{edit_readonly}}></td>
-                <td id="td_lengthofprog"><input class='w-100' type="number" id="lengthofprog" {{new_plan}} value="{{lengthofprog}}" {{default_readonly}}></td>
-                <td id="td_otjh"><input class='w-100' type="number" id="otjh" {{new_plan}} value="{{otjh}}" {{default_readonly}}></td>
+                <td id="td_name"><input class='w-100' type='text' id="name" required value="{{learnername}}"></td>
+                <td id="td_employer"><input class='w-100' type='text' id="employer" required value="{{employer}}"></td>
+                <td id="td_startdate"><input class='w-100' type="date" id="startdate" required value="{{startdate}}"></td>
+                <td id="td_planenddate"><input class='w-100' type="date" id="planenddate" required value="{{plannedendd}}"></td>
+                <td id="td_lengthofprog"><input class='w-100' type="number" id="lengthofprog" required value="{{lengthofprog}}"></td>
+                <td id="td_otjh"><input class='w-100' type="number" id="otjh" required value="{{otjh}}"></td>
                 <td id="td_epao">
-                    <select class='w-100' id="epao" {{new_plan}} {{edit_readonly}}>
+                    <select class='w-100' id="epao" required>
                         <option disabled {{epao_default}} value="">Choose EPAO</option>
                         <option value="frawards" {{frawards}}>FR Awards</option>
                         <option value="candg" {{candg}}>C & G</option>
@@ -36,7 +36,7 @@
                     </select>
                 </td>
                 <td id="td_fundsource">
-                    <select class='w-100' id="fundsource" {{new_plan}} {{edit_readonly}}>
+                    <select class='w-100' id="fundsource" required>
                         <option disabled {{fund_default}} value="">Choose Funding Source</option>
                         <option value="contrib" {{contrib}}>5% Contribution</option>
                         <option value="levy" {{levy}}>Levy</option>
@@ -58,18 +58,18 @@
         </thead>
         <tbody>
             <tr>
-                <td id="td_bksbrm"><input class='w-100' type='number' id="bksbrm" {{new_plan}} value="{{bksbrm}}" {{edit_readonly}}></td>
-                <td id="td_bksbre"><input class='w-100' type='number' id="bksbre" {{new_plan}} value="{{bksbre}}" {{edit_readonly}}></td>
+                <td id="td_bksbrm"><input class='w-100' type='number' id="bksbrm" required value="{{bksbrm}}"></td>
+                <td id="td_bksbre"><input class='w-100' type='number' id="bksbre" required value="{{bksbre}}"></td>
                 <td id="td_learnstyle">
-                    <select class='w-100' id="learnstyle" {{new_plan}} {{edit_readonly}}>
+                    <select class='w-100' id="learnstyle" required>
                         <option disabled {{learnstyle_default}} value="">Choose Learning Style</option>
                         <option value="visual" {{visual}}>Visual</option>
                         <option value="auditory" {{auditory}}>Auditory</option>
                         <option value="kinaesthetic" {{kinaesthetic}}>Kinaesthetic</option>
                     </select>
                 </td>
-                <td id="td_skillscanlr"><input class='w-100' type='text' id="skillscanlr" {{new_plan}} value="{{skillscanlr}}" {{edit_readonly}}></td>
-                <td id="td_skillscaner"><input class='w-100' type='text' id="skillscaner" {{new_plan}} value="{{skillscaner}}" {{edit_readonly}}></td>
+                <td id="td_skillscanlr"><input class='w-100' type='text' id="skillscanlr" required value="{{skillscanlr}}"></td>
+                <td id="td_skillscaner"><input class='w-100' type='text' id="skillscaner" required value="{{skillscaner}}"></td>
             </tr>
         </tbody>
     </table>
@@ -85,10 +85,10 @@
         </thead>
         <tbody>
             <tr>
-                <td id="td_apprenhpw"><input class='w-100' type="number" id="apprenhpw" step="0.01" {{new_plan}} value="{{hpw}}" {{default_readonly}}></td>
-                <td id="td_weeksonprog"><input class='w-100' type="number" id="weeksonprog" step="1" {{new_plan}} value="{{wop}}" {{default_readonly}}></td>
-                <td id="td_annualleave"><input class='w-100' type="number" id="annualleave" step="0.01" {{new_plan}} value="{{annuallw}}" {{default_readonly}}></td>
-                <td id="td_hoursperweek"><input class='w-100' type="number" id="hoursperweek" step="0.01" {{new_plan}} value="{{hoursperweek}}" {{edit_readonly}}></td>
+                <td id="td_apprenhpw"><input class='w-100' type="number" id="apprenhpw" step="0.01" required value="{{hpw}}"></td>
+                <td id="td_weeksonprog"><input class='w-100' type="number" id="weeksonprog" step="1" required value="{{wop}}"></td>
+                <td id="td_annualleave"><input class='w-100' type="number" id="annualleave" step="0.01" required value="{{annuallw}}"></td>
+                <td id="td_hoursperweek"><input class='w-100' type="number" id="hoursperweek" step="0.01" required value="{{hoursperweek}}"></td>
             </tr>
         </tbody>
     </table>
@@ -96,19 +96,19 @@
         <h3>Aspirations & Career Goals</h3>
             <tr class='d-flex'>
                 <th class='w-25'>Area of strength</th>
-                <td class='w-75' id="td_aostrength"><textarea class='w-100' id="aostrength" {{new_plan}} {{edit_readonly}}>{{aostrength}}</textarea></td>
+                <td class='w-75' id="td_aostrength"><textarea class='w-100' id="aostrength" required>{{aostrength}}</textarea></td>
             </tr>
             <tr class='d-flex'>
                 <th class='w-25'>Long Term Goals</th>
-                <td class='w-75' id="td_ltgoals"><textarea class='w-100' id="ltgoals" {{new_plan}} {{edit_readonly}}>{{ltgoals}}</textarea></td>
+                <td class='w-75' id="td_ltgoals"><textarea class='w-100' id="ltgoals" required>{{ltgoals}}</textarea></td>
             </tr>
             <tr class='d-flex'>
                 <th class='w-25'>Short Term Goals</th>
-                <td class='w-75' id="td_stgoals"><textarea class='w-100' id="stgoals" {{new_plan}} {{edit_readonly}}>{{stgoals}}</textarea></td>
+                <td class='w-75' id="td_stgoals"><textarea class='w-100' id="stgoals" required>{{stgoals}}</textarea></td>
             </tr>
             <tr class='d-flex'>
                 <th class='w-25'>IAG (Information, Advice, Guidance)</th>
-                <td class='w-75' id="td_iaguide"><textarea class='w-100' id="iaguide" {{new_plan}} {{edit_readonly}}>{{iaguide}}</textarea></td>
+                <td class='w-75' id="td_iaguide"><textarea class='w-100' id="iaguide" required>{{iaguide}}</textarea></td>
             </tr>
     </table>
     <table class='table table-bordered table-striped table-hover'>
@@ -119,7 +119,7 @@
         </thead>
         <tbody>
             <tr>
-                <td id="td_recopl"><textarea class='w-100' id="recopl" {{new_plan}} {{edit_readonly}}>{{recopl}}</textarea></td>
+                <td id="td_recopl"><textarea class='w-100' id="recopl" required>{{recopl}}</textarea></td>
             </tr>
         </tbody>
     </table>
@@ -141,29 +141,29 @@
         <tbody>
             {{#modulesarray}}
                 <tr>
-                    <td class='td-mod-m'><textarea class='w-100 mod-m' {{new_plan}} {{default_readonly}}>{{0}}</textarea></td>
-                    <td class='td-mod-psd'><input class='w-100 mod-psd' type='date' {{new_plan}}></td>
+                    <td class='td-mod-m'><textarea class='w-100 mod-m' required>{{0}}</textarea></td>
+                    <td class='td-mod-psd'><input class='w-100 mod-psd' type='date' required></td>
                     <td class='td-mod-rsd'><input class='w-100 mod-rsd' type='date' {{new_disabled}}></td>
-                    <td class='td-mod-ped'><input class='w-100 mod-ped' type='date' {{new_plan}}></td>
+                    <td class='td-mod-ped'><input class='w-100 mod-ped' type='date' required></td>
                     <td class='td-mod-red'><input class='w-100 mod-red' type='date' {{new_disabled}}></td>
-                    <td class='td-mod-mw'><input class='w-100 mod-mw' type='number' step='0.01' {{new_plan}} value='{{1}}' {{default_readonly}}></td>
-                    <td class='td-mod-potjh'><input class='w-100 mod-potjh' type='number' step='0.01' {{new_plan}} value='{{3}}' {{default_readonly}}></td>
-                    <td class='td-mod-mod'><textarea class='w-100 mod-mod' {{new_plan}}>{{2}}</textarea></td>
-                    <td class='td-mod-otjt'><textarea class='w-100 mod-otjt' {{new_plan}}></textarea></td>
+                    <td class='td-mod-mw'><input class='w-100 mod-mw' type='number' step='0.01' required value='{{1}}'></td>
+                    <td class='td-mod-potjh'><input class='w-100 mod-potjh' type='number' step='0.01' required value='{{3}}'></td>
+                    <td class='td-mod-mod'><textarea class='w-100 mod-mod' required>{{2}}</textarea></td>
+                    <td class='td-mod-otjt'><textarea class='w-100 mod-otjt' required></textarea></td>
                     <td><input class='w-100' disabled></td>
                 </tr>
             {{/modulesarray}}
             {{#modarray}}
                 <tr>
-                    <td class='td-mod-m'><textarea class='w-100 mod-m' {{new_plan}} {{default_readonly}}>{{1}}</textarea></td>
-                    <td class='td-mod-psd'><input class='w-100 mod-psd' type='date' {{new_plan}} value="{{2}}" {{edit_readonly}}></td>
+                    <td class='td-mod-m'><textarea class='w-100 mod-m' required>{{1}}</textarea></td>
+                    <td class='td-mod-psd'><input class='w-100 mod-psd' type='date' required value="{{2}}"></td>
                     <td class='td-mod-rsd'><input class='w-100 mod-rsd' type='date' {{new_disabled}} value="{{3}}"></td>
-                    <td class='td-mod-ped'><input class='w-100 mod-ped' type='date' {{new_plan}} value="{{4}}" {{edit_readonly}}></td>
+                    <td class='td-mod-ped'><input class='w-100 mod-ped' type='date' required value="{{4}}"></td>
                     <td class='td-mod-red'><input class='w-100 mod-red' type='date' {{new_disabled}} value="{{5}}"></td>
-                    <td class='td-mod-mw'><input class='w-100 mod-mw' type='number' step='0.01' {{new_plan}} value='{{6}}' {{default_readonly}}></td>
-                    <td class='td-mod-potjh'><input class='w-100 mod-potjh' type='number' step='0.01' {{new_plan}} value='{{7}}' {{default_readonly}}></td>
-                    <td class='td-mod-mod'><textarea class='w-100 mod-mod' {{new_plan}} {{edit_readonly}}>{{8}}</textarea></td>
-                    <td class='td-mod-otjt'><textarea class='w-100 mod-otjt' {{new_plan}}>{{9}}</textarea></td>
+                    <td class='td-mod-mw'><input class='w-100 mod-mw' type='number' step='0.01' required value='{{6}}'></td>
+                    <td class='td-mod-potjh'><input class='w-100 mod-potjh' type='number' step='0.01' required value='{{7}}'></td>
+                    <td class='td-mod-mod'><textarea class='w-100 mod-mod' required>{{8}}</textarea></td>
+                    <td class='td-mod-otjt'><textarea class='w-100 mod-otjt' required>{{9}}</textarea></td>
                     <td><input class='w-100' disabled value="{{10}}"></td>
                 </tr>
             {{/modarray}}
@@ -204,20 +204,20 @@
             </thead>
             <tbody>
                 <tr>
-                    <td id='td_mathfs'><input class='w-100' type='text' id='mathfs' value="{{mathfs}}" {{default_readonly}}></td>
-                    <td id='td_mathlevel'><input class='w-100' type='number' id='mathlevel' value="{{mathlevel}}" {{edit_readonly}}></td>
-                    <td id='td_mathmod'><textarea class='w-100' id='mathmod' {{edit_readonly}}>{{mathmod}}{{defualt_fs_tor}}</textarea></td>
-                    <td id='td_mathsd'><input class='w-100' type='date' id='mathsd' value="{{mathsd}}" {{edit_readonly}}></td>
-                    <td id='td_mathped'><input class='w-100' type='date' id='mathped' value="{{mathped}}" {{edit_readonly}}></td>
+                    <td id='td_mathfs'><input class='w-100' type='text' id='mathfs' value="{{mathfs}}"></td>
+                    <td id='td_mathlevel'><input class='w-100' type='number' id='mathlevel' value="{{mathlevel}}"></td>
+                    <td id='td_mathmod'><textarea class='w-100' id='mathmod'>{{mathmod}}{{defualt_fs_tor}}</textarea></td>
+                    <td id='td_mathsd'><input class='w-100' type='date' id='mathsd' value="{{mathsd}}"></td>
+                    <td id='td_mathped'><input class='w-100' type='date' id='mathped' value="{{mathped}}"></td>
                     <td id='td_mathaed'><input class='w-100' type='date' id='mathaed' {{new_disabled}} value="{{mathaed}}"></td>
                     <td id='td_mathaead'><input class='w-100' type='date' id='mathaead' {{new_disabled}} value="{{mathaead}}"></td>
                 </tr>
                 <tr>
-                    <td id='td_engfs'><input class='w-100' type='text' id='engfs' value="{{engfs}}" {{default_readonly}}></td>
-                    <td id='td_englevel'><input class='w-100' type='number' id='englevel' value="{{englevel}}" {{edit_readonly}}></td>
-                    <td id='td_engmod'><textarea class='w-100' id='engmod' {{edit_readonly}}>{{engmod}}{{defualt_fs_tor}}</textarea></td>
-                    <td id='td_engsd'><input class='w-100' type='date' id='engsd' value="{{engsd}}" {{edit_readonly}}></td>
-                    <td id='td_engped'><input class='w-100' type='date' id='engped' value="{{engped}}" {{edit_readonly}}></td>
+                    <td id='td_engfs'><input class='w-100' type='text' id='engfs' value="{{engfs}}"></td>
+                    <td id='td_englevel'><input class='w-100' type='number' id='englevel' value="{{englevel}}"></td>
+                    <td id='td_engmod'><textarea class='w-100' id='engmod'>{{engmod}}{{defualt_fs_tor}}</textarea></td>
+                    <td id='td_engsd'><input class='w-100' type='date' id='engsd' value="{{engsd}}"></td>
+                    <td id='td_engped'><input class='w-100' type='date' id='engped' value="{{engped}}"></td>
                     <td id='td_engaed'><input class='w-100' type='date' id='engaed' {{new_disabled}} value="{{engaed}}"></td>
                     <td id='td_engaead'><input class='w-100' type='date' id='engaead' {{new_disabled}} value="{{engaead}}"></td>
                 </tr>
@@ -238,13 +238,13 @@
             {{#prarray}}
                 <tr class='tr-td-pr'>
                     <td class='td-pr-type'>
-                        <select class='w-100 pr-type' {{new_plan}} {{6}}>
+                        <select class='w-100 pr-type' required {{6}}>
                             <option disabled {{progreview_default}} value="" {{1}}>Learner/Employer</option>
                             <option value='Learner' {{2}}>Learner</option>
                             <option value='Employer' {{3}}>Employer</option>
                         </select>
                     </td>
-                    <td class='td-pr-pr'><input class='w-100 pr-pr' type='date' {{new_plan}} value="{{4}}" {{6}}></td>
+                    <td class='td-pr-pr'><input class='w-100 pr-pr' type='date' required value="{{4}}" {{6}}></td>
                     <td class='td-pr-ar'><input class='w-100 pr-ar' type='date' {{new_disabled}} value="{{5}}"></td>
                 </tr>
             {{/prarray}}
@@ -262,7 +262,7 @@
         </thead>
         <tbody>
             <tr>
-                <td id="td_addsa"><textarea class='w-100' id="addsa" {{edit_readonly}}>{{addsa}}</textarea></td>
+                <td id="td_addsa"><textarea class='w-100' id="addsa">{{addsa}}</textarea></td>
             </tr>
         </tbody>
     </table>
