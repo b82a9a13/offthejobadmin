@@ -493,9 +493,12 @@ class lib{
         if(count($courses > 0)){
             $array = [];
             foreach($courses as $course){
-                array_push($array, [
-                    $course[0], $this->get_otj_progress_data($course[1])
-                ]);
+                $coursearray = $this->get_otj_progress_data($course[1]);
+                if($coursearray != []){
+                    array_push($array, [
+                        $course[0], $this->get_otj_progress_data($course[1])
+                    ]);
+                }
             }
             return $array;
         } else {
