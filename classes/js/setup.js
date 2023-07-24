@@ -1,5 +1,7 @@
 document.getElementById('setup_form').addEventListener('submit', (e)=>{
     e.preventDefault();
+    const success = document.getElementById('setup_success');
+    success.style.display = 'none';
     const error = document.getElementById('setup_error');
     error.style.display = 'none';
     error.innerText = '';
@@ -37,7 +39,7 @@ document.getElementById('setup_form').addEventListener('submit', (e)=>{
                 }
                 error.style.display = 'block';
             } else if(text['return']){
-                document.getElementById('back_to_user').click();
+                success.style.display = 'block';
             } else {
                 error.innerText = 'Update error.';
                 error.style.display = 'block';

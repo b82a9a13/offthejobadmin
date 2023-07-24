@@ -9,7 +9,7 @@
         {{#records}}
             <li class='d-flex mb-2'>
                 <h4 class='mr-1'>{{0}}</h4>
-                <button class='btn btn-primary mr-1 mb-1' onclick="recordtype('edit', {{1}})">Edit</button>
+                <button class='btn btn-primary mr-1 mb-1' onclick="getrecord({{1}})">Edit</button>
                 <button class='btn btn-danger mr-1 mb-1' onclick="delrecord({{1}})">Delete</button>
                 <div class='modal' id="modal_{{1}}" style='display:none;'>
                     <div class='modal_content'>
@@ -20,11 +20,11 @@
                         <h2 id="modal_{{1}}_error" style="display:none;" class='text-error'></h2>
                     </div>
                 </div>
-                <button class='btn btn-primary mr-1 mb-1' onclick="window.open('./classes/pdf/arpdf.php?id={{1}}', '_blank');window.open('./classes/pdf/employercomment_pdf.php?id={{1}}', '_blank');">PDF</button>
+                <button class='btn btn-primary mr-1 mb-1' onclick="window.open('./classes/pdf/activityrecord.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');window.open('./classes/pdf/activityrecord_employercomment.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');">PDF</button>
             </li>
         {{/records}}
     </ol>
-    <h2 style='display:none;' class='text-error' id='type_error'></h2>
+    <h2 style='display:none;' class='text-error' id='get_error'></h2>
 </div>
 <div id="activityrecord_content_div" style="display: none;">
     <h2 class='text-center' id="activityrecord_title"></h2>
@@ -231,14 +231,13 @@
         <div style="display:none;" id="ar_sign_div">
             <div class="mr-1">
                 <p>Learner Signature</p>
-                <img width="250px" height="100px" id="learnsignimg" style="display:none;">
-                <p><input type='date' name='learnsigndate' id="learnsigndate" style="display:none;"></p>
+                <img width="250px" height="100px" id="learnsignimg" style="display:none;" src>
+                <p><input disabled type='date' name='learnsigndate' id="learnsigndate" style="display:none;"></p>
             </div>
             <div>
                 <p>Coach Signature</p>
-                <button class='btn btn-primary mb-2' type='button' id="coach_signed_btn">Add Signature</button>
-                <img width="250px" height="100px" id="coachsignimg" style="display:none;">
-                <p id="td_coachsigndate"><input type='date' name='coachsigndate' id="coachsigndate" style="display:none;"></p>
+                <img width="250px" height="100px" id="coachsignimg" style="display:none;" src>
+                <p id="td_coachsigndate"><input disabled type='date' name='coachsigndate' id="coachsigndate" style="display:none;"></p>
             </div>
         </div>
         <h2 style="display:none;" class="text-error" id="ar_error"></h2>

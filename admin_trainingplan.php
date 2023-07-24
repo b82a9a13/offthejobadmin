@@ -106,5 +106,8 @@ if($errorTxt != ''){
         'prbtns' => [[]]
     ];
     echo $OUTPUT->render_from_template('local_offthejobadmin/trainingplan', $template);
+    $_SESSION['otj_adminplan'] = true;
+    $_SESSION['otj_adminplan_uid'] = $uid;
+    $_SESSION['otj_adminplan_cid'] = $cid;
 }
 echo $OUTPUT->footer();

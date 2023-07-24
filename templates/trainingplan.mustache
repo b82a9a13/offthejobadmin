@@ -238,13 +238,13 @@
             {{#prarray}}
                 <tr class='tr-td-pr'>
                     <td class='td-pr-type'>
-                        <select class='w-100 pr-type' required {{6}}>
+                        <select class='w-100 pr-type' required>
                             <option disabled {{progreview_default}} value="" {{1}}>Learner/Employer</option>
                             <option value='Learner' {{2}}>Learner</option>
                             <option value='Employer' {{3}}>Employer</option>
                         </select>
                     </td>
-                    <td class='td-pr-pr'><input class='w-100 pr-pr' type='date' required value="{{4}}" {{6}}></td>
+                    <td class='td-pr-pr'><input class='w-100 pr-pr' type='date' required value="{{4}}"></td>
                     <td class='td-pr-ar'><input class='w-100 pr-ar' type='date' {{new_disabled}} value="{{5}}"></td>
                 </tr>
             {{/prarray}}

@@ -61,5 +61,8 @@ if($errorTxt != ''){
         'uid' => $uid
     ];
     echo $OUTPUT->render_from_template('local_offthejobadmin/activityrecords', $template);
+    $_SESSION['otj_actrec'] = true;
+    $_SESSION['otj_actrec_cid'] = $cid;
+    $_SESSION['otj_actrec_uid'] = $uid;
 }
 echo $OUTPUT->footer();

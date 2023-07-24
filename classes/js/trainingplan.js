@@ -66,7 +66,7 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
     let params = '';
     idsArray.forEach(function(arr){
         console.log(document.getElementById(arr).value);
-        params += `${arr}=${document.getElementById(arr).value.replaceAll('&','($)')}`;
+        params += `${arr}=${document.getElementById(arr).value.replaceAll('&','($)')}&`;
         document.getElementById('td_'+arr).style.background = '';
     });
     let total = 0;
@@ -111,16 +111,37 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
                     } else if (classArray[1].includes(item[0])){
                         document.querySelectorAll(".td-"+item[0])[item[2]].style.background = 'red';
                     }
+                    errorTxt.innerText += item[1] + '|';
                 });
-                errorTxt.innerText += item[1] + '|';
                 errorTxt.style.display = 'block';
             } else if(text['return']){
                 window.location.reload();
             } else {
-                errorTxt.innerText = 'Connection error.'; 
+                errorTxt.innerText = 'Submit error.'; 
                 errorTxt.style.display = 'block';
             }
+        } else {
+            errorTxt.innerText = 'Connection error.'; 
+            errorTxt.style.display = 'block';
         }
     }
     xhr.send(params);
 });
+function addprRecord(){
+    const html = "<td class='td-pr-type'><select class='w-100 pr-type' required><option disabled value='' selected>Learner/Employer</option><option value='Learner'>Learner</option><option value='Employer'>Employer</option></select></td><td class='td-pr-pr'><input class='w-100 pr-pr' type='date' required></td><td class='td-pr-ar'><input class='w-100 pr-ar' type='date'></td>";
+    const tr = document.createElement('tr');
+    tr.className = 'tr-td-pr tr-td-pr-new';
+    tr.innerHTML = html;
+    document.getElementById('pr_tbody').appendChild(tr);
+    document.getElementById('pr_removerecord').disabled = false;
+}
+function removeprRecord(){
+    const tr = document.querySelectorAll('.tr-td-pr-new');
+    const length = tr.length;
+    if(length > 0){
+        tr[length - 1].remove();
+        if(length == 1){
+            document.getElementById('pr_removerecord').disabled = true;
+        }
+    }
+}

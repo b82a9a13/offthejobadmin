@@ -881,4 +881,211 @@ class lib{
         asort($logArray);
         return [$plansArray, $modArray, $fsArray, $prArray, $logArray];
     }
+
+    //Submit training plan data for a specific course id and user id
+    public function submit_trainplan($cid, $uid, $allArray, $modArray, $fsValues, $prArray, $logArray){
+        global $DB;
+        $planid = $this->get_trainplan_id($cid, $uid);
+        $record = new stdClass();
+        $record->id = $planid;
+        $record->userid = $uid;
+        $record->courseid = $cid;
+        $record->name = $allArray[0];
+        $record->employer = $allArray[1];
+        $record->startdate = $allArray[2];
+        $record->plannedendd = $allArray[3];
+        $record->lengthoprog = $allArray[4];
+        $record->otjh = $allArray[5];
+        $record->epao = $allArray[6];
+        $record->fundsource = $allArray[7];
+        $record->bksbrm = $allArray[8];
+        $record->bksbre = $allArray[9];
+        $record->learnstyle = $allArray[10];
+        $record->sslearnr = $allArray[11];
+        $record->ssemployr = $allArray[12];
+        $record->apprenhpw = $allArray[13];
+        $record->weekop = $allArray[14];
+        $record->annuall = $allArray[15];
+        $record->pdhours = $allArray[16];
+        $record->areaostren = $allArray[17];
+        $record->longtgoal = $allArray[18];
+        $record->shorttgoal = $allArray[19];
+        $record->iag = $allArray[20];
+        $record->recopl = $allArray[21];
+        $record->addsa = $allArray[22];
+        if($DB->update_record('trainingplan_plans', $record)){
+            for($i = 0; $i < count($modArray); $i++){
+                $record = new stdClass();
+                $record->id = $DB->get_record_sql('SELECT id FROM {trainingplan_plans_modules} WHERE plansid = ? AND modpos = ?',[$planid, $i])->id;
+                if($record->id != null && $record->id != ''){
+                    $record->modpos = $i;
+                    $record->modname = $modArray[$i][0];
+                    $record->modpsd = $modArray[$i][1];
+                    $record->modped = $modArray[$i][2];
+                    $record->modw = $modArray[$i][3];
+                    $record->modotjh = $modArray[$i][4];
+                    $record->modmod = $modArray[$i][5];
+                    $record->modotjt = $modArray[$i][6];
+                    $record->modrsd = $modArray[$i][7];
+                    $record->modred = $modArray[$i][8];
+                    $DB->update_record('trainingplan_plans_modules', $record);
+                }
+            }
+            for($i = 0; $i < count($fsArray); $i++){
+                $record = new stdClass();
+                $record->id = $DB->get_record_sql('SELECT id FROM {trainingplan_plans_fs} WHERE plansid = ? AND fspos = ?',[$planid, $i])->id;
+                if($record->id != null && $record->id != ''){
+                    $record->fspos = $i;
+                    $record->fsname = $fsArray[$i][0];
+                    $record->fslevel = $fsArray[$i][1];
+                    $record->fsmod = $fsArray[$i][2];
+                    $record->fssd = $fsArray[$i][3];
+                    $record->fsped = $fsArray[$i][4];
+                    $record->fsaed = $fsArray[$i][5];
+                    $record->fsaead = $fsArray[$i][6];
+                    $DB->update_record('trainingplan_plans_fs', $record);
+                }
+            }
+            for($i = 0; $i < count($prArray); $i++){
+                $record = new stdClass();
+                $record->id = $DB->get_record_sql('SELECT id FROM {trainingplan_plans_pr} WHERE plansid = ? AND prpos = ?',[$planid, $i])->id;
+                if($record->id != null && $record->id != ''){
+                    $record->prpos = $i;
+                    $record->prtor = $prArray[$i][0];
+                    $record->prpr = $prArray[$i][1];
+                    $record->prar = $prArray[$i][2];
+                    $DB->update_record('trainingplan_plans_pr', $record);
+                } else {
+                    unset($record->id);
+                    $record->plansid = $planid;
+                    $record->prpos = $i;
+                    $record->prtor = $prArray[$i][0];
+                    $record->prpr = $prArray[$i][1];
+                    $record->prar = $prArray[$i][2];
+                    $DB->insert_record('trainingplan_plans_pr', $record, true);
+                }
+            }
+            $record = new stdClass();
+            $record->plansid = $planid;
+            $record->dateofc = $logArray[0];
+            $record->log = $logArray[1];
+            $DB->insert_record('trainingplan_plans_log', $record, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //delete specfic activity record for a specific course id and user id
+    public function delete_activityrecord($cid, $uid, $id){
+        global $DB;
+        $docsid = $this->get_activityrecord_id($cid, $uid);
+        $file = $DB->get_record_sql('SELECT employercomment FROM {activityrecord_docs_info} WHERE docsid = ? AND id = ?',[$docsid, $id])->employercomment;
+        if(file_exists('../../../activityrecord/classes/pdf/employercomment/'.$file)){
+            unlink('../../../activityrecord/classes/pdf/employercomment/'.$file);
+        }
+        $DB->delete_records('activityrecord_docs_info', [$DB->sql_compare_text('docsid') => $docsid, $DB->sql_compare_text('id') => $id]);
+        return true;
+    }
+
+    //get activity record data for a spefici course id and user id
+    public function get_activityrecord_data($cid, $uid, $id){
+        global $DB;
+        $record = $DB->get_record_sql('SELECT * FROM {activityrecord_docs_info} WHERE id = ? AND docsid = ?',[$id, $this->get_activityrecord_id($cid, $uid)]);
+        $array = [
+            $record->apprentice,
+            date('Y-m-d',$record->reviewdate),
+            $record->standard,
+            $record->employerandstore,
+            $record->coach,
+            $record->managerormentor,
+            $record->progress,
+            $record->expectprogress,
+            $record->progresscom,
+            $record->hours,
+            $record->expecthours,
+            $record->otjhcom,
+            $record->recap,
+            $record->impact,
+            $record->details,
+            $record->detailsksb,
+            $record->detailimpact,
+            $record->todaymath,
+            $record->nextmath,
+            $record->todayeng,
+            $record->nexteng,
+            $record->alnsupport,
+            $record->coachfeedback,
+            $record->safeguarding,
+            $record->agreedaction,
+            $record->apprenticecomment,
+            $record->employercomment,
+            date('Y-m-d',$record->ntasigndate),
+            date('Y-m-d',$record->learnsigndate),
+            str_replace(" ","+",$record->learnsign),
+            str_replace(" ","+",$record->ntasign),
+            date('Y-m-d H:m',$record->nextdate),
+            $record->nexttype
+        ];
+        return $array;
+    }
+
+    //get employer comment pdf file for a specific record id, user id and course id
+    public function get_employercomment_pdf($cid, $uid, $id){
+        global $DB;
+        $record = $DB->get_record_sql('SELECT employercomment, reviewdate FROM {activityrecord_docs_info} WHERE id = ? AND docsid = ?',[$id, $this->get_activityrecord_id($cid, $uid)]);
+        return [$record->employercomment, date('Y-m-d',$record->reviewdate)];
+    }
+
+    //update a activity record for a sepcific record id, user id and course id
+    public function update_activityrecord($cid, $uid, $id, $data){
+        global $DB;
+        $info = $DB->get_record_sql('SELECT docsid, employercomment FROM {activityrecord_docs_info} WHERE id = ? AND docsid = ?',[$id, $this->get_activityrecord_id($cid, $uid)]);
+        $docsid = $info->docsid;
+        $file = $info->employercomment;
+        if($data[25] != $file && $file != null && $data[25] != null && !empty($data[25]) && !empty($file)){
+            if(file_exists('../../../activityrecord/classes/pdf/employercomment/'.$file)){
+                unlink('../../../activityrecord/classes/pdf/employercomment/'.$file);
+            }
+        } elseif($file != null){
+            $data[25] = $file;
+        }
+        $record = new stdClass();
+        $record->id = $id;
+        $record->docsid = $docsid;
+        $record->apprentice = $data[0];
+        $record->reviewdate = $data[1];
+        $record->standard = $data[2];
+        $record->employerandstore = $data[3];
+        $record->coach = $data[4];
+        $record->managerormentor = $data[5];
+        $record->progress = $data[6];
+        $record->expectprogress = $data[7];
+        $record->progresscom = $data[8];
+        $record->hours = $data[9];
+        $record->expecthours = $data[10];
+        $record->otjhcom = $data[11];
+        $record->recap = $data[12];
+        $record->impact = $data[13];
+        $record->details = $data[14];
+        $record->detailsksb = $data[15];
+        $record->detailimpact = $data[16];
+        $record->todaymath = $data[17];
+        $record->nextmath = $data[18];
+        $record->todayeng = $data[19];
+        $record->nexteng = $data[20];
+        $record->alnsupport = $data[21];
+        $record->coachfeedback = $data[22];
+        $record->safeguarding = $data[23];
+        $record->agreedaction = $data[24];
+        $record->employercomment = $data[25];
+        $record->apprenticecomment = $data[26];
+        $record->nextdate = $data[27];
+        $record->nexttype = $data[28];
+        if($DB->update_record('activityrecord_docs_info', $record, true)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
