@@ -597,7 +597,7 @@ class lib{
     //Reset all data for a specific course id and user id
     public function reset_user_course_data($cid, $uid){
         global $DB;
-        $id = $DB->get_record_sql('SELECT id FROM {hourslog_hours} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id;
+        $id = $this->get_hours_id($cid, $uid);
         if($id != null && $id != ''){
             $DB->delete_records('hourslog_hours_info', [$DB->sql_compare_text('hoursid') => $id]);
             $DB->delete_records('hourslog_hours', [$DB->sql_compare_text('id') => $id]);
@@ -1083,6 +1083,167 @@ class lib{
         $record->nextdate = $data[27];
         $record->nexttype = $data[28];
         if($DB->update_record('activityrecord_docs_info', $record, true)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Get hours log for a specific user id and course id
+    public function get_hours_logs($cid, $uid){
+        global $DB;
+        if(!$this->check_hourslog_exists($cid, $uid)){
+            return [];
+        } else {
+            $array = [];
+            $records = $DB->get_records_sql('SELECT * FROM {hourslog_hours_info} WHERE hoursid = ?',[$this->get_hours_id($cid, $uid)]);
+            if(count($records) > 0){
+                $int = 1;
+                foreach($records as $record){
+                    $initials = $DB->get_record_sql('SELECT firstname, lastname FROM {user} WHERE id = ?',[$record->creatorid]);
+                    array_push($array, [
+                        $int,
+                        $record->id, 
+                        date('d/m/Y',$record->date), 
+                        $record->activity, 
+                        $record->whatlink, 
+                        $record->impact, 
+                        $record->duration, 
+                        $record->creatorid, 
+                        substr($initials->firstname, 0, 1).''.substr($initials->lastname, 0, 1)
+                    ]);
+                    $int++;
+                }
+            }
+            return $array;
+        }
+    }
+
+    //Get hours log progress info for a specific course id and user id
+    public function get_hourslog_progress_info($cid, $uid){
+        global $DB;
+        $record = $DB->get_record_sql('SELECT otjhours, totalmonths, startdate FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+            INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
+            WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
+        [$cid, $uid]);
+        $expected = floatval(
+            number_format((($record->otjhours / $record->totalmonths) / 4) *
+            (round((date('U') - $record->startdate) / 604800) / $record->otjhours) * 100, 0, '.',' ')
+        );
+        $expected = ($expected < 0) ? 0 : $expected;
+        $percent = 0;
+        if(count($records) > 0){
+            $duration = 0;
+            foreach($records as $rec){
+                $duration += $rec->duration;
+            }
+            $percent = floatval(number_format(($duration / $record->otjhours) * 100, 0, '.',' '));
+            $percent = ($percent < 0) ? 0 : $percent;
+            $percent = ($percent > 100) ? 100 : $percent;
+        }
+        return [$percent, $expected];
+    }
+
+    //Get the total number of otj hours left for a specific course id and user id
+    public function get_hourslog_otjh_left($cid, $uid){
+        global $DB;
+        $record = $DB->get_record_sql('SELECT otjhours FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+            INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
+            WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
+        [$cid, $uid]);
+        $totalHL = $record->otjhours;
+        foreach($records as $rec){
+            $totalHL -= $rec->duration;
+        }
+        $totalHL = ($totalHL < 0) ? 0 : $totalHL;
+        return $totalHL;
+    }
+
+    //Get hours log data for a specific id
+    public function get_hourslog_id_data($cid, $uid, $id){
+        global $DB;
+        $hid = $this->get_hours_id($cid, $uid);
+        if($hid == null || $hid == ''){
+            return false;
+        } else {
+            if(!$DB->record_exists('hourslog_hours_info', [$DB->sql_compare_text('id') => $id, $DB->sql_compare_text('hoursid') => $hid])){
+                return false;
+            } else {
+                $record = $DB->get_record_sql('SELECT id, date, activity, whatlink, impact, duration FROM {hourslog_hours_info} WHERE id = ? AND hoursid = ?',[$id, $hid]);
+                return [
+                    $record->id,
+                    date('Y-m-d', $record->date),
+                    $record->activity,
+                    $record->whatlink,
+                    $record->impact,
+                    $record->duration
+                ];
+            }
+        }
+    }
+
+    //Get plan modules for a specific course id and user id
+    public function get_training_plans_modules($cid, $uid){
+        global $DB;
+        global $CFG;
+        $record = $DB->get_record_sql('SELECT planfilename, option FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
+        $json = json_decode(file_get_contents($CFG->dirroot.'/local/trainingplan/templates/json/'.$record->planfilename));
+        $array = [];
+        foreach($json->modules as $arr){
+            if(isset($arr->option1)){
+                if($record->option == 1){
+                    foreach($arr->option1 as $opt){
+                        array_push($array, [str_replace(',','',$opt->name)]);
+                    }
+                }
+            } elseif(isset($arr->option2)){
+                if($record->option == 2){
+                    foreach($arr->option2 as $opt){
+                        array_push($array, [str_replace(',','',$opt->name)]);
+                    }
+                }
+            } else {
+                array_push($array, [str_replace(',','',$arr->name)]);
+            }
+        }
+        return $array;
+    }
+
+    //Update hours log record for a specific course id, user id and record id
+    public function update_hourslog($cid, $uid, $rid, $data){
+        global $DB;
+        global $USER;
+        $hid = $this->get_hours_id($cid, $uid);
+        if($hid == null || $hid == ''){
+            return false;
+        } else {
+            if(!$DB->record_exists('hourslog_hours_info', [$DB->sql_compare_text('id') => $rid, $DB->sql_compare_text('hoursid') => $hid])){
+                return false;
+            } else {
+                $record = new stdClass();
+                $record->id = $rid;
+                $record->date = $data[0];
+                $record->activity = $data[1];
+                $record->whatlink = $data[2];
+                $record->impact = $data[3];
+                $record->duration = $data[4];
+                $record->creatorid = $USER->id;
+                if($DB->update_record('hourslog_hours_info', $record)){
+                    unset($_SESSION['otj_hourslog_rid']);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    //Delete a hours log record for a specific course id, user id and record id
+    public function delete_hourslog($cid, $uid, $rid){
+        global $DB;
+        if($DB->delete_records('hourslog_hours_info', [$DB->sql_compare_text('id') => $rid, $DB->sql_compare_text('hoursid') => $this->get_hours_id($cid, $uid)]) > 0){
             return true;
         } else {
             return false;

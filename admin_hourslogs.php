@@ -58,8 +58,12 @@ if($errorTxt != ''){
         'coursename' => $lib->get_course_fullname($cid),
         'cid' => $cid,
         'uid' => $uid,
-        'info_array' => array_values([$lib->get_hourslog_info_table_data($cid, $uid)])
+        'info_array' => array_values([$lib->get_hourslog_info_table_data($cid, $uid)]),
+        'logs_array' => $lib->get_hours_logs($cid, $uid)
     ];
     echo $OUTPUT->render_from_template('local_offthejobadmin/hourslog', $template);
+    $_SESSION['otj_hourslog'] = true;
+    $_SESSION['otj_hourslog_cid'] = $cid;
+    $_SESSION['otj_hourslog_uid'] = $uid;
 }
 echo $OUTPUT->footer();
