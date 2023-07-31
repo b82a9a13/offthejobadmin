@@ -8,11 +8,11 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_offthejobadmin';
-$plugin->version = 12;
+$plugin->version = 13;
 $plugin->requires = 2016052314;
 $plugin->dependencies = [
-    'local_trainingplan' => 12,
-    'local_hourslog' => 9,
-    'local_modulecompletion' => 4,
-    'local_activityrecord' => 10
+    'local_trainingplan' => 20,
+    'local_hourslog' => 12,
+    'local_modulecompletion' => 6,
+    'local_activityrecord' => 12
 ];

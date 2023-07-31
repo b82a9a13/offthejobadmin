@@ -25,3 +25,5 @@ $template = (Object)[
 echo $OUTPUT->render_from_template('local_offthejobadmin/menu', $template);
 
 echo $OUTPUT->footer();
+
+\local_offthejobadmin\event\viewed_main_menu::create(array('context' => \context_system::instance()))->trigger();

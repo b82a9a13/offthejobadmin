@@ -109,5 +109,6 @@ if($errorTxt != ''){
     $_SESSION['otj_adminplan'] = true;
     $_SESSION['otj_adminplan_uid'] = $uid;
     $_SESSION['otj_adminplan_cid'] = $cid;
+    \local_offthejobadmin\event\viewed_user_trainingplan::create(array('context' => \context_course::instance($cid), 'courseid' => $cid, 'relateduserid' => $uid))->trigger();
 }
 echo $OUTPUT->footer();

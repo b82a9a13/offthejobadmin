@@ -160,4 +160,6 @@ if($errorTxt != ''){
 
     //Output the pdf
     $pdf->Output("OTJH-$coursename-$fullname.pdf");
+
+    \local_offthejobadmin\event\viewed_user_hourslog_pdf::create(array('context' => \context_course::instance($cid), 'courseid' => $cid, 'relateduserid' => $uid))->trigger();
 }

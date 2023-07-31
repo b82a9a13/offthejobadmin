@@ -65,5 +65,6 @@ if($errorTxt != ''){
     $_SESSION['otj_hourslog'] = true;
     $_SESSION['otj_hourslog_cid'] = $cid;
     $_SESSION['otj_hourslog_uid'] = $uid;
+    \local_offthejobadmin\event\viewed_user_hourslog::create(array('context' => \context_course::instance($cid), 'relateduserid' => $uid, 'courseid' => $cid))->trigger();
 }
 echo $OUTPUT->footer();

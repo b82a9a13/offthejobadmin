@@ -306,5 +306,5 @@ if($errorTxt != ''){
     ';
     $pdf->writeHTML($html, true, false, false, false, '');
     $pdf->Output("ActivityRecord-$fullname-$coursename-$data[1].pdf");
-    $pdf->Output("ActivityRecord-$fullname-$coursename-$data[1].pdf");
+    \local_offthejobadmin\event\viewed_user_activityrecord_pdf::create(array('context' => \context_course::instance($cid), 'courseid' => $cid, 'relateduserid' => $uid))->trigger();
 }

@@ -46,4 +46,5 @@ if($errorTxt != ''){
     header('Content-Type: application/pdf');
     header("Content-Disposition:inline;filename=MonthlyActivityRecord-".str_replace(' ','_',$fullname)."-".str_replace(' ','_',$coursename)."-$date-EmployerComment.pdf");
     include("../../../activityrecord/classes/pdf/employercomment/$data[0]");
+    \local_offthejobadmin\event\viewed_user_activityrecord_ec_pdf::create(array('context' => \context_course::instance($cid), 'courseid' => $cid, 'relateduserid' => $uid))->trigger();
 }

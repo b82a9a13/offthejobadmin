@@ -64,5 +64,6 @@ if($errorTxt != ''){
     $_SESSION['otj_actrec'] = true;
     $_SESSION['otj_actrec_cid'] = $cid;
     $_SESSION['otj_actrec_uid'] = $uid;
+    \local_offthejobadmin\event\viewed_user_activityrecords::create(array('context' => \context_course::instance($cid), 'relateduserid' => $uid, 'courseid' => $cid))->trigger();
 }
 echo $OUTPUT->footer();

@@ -87,5 +87,6 @@ if($errorTxt != ''){
     $_SESSION['otj_adminsetup'] = true;
     $_SESSION['otj_adminsetup_cid'] = $cid;
     $_SESSION['otj_adminsetup_uid'] = $uid;
+    \local_offthejobadmin\event\viewed_user_setup::create(array('context' => \context_course::instance($cid), 'courseid' => $cid, 'relateduserid' => $uid))->trigger();
 }
 echo $OUTPUT->footer();
