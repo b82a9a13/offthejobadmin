@@ -18,7 +18,7 @@ class viewed_user_setup extends base {
         return "User setup viewed";
     }
     public function get_description(){
-        return "The user with id '".$this->userid."' the user's setup for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
+        return "The user with id '".$this->userid."' viewed the user's setup for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
     }
     public function get_url(){
         return new \moodle_url('/local/offthejobadmin/admin_setup.php?uid='.$this->relateduserid.'&cid='.$this->courseid);

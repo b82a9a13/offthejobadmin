@@ -34,6 +34,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'all apprenticeship courses'))->trigger();
             } elseif($type === 'lwis'){
                 $array = $lib->get_users_incomplete_setup();
                 $return .= '<h4>Learners With Incomplete Setup</h4>
@@ -55,6 +56,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners with incomplete setup'))->trigger();
             } elseif($type === 'lwcs'){
                 $array = $lib->get_users_complete_setup();
                 $return .= '<h4>Learners With Complete Setup</h4>
@@ -84,6 +86,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners with complete setup'))->trigger();
             } elseif($type === 'lbt'){
                 $array = $lib->get_users_behind_target();
                 $return .= '<h4>Learners Behind Target</h4>
@@ -111,6 +114,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners behind target'))->trigger();
             } elseif($type === 'ldms'){
                 $array = $lib->get_nosign_ar();
                 $return .= '<h4>Learner Documents Missing Signature(s)</h4>
@@ -140,6 +144,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learner documents missing signature(s)'))->trigger();
             } elseif($type === 'lwap'){
                 $array = $lib->get_noplan_learners();
                 $return .= '<h4>Learners Without A Plan</h4>
@@ -161,6 +166,7 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
+                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners without a plan'))->trigger();
             }
             $returnText->return = str_replace("  ","",$return);
         }

@@ -11,6 +11,7 @@ $context = context_system::instance();
 require_capability('local/offthejobadmin:admin', $context);
 use local_offthejobadmin\lib;
 $lib = new lib;
+$p = 'local_offthejobadmin';
 
 $errorTxt = '';
 $cid = $_GET['cid'];
@@ -66,6 +67,22 @@ if($errorTxt != ''){
         }
     }
     $template = (Object)[
+        'btmm' => get_string('btmm', $p),
+        'btum' => get_string('btum', $p),
+        'title' => get_string('setup', $p),
+        'total_m' => get_string('total_m', $p),
+        'total_otjh' => get_string('total_otjh', $p),
+        'employer_os' => get_string('employer_os', $p),
+        'coach_txt' => get_string('coach', $p),
+        'manager_om' => get_string('manager_om', $p),
+        'start_date' => get_string('start_date', $p),
+        'contracted_hpw' => get_string('contracted_hpw', $p),
+        'annual_lw' => get_string('annual_lw', $p),
+        'training_plan' => get_string('training_plan', $p),
+        'option' => get_string('option', $p),
+        'coach_s' => get_string('coach_s', $p),
+        'success' => get_string('success', $p),
+        'submit' => get_string('submit', $p),
         'fullname' => $fullname,
         'coursename' => $lib->get_course_fullname($cid),
         'cid' => $cid,

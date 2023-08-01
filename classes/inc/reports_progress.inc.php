@@ -26,6 +26,7 @@ if($_SESSION['otj_adminreport']){
     ";
     $return = str_replace("  ","",$return);
     $returnText->return = $return;
+    \local_offthejobadmin\event\viewed_reports_progress_menu::create(array('context' => \context_system::instance()))->trigger();
 } else {
     $returnText->return = 'Error Loading data.';
 }

@@ -1,17 +1,17 @@
 <link rel="stylesheet" type="text/css" href="./classes/css/setup.css">
-<button class='btn btn-primary' onclick="window.location.href='./admin.php'">Back to main menu</button>
-<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">Back to user menu</button>
-<h1 class='text-center'><b>{{fullname}}'s Setup</b></h1>
+<button class='btn btn-primary' onclick="window.location.href='./admin.php'">{{btmm}}</button>
+<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">{{btum}}</button>
+<h1 class='text-center'><b>{{fullname}} {{title}}</b></h1>
 <h1 class='text-center'><b>{{coursename}}</b></h1>
 <form action="" class='text-center' id="setup_form">
     <table class='table table-bordered table-striped setup-table'>
         <thead>
             <tr>
-                <th>Total Months</th>
-                <th>Total Off The Job Hours</th>
-                <th>Employer or Store</th>
-                <th>Coach</th>
-                <th>Manager/Mentor</th>
+                <th>{{total_m}}</th>
+                <th>{{total_otjh}}</th>
+                <th>{{employer_os}}</th>
+                <th>{{coach_txt}}</th>
+                <th>{{manager_om}}</th>
             </tr>
         </thead>
         <tbody>
@@ -27,11 +27,11 @@
     <table class='table table-bordered table-striped setup-table'>
         <thead>
             <tr>
-                <th>Start Date</th>
-                <th>Contracted Hours Per Week</th>
-                <th>Annual Leave Weeks</th>
-                <th>Training Plan</th>
-                <th style='display:{{has_option}};' id="option_th">Option</th>
+                <th>{{start_date}}</th>
+                <th>{{contracted_hpw}}</th>
+                <th>{{annual_lw}}</th>
+                <th>{{training_plan}}</th>
+                <th style='display:{{has_option}};' id="option_th">{{option}}</th>
             </tr>
         </thead>
         <tbody>
@@ -57,11 +57,11 @@
         </tbody>
     </table>
     <div class='text-center'>
-        <h4>Coach Signature</h4>
+        <h4>{{coach_s}}</h4>
         <img height="200px" width="500px" src="{{signature}}">
     </div>
     <h2 class='text-error' id="setup_error" style="display: none;"></h2>
-    <h2 class='text-success' id="setup_success" style="display: none;">Success</h2>
-    <button type="submit" class='btn btn-primary'>Submit</button>
+    <h2 class='text-success' id="setup_success" style="display: none;">{{success}}</h2>
+    <button type="submit" class='btn btn-primary'>{{submit}}</button>
 </form>
-<script defer src='./classes/js/setup.js'></script>
+<script defer src='./amd/min/setup.min.js'></script>

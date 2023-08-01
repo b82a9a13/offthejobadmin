@@ -1,26 +1,26 @@
 <link rel="stylesheet" type="text/css" href="./classes/css/activityrecords.css">
-<button class='btn btn-primary' onclick="window.location.href='./admin.php'">Back to main menu</button>
-<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">Back to user menu</button>
-<h1 class='text-center'><b>{{fullname}}'s Activity Records</b></h1>
+<button class='btn btn-primary' onclick="window.location.href='./admin.php'">{{btmm}}</button>
+<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">{{btum}}</button>
+<h1 class='text-center'><b>{{fullname}} {{title}}</b></h1>
 <h1 class='text-center'><b>{{coursename}}</b></h1>
 <div>
-    <h3>Records</h3>
+    <h3>{{records_txt}}</h3>
     <ol>
         {{#records}}
             <li class='d-flex mb-2'>
                 <h4 class='mr-1'>{{0}}</h4>
-                <button class='btn btn-primary mr-1 mb-1' onclick="getrecord({{1}})">Edit</button>
-                <button class='btn btn-danger mr-1 mb-1' onclick="delrecord({{1}})">Delete</button>
+                <button class='btn btn-primary mr-1 mb-1' onclick="getrecord({{1}})">{{edit}}</button>
+                <button class='btn btn-danger mr-1 mb-1' onclick="delrecord({{1}})">{{delete}}</button>
                 <div class='modal' id="modal_{{1}}" style='display:none;'>
                     <div class='modal_content'>
                         <span class='close' onclick="closedelrecord({{1}})">&times;</span>
                         <h2>Are you sure you want to delete this?</h2>
-                        <button class='btn btn-danger mb-2 mr-2 p-2' type="button" onclick="delrecord({{1}})">Yes</button>
-                        <button class='btn btn-primary mb-2 mr-2 p02' type="button" onclick="closedelrecord({{1}})">No</button>
+                        <button class='btn btn-danger mb-2 mr-2 p-2' type="button" onclick="delrecord({{1}})">{{yes}}</button>
+                        <button class='btn btn-primary mb-2 mr-2 p02' type="button" onclick="closedelrecord({{1}})">{{no}}</button>
                         <h2 id="modal_{{1}}_error" style="display:none;" class='text-error'></h2>
                     </div>
                 </div>
-                <button class='btn btn-primary mr-1 mb-1' onclick="window.open('./classes/pdf/activityrecord.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');window.open('./classes/pdf/activityrecord_employercomment.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');">PDF</button>
+                <button class='btn btn-primary mr-1 mb-1' onclick="window.open('./classes/pdf/activityrecord.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');window.open('./classes/pdf/activityrecord_employercomment.php?cid={{cid}}&uid={{uid}}&id={{1}}', '_blank');">{{pdf}}</button>
             </li>
         {{/records}}
     </ol>
@@ -32,12 +32,12 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Apprentice*</th>
-                    <th class='text-center'>Review Date*</th>
-                    <th class='text-center'>Standard*</th>
-                    <th class='text-center'>Employer or Store*</th>
-                    <th class='text-center'>Coach*</th>
-                    <th class='text-center'>Manager/Mentor*</th>
+                    <th class='text-center'>{{apprentice}}*</th>
+                    <th class='text-center'>{{review_date}}*</th>
+                    <th class='text-center'>{{standard}}*</th>
+                    <th class='text-center'>{{employer_os}}*</th>
+                    <th class='text-center'>{{coach}}*</th>
+                    <th class='text-center'>{{manager_om}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,24 +54,24 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th colspan='6' class='text-center'>Summary of progress</th>
+                    <th colspan='6' class='text-center'>{{summary_op}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th>Course % Progress to date*</th>
+                    <th>{{course_ptd}}*</th>
                     <td id="td_coursep"><input class='w-100' type='number' id="coursep" step='1' required></td>
-                    <th>Course % Expected Progress according to Training Plan*</th>
+                    <th>{{course_epattp}}*</th>
                     <td id="td_courseep"><input class='w-100' type='number' id="courseep" step='1' required></td>
-                    <th>Comments*</th>
+                    <th>{{comments}}*</th>
                     <td id="td_coursecomment" class='w-50'><textarea class='w-100' id="coursecomment" required></textarea></td>
                 </tr>
                 <tr>
-                    <th>OTJH Completed*</th>
+                    <th>{{otjh_c}}*</th>
                     <td id="td_otjhc"><input class='w-100' type='number' id="otjhc" step='1' required></td>
-                    <th>Expected OTJH as per Training Plan*</th>
+                    <th>{{expected_otjh_aptp}}*</th>
                     <td id="td_otjhe"><input class='w-100' type='number' id="otjhe" step='1' required></td>
-                    <th>Comments*</th>
+                    <th>{{comments}}*</th>
                     <td id="td_otjhcomment" class='w-50'><textarea class='w-100' id="otjhcomment" required></textarea></td>
                 </tr>
             </tbody>
@@ -79,7 +79,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>E & D, H & S, Safeguarding & Learner Welfare (LDC to check understanding & link to a vocational context. Any issues must be actioned accordingly)*</th>
+                    <th class='text-center'>{{safeguarding_title}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,8 +91,8 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Recap on actions from last month</th>
-                    <th class='text-center'>What impact has this had in your current job role/situation</th>
+                    <th class='text-center'>{{recap_title}}</th>
+                    <th class='text-center'>{{impact_title}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,8 +105,8 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Details of Teaching & Learning activity undertaken today (include reference to modules and knowledge, skills & behaviours)*</th>
-                    <th class='text-center'>Modules and K,S,B*</th>
+                    <th class='text-center'>{{details_title}}*</th>
+                    <th class='text-center'>{{modules_askb}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,7 +119,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>What impact will this have in your job role/situation*</th>
+                    <th class='text-center'>{{impact_title}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,22 +131,22 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th colspan='3' class='text-center'>Functional Skills Progress</th>
+                    <th colspan='3' class='text-center'>{{functional_sp}}</th>
                 </tr>
                 <tr>
                     <th></th>
-                    <th class='text-center'>Learning today*</th>
-                    <th class='text-center'>Target for next visit*</th>
+                    <th class='text-center'>{{learning_t}}*</th>
+                    <th class='text-center'>{{target_title}}*</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th class='text-center'>Math*</th>
+                    <th class='text-center'>{{math}}*</th>
                     <td id="td_mathtoday"><textarea class='w-100' id="mathtoday" required></textarea></td>
                     <td id="td_mathnext"><textarea class='w-100' id="mathnext" required></textarea></td>
                 </tr>
                 <tr>
-                    <th class='text-center'>English*</th>
+                    <th class='text-center'>{{english}}*</th>
                     <td id="td_engtoday"><textarea class='w-100' id="engtoday" required></textarea></td>
                     <td id="td_engnext"><textarea class='w-100' id="engnext" required></textarea></td>
                 </tr>
@@ -155,7 +155,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>ALN (Additional Learner Needs) Suppot delivered today*</th>
+                    <th class='text-center'>{{aln_title}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -167,7 +167,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Agreed actions & future skills development activity*</th>
+                    <th class='text-center'>{{agreed_title}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -179,7 +179,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Coach/Tutor Feedback*</th>
+                    <th class='text-center'>{{coach_feedback}}*</th>
                 </tr>
             </thead>
             <tbody>
@@ -191,7 +191,7 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
-                    <th class='text-center'>Apprentice Comments regarding their learning journey</th>
+                    <th class='text-center'>{{apprentice_ct}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -202,9 +202,9 @@
         </table>
         <table class='table table-bordered table-striped table-hover'>
             <tr>
-                <th class='w-25'>Employer comment on progress*</th>
+                <th class='w-25'>{{employer_comment}}*</th>
                 <td id="td_file" class='w-75'>
-                    <h4>Choose a PDF</h4>
+                    <h4>{{choose_apdf}}</h4>
                     <input type='file' name='file' class='w-100' id="file">
                     <iframe id="filesrc" src="" style="height:450px;" class='w-100'></iframe>
                 </td>
@@ -212,36 +212,36 @@
         </table>
         <table class='table table-bordered table-striped table-hover'>
             <tr>
-                <th class='w-25'>Date & time of next planned review</th>
+                <th class='w-25'>{{date_onpr}}</th>
                 <td id="td_nextdate">
                     <input type="datetime-local" required id="nextdate">
                 </td>
             </tr>
             <tr>
-                <th class='w-25'>Remote / Face to Face</th>
+                <th class='w-25'>{{remote_ftf}}</th>
                 <td id="td_remotef2f">
                     <select id="remotef2f" required>
-                        <option id="remotef2f_default" value="" selected disabled>Remote/Face to Face</option>
-                        <option id="remotef2f_f2f" value="f2f">Face to Face</option>
-                        <option id="remotef2f_remote" value="remote">Remote</option>
+                        <option id="remotef2f_default" value="" selected disabled>{{remote_ftf}}</option>
+                        <option id="remotef2f_f2f" value="f2f">{{face_tf}}</option>
+                        <option id="remotef2f_remote" value="remote">{{remote}}</option>
                     </select>
                 </td>
             </tr>
         </table>
         <div style="display:none;" id="ar_sign_div">
             <div class="mr-1">
-                <p>Learner Signature</p>
+                <p>{{learner_s}}</p>
                 <img width="250px" height="100px" id="learnsignimg" style="display:none;" src>
                 <p><input disabled type='date' name='learnsigndate' id="learnsigndate" style="display:none;"></p>
             </div>
             <div>
-                <p>Coach Signature</p>
+                <p>{{coach_s}}</p>
                 <img width="250px" height="100px" id="coachsignimg" style="display:none;" src>
                 <p id="td_coachsigndate"><input disabled type='date' name='coachsigndate' id="coachsigndate" style="display:none;"></p>
             </div>
         </div>
         <h2 style="display:none;" class="text-error" id="ar_error"></h2>
-        <button class='w-100 btn btn-primary' type="submit">Submit</button>
+        <button class='w-100 btn btn-primary' type="submit">{{submit}}</button>
     </form>
 </div>
-<script defer src='./classes/js/activityrecords.js'></script>
+<script defer src='./amd/min/activityrecords.min.js'></script>

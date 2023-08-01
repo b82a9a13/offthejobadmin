@@ -1,20 +1,20 @@
 <link rel="stylesheet" type="text/css" href="./classes/css/trainingplan.css">
-<button class='btn btn-primary' onclick="window.location.href='./admin.php'">Back to main menu</button>
-<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">Back to user menu</button>
-<h1 class='text-center'><b>{{fullname}}'s Training Plan</b></h1>
+<button class='btn btn-primary' onclick="window.location.href='./admin.php'">{{btmm}}</button>
+<button class='btn btn-primary' onclick="window.location.href='./admin_user.php?cid={{cid}}&uid={{uid}}'" id="back_to_user">{{btum}}</button>
+<h1 class='text-center'><b>{{fullname}} {{title}}</b></h1>
 <h1 class='text-center'><b>{{coursename}}</b></h1>
 <form action="" id="plan_form">
     <table class='table table-bordered table-striped table-hover'>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Employer</th>
-                <th>Start Date</th>
-                <th>Planned End Date</th>
-                <th>Length of Programme</th>
-                <th>OTJH</th>
-                <th>EPAO</th>
-                <th>Funding Source</th>
+                <th>{{name}}</th>
+                <th>{{employer_txt}}</th>
+                <th>{{start_date}}</th>
+                <th>{{planned_ed}}</th>
+                <th>{{length_op}}</th>
+                <th>{{otjh_txt}}</th>
+                <th>{{epao}}</th>
+                <th>{{funding_s}}</th>
             </tr>
         </thead>
         <tbody>
@@ -27,33 +27,33 @@
                 <td id="td_otjh"><input class='w-100' type="number" id="otjh" required value="{{otjh}}"></td>
                 <td id="td_epao">
                     <select class='w-100' id="epao" required>
-                        <option disabled {{epao_default}} value="">Choose EPAO</option>
-                        <option value="frawards" {{frawards}}>FR Awards</option>
-                        <option value="candg" {{candg}}>C & G</option>
-                        <option value="innovate" {{innovate}}>Innovate</option>
-                        <option value="dsw" {{dsw}}>DSW</option>
-                        <option value="nocn" {{nocn}}>NOCN</option>
+                        <option disabled {{epao_default}} value="">{{choose_epao}}</option>
+                        <option value="frawards" {{frawards}}>{{fr_awards}}</option>
+                        <option value="candg" {{candg}}>{{c_and_g}}</option>
+                        <option value="innovate" {{innovate}}>{{innovate_txt}}</option>
+                        <option value="dsw" {{dsw}}>{{dsw_txt}}</option>
+                        <option value="nocn" {{nocn}}>{{nocn_txt}}</option>
                     </select>
                 </td>
                 <td id="td_fundsource">
                     <select class='w-100' id="fundsource" required>
-                        <option disabled {{fund_default}} value="">Choose Funding Source</option>
-                        <option value="contrib" {{contrib}}>5% Contribution</option>
-                        <option value="levy" {{levy}}>Levy</option>
+                        <option disabled {{fund_default}} value="">{{choose_fs}}</option>
+                        <option value="contrib" {{contrib}}>{{contrib_five}}</option>
+                        <option value="levy" {{levy}}>{{levy_txt}}</option>
                     </select>
                 </td>
             </tr>
         </tbody>
     </table>
     <table class='table table-bordered table-striped table-hover'>
-        <h3>Initial Assessment</h3>
+        <h3>{{initial_a}}</h3>
         <thead>
             <tr>
-                <th>BKSB Result Maths</th>
-                <th>BKSB Result English</th>
-                <th>Learning Style</th>
-                <th>Skill Scan Learner Result</th>
-                <th>Skill Scan Employer Result</th>
+                <th>{{bksb_rm}}</th>
+                <th>{{bksb_re}}</th>
+                <th>{{learning_s}}</th>
+                <th>{{skill_slr}}</th>
+                <th>{{skill_ser}}</th>
             </tr>
         </thead>
         <tbody>
@@ -62,10 +62,10 @@
                 <td id="td_bksbre"><input class='w-100' type='number' id="bksbre" required value="{{bksbre}}"></td>
                 <td id="td_learnstyle">
                     <select class='w-100' id="learnstyle" required>
-                        <option disabled {{learnstyle_default}} value="">Choose Learning Style</option>
-                        <option value="visual" {{visual}}>Visual</option>
-                        <option value="auditory" {{auditory}}>Auditory</option>
-                        <option value="kinaesthetic" {{kinaesthetic}}>Kinaesthetic</option>
+                        <option disabled {{learnstyle_default}} value="">{{choose_ls}}</option>
+                        <option value="visual" {{visual}}>{{visual_txt}}</option>
+                        <option value="auditory" {{auditory}}>{{auditory_txt}}</option>
+                        <option value="kinaesthetic" {{kinaesthetic}}>{{kinaesthetic_txt}}</option>
                     </select>
                 </td>
                 <td id="td_skillscanlr"><input class='w-100' type='text' id="skillscanlr" required value="{{skillscanlr}}"></td>
@@ -74,13 +74,13 @@
         </tbody>
     </table>
     <table class='table table-bordered table-striped table-hover'>
-        <h3>Off The Job Calculation</h3>
+        <h3>{{otj_c}}</h3>
         <thead>
             <tr>
-                <th>Apprentice Hours Per Week</th>
-                <th>Weeks on Programme</th>
-                <th>Less Annual Leave</th>
-                <th>Hours Per Week</th>
+                <th>{{apprentice_hpw}}</th>
+                <th>{{weeks_op}}</th>
+                <th>{{less_al}}</th>
+                <th>{{hours_pw}}</th>
             </tr>
         </thead>
         <tbody>
@@ -93,28 +93,28 @@
         </tbody>
     </table>
     <table class='table table-bordered table-striped table-hover'>
-        <h3>Aspirations & Career Goals</h3>
+        <h3>{{aspirations_acg}}</h3>
             <tr class='d-flex'>
-                <th class='w-25'>Area of strength</th>
+                <th class='w-25'>{{area_os}}</th>
                 <td class='w-75' id="td_aostrength"><textarea class='w-100' id="aostrength" required>{{aostrength}}</textarea></td>
             </tr>
             <tr class='d-flex'>
-                <th class='w-25'>Long Term Goals</th>
+                <th class='w-25'>{{long_tg}}</th>
                 <td class='w-75' id="td_ltgoals"><textarea class='w-100' id="ltgoals" required>{{ltgoals}}</textarea></td>
             </tr>
             <tr class='d-flex'>
-                <th class='w-25'>Short Term Goals</th>
+                <th class='w-25'>{{short_tg}}</th>
                 <td class='w-75' id="td_stgoals"><textarea class='w-100' id="stgoals" required>{{stgoals}}</textarea></td>
             </tr>
             <tr class='d-flex'>
-                <th class='w-25'>IAG (Information, Advice, Guidance)</th>
+                <th class='w-25'>{{iag_title}}</th>
                 <td class='w-75' id="td_iaguide"><textarea class='w-100' id="iaguide" required>{{iaguide}}</textarea></td>
             </tr>
     </table>
     <table class='table table-bordered table-striped table-hover'>
         <thead>
             <tr>
-                <th>Recognition of Prior Learning (use this section to describe and evidence any prior learning, qualifications, work experience etc).</th>
+                <th>{{recognition_title}}</th>
             </tr>
         </thead>
         <tbody>
@@ -126,16 +126,16 @@
     <table class='table table-bordered table-striped table-hover'>
         <thead>
             <tr>
-                <th>Modules</th>
-                <th>Planned Start Date</th>
-                <th>Revised Start Date</th>
-                <th>Planned End Date</th>
-                <th>Revised End Date</th>
-                <th>Module Weighting %</th>
-                <th>Planned OTJH</th>
-                <th>Method of Delivery</th>
-                <th>OTJ Tasks</th>
-                <th>Actual OTJH completed (as per log)</th>
+                <th>{{modules}}</th>
+                <th>{{planned_sd}}</th>
+                <th>{{revised_sd}}</th>
+                <th>{{planned_ed}}</th>
+                <th>{{revised_ed}}</th>
+                <th>{{module_w}}</th>
+                <th>{{planned_otjh}}</th>
+                <th>{{method_od}}</th>
+                <th>{{otj_t}}</th>
+                <th>{{actual_otjhc}}</th>
             </tr>
         </thead>
         <tbody>
@@ -168,7 +168,7 @@
                 </tr>
             {{/modarray}}
             <tr>
-                <th>Totals</th>
+                <th>{{totals}}</th>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -182,24 +182,22 @@
         </tbody>
     </table>
     {{#fsrequired}}
-        <div class='d-flex'><h2>Required functional skills?</h2><p id='td_fscheckbox'><input class='ml-1 mt-3' type='checkbox' id='fscheckbox'></p></div>
+        <div class='d-flex'><h2>{{required_fs}}</h2><p id='td_fscheckbox'><input class='ml-1 mt-3' type='checkbox' id='fscheckbox'></p></div>
     {{/fsrequired}}
     {{#fsarray}}
     <div style='display: {{0}};' id='fs_div'>
         <table class='table table-bordered table-striped table-hover'>
-            <h3>Functional Skills Delivery</h3>
-            <p>
-                As part of NTA's commitment to both yourself and your employer we will always work with you to ensure you reach your maximum potential during and after your apprenticeship where possible. As part of this we will encourage you to over-achieve the minimum requirement needed for Maths & English. Where we feel there is time and potential to work towards a higher level of Maths & English during the planned time of your apprenticeships, we will provide the support and learning platform to help you reach higher goals.
-            </p>
+            <h3>{{functional_sd}}</h3>
+            <p>{{functional_sd_desc}}</p>
             <thead>
                 <tr>
-                    <th>Functional Skills</th>
-                    <th>Level</th>
-                    <th>Method of Delivery</th>
-                    <th>Start Date</th>
-                    <th>Planned End Date</th>
-                    <th>Actual End Date</th>
-                    <th>Actual End/Achievment Date</th>
+                    <th>{{functional_s}}</th>
+                    <th>{{level}}</th>
+                    <th>{{method_od}}</th>
+                    <th>{{start_date}}</th>
+                    <th>{{planned_ed}}</th>
+                    <th>{{actual_ed}}</th>
+                    <th>{{actual_ead}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -226,12 +224,12 @@
     </div>
     {{/fsarray}}
     <table class='table table-bordered table-striped table-hover' id="prog_table">
-        <h3>Progress Reviews</h3>
+        <h3>{{progress_r}}</h3>
         <thead>
             <tr>
-                <th>Type of Review</th>
-                <th>Planned Review</th>
-                <th>Actual Review</th>
+                <th>{{type_or}}</th>
+                <th>{{planned_r}}</th>
+                <th>{{actual_r}}</th>
             </tr>
         </thead>
         <tbody id="pr_tbody">
@@ -289,4 +287,4 @@
     {{/successUpdate}}
     <button class='btn btn-primary w-100' type="submit" name="submit">Submit</button>
 </form>
-<script defer src='./classes/js/trainingplan.js'></script>
+<script defer src='./amd/min/trainingplan.min.js'></script>

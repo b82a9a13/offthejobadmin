@@ -20,6 +20,7 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                         $returnText->error = 'No data available.';
                     } else {
                         $html = '';
+                        $type = ($type == 'learn') ? 'learner' : $type;
                         if($action === 'view'){
                             $html .= "    
                                 <div class='modal_content'>
@@ -28,6 +29,7 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                                     <button class='btn btn-primary mb-2 mr-2 p-2' id='modal_btn_close' onclick='close_modal_div()'>Close</button>
                                 </div>
                             ";
+                            \local_offthejobadmin\event\viewed_user_signature::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid'], 'other' => $type))->trigger();
                         } elseif($action === 'reset'){
                             $html .= "    
                                 <div class='modal_content'>
@@ -41,8 +43,8 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                                     <div>
                                 </div>
                             ";
+                            \local_offthejobadmin\event\viewed_user_signature_reset::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid'], 'other' => $type))->trigger();
                         }
-
                         $returnText->return = str_replace("  ","",$html);
                     }
                 }

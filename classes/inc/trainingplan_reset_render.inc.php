@@ -44,6 +44,7 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
         </div>
     ";
     $returnText->return = str_replace("  ","",$html);
+    \local_offthejobadmin\event\viewed_user_trainingplan_reset::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid']))->trigger();
 } else {
     $returnText->error = 'Error Loading data.';
 }

@@ -66,8 +66,8 @@ if($_SESSION['otj_adminreport']){
                     </tbody></table>
                 ";
             }
-
             $returnText->return = str_replace("  ","",$return);
+            \local_offthejobadmin\event\viewed_reports_chart::create(array('context' => \context_system::instance(), 'other' => strtolower($title)))->trigger();
         }
     } else {
         $returnText->error = 'No type specified.';

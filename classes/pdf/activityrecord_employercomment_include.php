@@ -26,7 +26,7 @@ if($fullname == false){
 } else {
     $data = $lib->get_employercomment_pdf($cid, $uid, $id);
     if($data[0] == '' || $data[0] == null){
-        echo("<h2 class='text-error'>Employe rcomment doesn't exists</h2>");
+        echo("<h2 class='text-error'>Employer comment doesn't exist.</h2>");
         exit();
     } else {
         header('Content-Type: application/pdf');

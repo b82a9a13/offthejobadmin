@@ -18,7 +18,7 @@ class viewed_user_trainingplan extends base {
         return "User training plan viewed";
     }
     public function get_description(){
-        return "The user with id '".$this->userid."' the user's training plan for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
+        return "The user with id '".$this->userid."' the viewed user's training plan for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
     }
     public function get_url(){
         return new \moodle_url('/local/offthejobadmin/admin_trainingplan.php?uid='.$this->relateduserid.'&cid='.$this->courseid);

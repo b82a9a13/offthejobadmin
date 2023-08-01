@@ -49,6 +49,7 @@ if($_SESSION['otj_adminreport']){
                 }
                 $returnText->return = str_replace("  ","",$return);
                 $returnText->script = $script;
+                \local_offthejobadmin\event\viewed_reports_progress_course::create(array('context' => \context_course::instance($cid), 'courseid' => $cid))->trigger();
             }
         }
     } else {
@@ -95,6 +96,7 @@ if($_SESSION['otj_adminreport']){
             }
             $returnText->return = str_replace("  ","",$return);
             $returnText->script = $script;
+            \local_offthejobadmin\event\viewed_reports_progress_all::create(array('context' => \context_system::instance()))->trigger();
         }
     }
 } else {

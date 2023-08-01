@@ -9,19 +9,19 @@ namespace local_offthejobadmin\event;
 use core\event\base;
 defined('MOODLE_INTERNAL') || die();
 
-class viewed_main_menu extends base {
+class viewed_user_trainingplan_reset extends base {
     protected function init(){
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
     public static function get_name(){
-        return "Main menu viewed";
+        return "User training plan reset viewed";
     }
     public function get_description(){
-        return "The user with id '".$this->userid."' viewed the main menu.";
+        return "The user with id '".$this->userid."' viewed the user's training plan reset for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
     }
     public function get_url(){
-        return new \moodle_url('/local/offthejobadmin/admin.php');
+        return new \moodle_url('/local/offthejobadmin/admin_user.php?uid='.$this->relateduserid.'&cid='.$this->courseid);
     }
     public function get_id(){
         return $this->objectid;

@@ -40,7 +40,7 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
                 ['agreedact', $data[24]],
                 ['apprencom', $data[25]],
                 ['activityrecord_title', 'Edit Activity Record'],
-                ['ar_form_script', './classes/js/editrecord.js'],
+                ['ar_form_script', './amd/min/editrecord.min.js'],
                 ['ar_sign_div', 'flex'],
                 ['filesrc', "./classes/pdf/activityrecord_employercomment_include.php?id=".$id],
                 ['nextdate', $data[31]],
@@ -55,6 +55,7 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
                 array_push($array, ['learnsignimg', $data[29]]);
             }
             $returnText->return = $array;
+            \local_offthejobadmin\event\viewed_user_activityrecord::create(array('context' => \context_course::instance($_SESSION['otj_actrec_cid']), 'courseid' => $_SESSION['otj_actrec_cid'], 'relateduserid' => $_SESSION['otj_actrec_uid'], 'other' => $id))->trigger();
         } else {
             $returnText->error = 'No data available.';
         }

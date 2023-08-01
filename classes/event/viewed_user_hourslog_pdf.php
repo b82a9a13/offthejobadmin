@@ -18,7 +18,7 @@ class viewed_user_hourslog_pdf extends base {
         return "User hours log pdf viewed";
     }
     public function get_description(){
-        return "The user with id '".$this->userid."' the user's hours log pdf for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
+        return "The user with id '".$this->userid."' viewed the user's hours log pdf for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
     }
     public function get_url(){
         return new \moodle_url('/local/offthejobadmin/classes/pdf/hourslog.php?uid='.$this->relateduserid.'&cid='.$this->courseid);
