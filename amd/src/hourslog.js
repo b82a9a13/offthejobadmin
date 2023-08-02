@@ -48,7 +48,7 @@ function clicked_log_id(id){
                     const urDiv = document.getElementById('update_record_div');
                     urDiv.innerHTML = text['return'];
                     const script = document.createElement('script');
-                    script.src = './amd/min/hourslog_update.min.js';
+                    script.src = './amd/min/hourslog_update_data.min.js';
                     urDiv.appendChild(script);
                     urDiv.scrollIntoView();
                 } else {
