@@ -237,9 +237,9 @@
                 <tr class='tr-td-pr'>
                     <td class='td-pr-type'>
                         <select class='w-100 pr-type' required>
-                            <option disabled {{progreview_default}} value="" {{1}}>Learner/Employer</option>
-                            <option value='Learner' {{2}}>Learner</option>
-                            <option value='Employer' {{3}}>Employer</option>
+                            <option disabled {{progreview_default}} value="" {{1}}>{{learner_employer}}</option>
+                            <option value='Learner' {{2}}>{{learner}}</option>
+                            <option value='Employer' {{3}}>{{employer_txt}}</option>
                         </select>
                     </td>
                     <td class='td-pr-pr'><input class='w-100 pr-pr' type='date' required value="{{4}}"></td>
@@ -249,13 +249,13 @@
         </tbody>
     </table>
     {{#prbtns}}
-        <button type="button" class="btn btn-primary m-1" onclick="addprRecord()" id="pr_addnewrecord">Add New Record</button>
-        <button type="button" class="btn btn-primary m-1" onclick="removeprRecord()" id="pr_removerecord" disabled>Remove Record</button>
+        <button type="button" class="btn btn-primary m-1" onclick="addprRecord()" id="pr_addnewrecord">{{add_nr}}</button>
+        <button type="button" class="btn btn-primary m-1" onclick="removeprRecord()" id="pr_removerecord" disabled>{{remove_r}}</button>
     {{/prbtns}}
     <table class='table table-bordered table-striped table-hover'>
         <thead>
             <tr>
-                <th>Additional Support Arrangements</th>
+                <th>{{additional_sa}}</th>
             </tr>
         </thead>
         <tbody>
@@ -265,11 +265,11 @@
         </tbody>
     </table>
     <table class='table table-bordered table-striped table-hover'>
-        <h3>Changes Log (to be used as an ongoing journal to record any changes to original plan throughout the apprenticeship).</h3>
+        <h3>{{changes_log_title}}</h3>
         <thead>
             <tr>
-                <th>Date of Change</th>
-                <th>Log</th>
+                <th>{{date_oc}}</th>
+                <th>{{log}}</th>
             </tr>
         </thead>
         <tbody>
@@ -285,6 +285,6 @@
     {{#successUpdate}}
         <h1 class='text-success' id="tplan_success">{{0}}</h1>
     {{/successUpdate}}
-    <button class='btn btn-primary w-100' type="submit" name="submit">Submit</button>
+    <button class='btn btn-primary w-100' type="submit" name="submit">{{submit}}</button>
 </form>
 <script defer src='./amd/min/trainingplan.min.js'></script>

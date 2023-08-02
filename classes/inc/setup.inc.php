@@ -4,6 +4,7 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 if($_SESSION['otj_adminsetup'] && $_SESSION['otj_adminsetup_cid'] && $_SESSION['otj_adminsetup_uid']){
     //Get posted values
     $totalmonths = $_POST['totalmonths'];
@@ -16,37 +17,38 @@ if($_SESSION['otj_adminsetup'] && $_SESSION['otj_adminsetup_cid'] && $_SESSION['
     $alw = $_POST['alw'];
     $trainplan = $_POST['trainplan'];
     $option = $_POST['option'];
+    $errorarray = [];
     //Validate posted values
     if(!preg_match("/^[0-9]*$/", $totalmonths) || empty($totalmonths)){
-        array_push($errorarray, 'Total Months:'.preg_replace('/[0-9]/','',$totalmonths));
+        array_push($errorarray, get_string('total_m', $p).':'.preg_replace('/[0-9]/','',$totalmonths));
     }
     if(!preg_match("/^[0-9]*$/", $totalhours) || empty($totalhours)){
-        array_push($errorarray, 'Total Hours:'.preg_replace('/[0-9]/','',$totalhours));
+        array_push($errorarray, get_string('total_h', $p).':'.preg_replace('/[0-9]/','',$totalhours));
     }
     if(!preg_match("/^[a-z A-Z'\-()0-9]*$/", $eors) || empty($eors)){
-        array_push($errorarray, 'Employer or Store:'.preg_replace("/[a-z A-Z'\-()0-9]/","",$eors));
+        array_push($errorarray, get_string('employer_os', $p).':'.preg_replace("/[a-z A-Z'\-()0-9]/","",$eors));
     }
     if(!preg_match("/^[A-Za-z '\-]*$/", $coach) || empty($coach)){
-        array_push($errorarray, 'Coach:'.preg_replace("/[a-zA-Z '\-]/","",$coach));
+        array_push($errorarray, get_string('coach', $p).':'.preg_replace("/[a-zA-Z '\-]/","",$coach));
     }
     if(!preg_match("/^[a-z A-Z'\-]*$/", $morm) || empty($morm)){
-        array_push($errorarray, 'Manager or Mentor:'.preg_replace("/[a-z A-Z'\-]/","",$morm));
+        array_push($errorarray, get_string('manager_om', $p).':'.preg_replace("/[a-z A-Z'\-]/","",$morm));
     }
     if(!preg_match("/^[0-9]*$/", $startdate) || empty($startdate)){
-        array_push($errorarray, 'Start Date:'.preg_replace('/[0-9]/','',$startdate));
+        array_push($errorarray, get_string('start_date', $p).':'.preg_replace('/[0-9]/','',$startdate));
     }
     if(!preg_match("/^[0-9.]*$/", $hpw) || empty($hpw)){
-        array_push($errorarray, 'Hours Per Week:'.preg_replace("/[0-9.]/","",$hpw));
+        array_push($errorarray, get_string('hours_pw', $p).':'.preg_replace("/[0-9.]/","",$hpw));
     }
     if(!preg_match("/^[0-9.]*$/", $alw) || empty($alw)){
-        array_push($errorarray, 'Annual Leave Weeks:'.preg_replace("/[0-9.]/","",$alw));
+        array_push($errorarray, get_string('annual_lw', $p).':'.preg_replace("/[0-9.]/","",$alw));
     }
     $plans = $lib->get_training_plans_names();
     if(!in_array($trainplan, $plans) || empty($trainplan)){
-        array_push($errorarray, 'Training Plan');
+        array_push($errorarray, get_string('training_plan', $p));
     }
     if(!preg_match("/^[0-9]*$/", $option)){
-        array_push($errorarray, 'Option');
+        array_push($errorarray, get_string('option', $p));
     }
     if($errorarray != []){
         $returnText->error = $errorarray;
@@ -59,6 +61,6 @@ if($_SESSION['otj_adminsetup'] && $_SESSION['otj_adminsetup_cid'] && $_SESSION['
         }
     }
 } else {
-    $returnText->error = 'Error updating data.';
+    $returnText->error = get_string('error_ud', $p);
 }
 echo(json_encode($returnText));

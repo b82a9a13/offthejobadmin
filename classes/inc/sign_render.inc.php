@@ -4,20 +4,21 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['otj_adminuser_uid']){
     if($_POST['type']){
         $type = $_POST['type'];
         if(!in_array($type, ['coach','learn'])){
-            $returnText->error = 'Invalid type provided.';
+            $returnText->error = get_string('invalid_tp', $p);
         } else {
             if($_POST['action']){
                 $action = $_POST['action'];
                 if(!in_array($action, ['reset', 'view'])){
-                    $returnText->error = 'Invalid action provided.';
+                    $returnText->error = get_string('invalid_ap', $p);
                 } else {
                     $sign = $lib->sign_render($_SESSION['otj_adminuser_cid'], $_SESSION['otj_adminuser_uid'], $type);
                     if($sign === ''){
-                        $returnText->error = 'No data available.';
+                        $returnText->error = get_string('no_da', $p);
                     } else {
                         $html = '';
                         $type = ($type == 'learn') ? 'learner' : $type;
@@ -26,7 +27,7 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                                 <div class='modal_content'>
                                     <span class='modal_close' id='modal_span_close' onclick='close_modal_div()'>&times;</span>
                                     <img id='modal_img' src='$sign'>
-                                    <button class='btn btn-primary mb-2 mr-2 p-2' id='modal_btn_close' onclick='close_modal_div()'>Close</button>
+                                    <button class='btn btn-primary mb-2 mr-2 p-2' id='modal_btn_close' onclick='close_modal_div()'>".get_string('close', $p)."</button>
                                 </div>
                             ";
                             \local_offthejobadmin\event\viewed_user_signature::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid'], 'other' => $type))->trigger();
@@ -35,10 +36,10 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                                 <div class='modal_content'>
                                     <span class='modal_close' id='modal_span_close' onclick='close_modal_div()'>&times;</span>
                                     <img id='modal_img' src='$sign'>
-                                    <h2 class='text-error'>Are you sure you want to reset this signature?</h2>
+                                    <h2 class='text-error'>".get_string('sign_reset_text', $p)."</h2>
                                     <div class='d-flex'>
-                                        <button class='btn btn-danger mb-2 mr-2 p-2' onclick='reset_sign(`$type`)'>Yes</button>
-                                        <button class='btn btn-primary mb-2 mr-2 p-2' id='modal_btn_close' onclick='close_modal_div()'>No</button>
+                                        <button class='btn btn-danger mb-2 mr-2 p-2' onclick='reset_sign(`$type`)'>".get_string('yes', $p)."</button>
+                                        <button class='btn btn-primary mb-2 mr-2 p-2' id='modal_btn_close' onclick='close_modal_div()'>".get_string('no', $p)."</button>
                                         <h4 class='text-error' id='modal_error' style='display:none;'></h4>
                                     <div>
                                 </div>
@@ -49,13 +50,13 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
                     }
                 }
             } else {
-                $returnText->error = 'No action provided.';
+                $returnText->error = get_string('no_ap', $p);
             }
         }
     } else {
-        $returnText->error = 'No type provided.';
+        $returnText->error = get_string('no_tp', $p);
     }
 } else {
-    $returnText->error = 'Error Loading data.';
+    $returnText->error = get_string('error_ld', $p);
 }
 echo(json_encode($returnText));

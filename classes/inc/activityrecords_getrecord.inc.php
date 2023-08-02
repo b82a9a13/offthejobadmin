@@ -4,10 +4,11 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actrec_uid']){
     $id = $_POST['id'];
     if(empty($id) || !preg_match("/^[0-9]*$/", $id)){
-        $returnText->error = 'Invalid number provided.';
+        $returnText->error = get_string('invalid_np', $p);
     } else {
         $data = $lib->get_activityrecord_data($_SESSION['otj_actrec_cid'], $_SESSION['otj_actrec_uid'], $id);
         if($data != []){
@@ -57,10 +58,10 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
             $returnText->return = $array;
             \local_offthejobadmin\event\viewed_user_activityrecord::create(array('context' => \context_course::instance($_SESSION['otj_actrec_cid']), 'courseid' => $_SESSION['otj_actrec_cid'], 'relateduserid' => $_SESSION['otj_actrec_uid'], 'other' => $id))->trigger();
         } else {
-            $returnText->error = 'No data available.';
+            $returnText->error = get_string('no_da', $p);
         }
     }
 } else {
-    $returnText->error = 'Error resetting.';
+    $returnText->error = get_string('error_gd', $p);
 }
 echo(json_encode($returnText));

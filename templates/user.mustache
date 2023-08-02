@@ -1,38 +1,38 @@
 <link rel="stylesheet" type="text/css" href="./classes/css/user.css">
-<button class='btn btn-primary' onclick="window.location.href='./admin.php'">Back to menu</button>
-<h2 class='text-center'>Select what you want to do - {{username}} - {{coursename}}</h2>
+<button class='btn btn-primary' onclick="window.location.href='./admin.php'">{{btm}}</button>
+<h2 class='text-center'>{{select_wywtd}} - {{username}} - {{coursename}}</h2>
 <ul class='ul-list'>
     <li class='li-item'>
-        <h3 class='li-h3'>Initial Setup</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_setup.php?cid={{cid}}&uid={{uid}}'">Edit</button>
-        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="setup_reset_btn_clicked()">Reset</button>
+        <h3 class='li-h3'>{{initial_s}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_setup.php?cid={{cid}}&uid={{uid}}'">{{edit}}</button>
+        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="setup_reset_btn_clicked()">{{reset}}</button>
         <h4 class='text-error' style='display:none;' id='initial_error'></h4>
     </li>
     <li class='li-item'>
-        <h3 class='li-h3'>Learner Signature</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="sign_btn_clicked('learn','view')" {{learner_disable}}>View</button>
-        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="sign_btn_clicked('learn','reset')" {{learner_disable}}>Reset</button>
+        <h3 class='li-h3'>{{learner_s}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="sign_btn_clicked('learn','view')" {{learner_disable}}>{{view}}</button>
+        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="sign_btn_clicked('learn','reset')" {{learner_disable}}>{{reset}}</button>
         <h4 class='text-error' style='display:none;' id='coach_error'></h4>
     </li>
     <li class='li-item'>
-        <h3 class='li-h3'>Coach Signature</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="sign_btn_clicked('coach','view')"  {{coach_disable}}>View</button>
-        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="sign_btn_clicked('coach','reset')"  {{coach_disable}}>Reset</button>
+        <h3 class='li-h3'>{{coach_s}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="sign_btn_clicked('coach','view')"  {{coach_disable}}>{{view}}</button>
+        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' onclick="sign_btn_clicked('coach','reset')"  {{coach_disable}}>{{reset}}</button>
         <h4 class='text-error' style='display:none;' id='learn_error'></h4>
     </li>
     <li class='li-item'>
-        <h3 class='li-h3'>Training Plan</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_trainingplan.php?cid={{cid}}&uid={{uid}}'" {{plan_disable}}>Edit</button>
-        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' {{plan_disable}} onclick="plan_reset_btn_clicked()">Reset</button>
+        <h3 class='li-h3'>{{training_plan}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_trainingplan.php?cid={{cid}}&uid={{uid}}'" {{plan_disable}}>{{edit}}</button>
+        <button class='btn btn-primary btn-delete mr-2 mb-2 p-2' {{plan_disable}} onclick="plan_reset_btn_clicked()">{{reset}}</button>
         <h4 class='text-error' style='display:none;' id='plan_error'></h4>
     </li>
     <li class='li-item'>
-        <h3 class='li-h3'>Activity Records</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_activityrecords.php?cid={{cid}}&uid={{uid}}'" {{activity_disabled}}>View</button>
+        <h3 class='li-h3'>{{activity_r}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_activityrecords.php?cid={{cid}}&uid={{uid}}'" {{activity_disabled}}>{{view}}</button>
     </li>
     <li class='li-item'>
-        <h3 class='li-h3'>Hours Logs</h3>
-        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_hourslogs.php?cid={{cid}}&uid={{uid}}'" {{hourslog_disabled}}>View</button>
+        <h3 class='li-h3'>{{hours_l}}</h3>
+        <button class='btn btn-primary mr-2 mb-2 p-2' onclick="window.location.href='./admin_hourslogs.php?cid={{cid}}&uid={{uid}}'" {{hourslog_disabled}}>{{view}}</button>
     </li>
 </ul>
 <script src='./amd/min/user.min.js' defer></script>

@@ -4,11 +4,12 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 
 if(isset($_POST['id'])){
     $id = $_POST['id'];
     if(!preg_match("/^[0-9]*$/", $id) || empty($id)){
-        $returnText->error = 'Invalid id provided.';
+        $returnText->error = get_string('invalid_ip', $p);
     } else {
         if(!isset($_SESSION['otj_hourslog']) || !isset($_SESSION['otj_hourslog_cid']) || !isset($_SESSION['otj_hourslog_uid'])){
             $returnText->return = false;
@@ -20,11 +21,11 @@ if(isset($_POST['id'])){
                         <table class='table table-bordered table-striped table-hover'>
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Activity</th>
-                                    <th>What unit does this link to?</th>
-                                    <th>What have you learned?</th>
-                                    <th>Duration (hours spent)</th>
+                                    <th>".get_string('date', $p)."</th>
+                                    <th>".get_string('activity', $p)."</th>
+                                    <th>".get_string('what_ul', $p)."</th>
+                                    <th>".get_string('what_l', $p)."</th>
+                                    <th>".get_string('duration_title', $p)."</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +48,7 @@ if(isset($_POST['id'])){
                             </tbody>
                         </table>
                         <h2 style='display:none;' class='text-error' id='hl_error_u'></h2>
-                        <button class='btn btn-primary' type='submit'>Update</button>
+                        <button class='btn btn-primary' type='submit'>".get_string('update', $p)."</button>
                     </form>
                 ";
                 $returnText->return = str_replace("  ","",$html);
@@ -58,7 +59,7 @@ if(isset($_POST['id'])){
         }
     }
 } else {
-    $returnText->error = 'No id provided.';
+    $returnText->error = get_string('no_ip', $p);
 }
 
 echo(json_encode($returnText));

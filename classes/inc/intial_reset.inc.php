@@ -11,6 +11,6 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
         $returnText->return = false;
     }
 } else {
-    $returnText->error = 'Error resetting.';
+    $returnText->error = get_string('error_r', 'local_offthejobadmin');
 }
 echo(json_encode($returnText));

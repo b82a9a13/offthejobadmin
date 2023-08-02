@@ -4,11 +4,12 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 if($_SESSION['otj_adminreport']){
     $array = $lib->get_courses_array();
     $return = "
-        <h3>Completion Progress</h3>
-        <h4>Select a course to filter by or select show all</h4>
+        <h3>".get_string('completion_p', $p)."</h3>
+        <h4>".get_string('select_ac', $p)."</h4>
         <div class='d-flex'>
             <select id='progress_select'>
     ";
@@ -16,10 +17,10 @@ if($_SESSION['otj_adminreport']){
         $return .= "<option value='$arr[1]'>$arr[0]</option>";
     }
     $return .= "
-                <option disabled hidden value='' selected>Choose a course</option>
+                <option disabled hidden value='' selected>".get_string('choose_ac', $p)."</option>
             </select>
-            <button class='btn btn-primary mr-1 ml-1' type='button' onclick='progress_select();'>Filter</button>
-            <button class='btn btn-primary mr-1 ml-1' type='button' onclick='progress_all();'>Show All</button>
+            <button class='btn btn-primary mr-1 ml-1' type='button' onclick='progress_select();'>".get_string('filter', $p)."</button>
+            <button class='btn btn-primary mr-1 ml-1' type='button' onclick='progress_all();'>".get_string('show_all', $p)."</button>
         </div>
         <h4 style='display: none;' class='text-error' id='progress_error'></h4>
         <div id='progress_content_div' style='display: none;'></div>
@@ -28,6 +29,6 @@ if($_SESSION['otj_adminreport']){
     $returnText->return = $return;
     \local_offthejobadmin\event\viewed_reports_progress_menu::create(array('context' => \context_system::instance()))->trigger();
 } else {
-    $returnText->return = 'Error Loading data.';
+    $returnText->return = get_string('error_ld', $p);
 }
 echo(json_encode($returnText));

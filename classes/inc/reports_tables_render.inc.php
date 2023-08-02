@@ -4,22 +4,25 @@ require_login();
 use local_offthejobadmin\lib;
 $lib = new lib;
 $returnText = new stdClass();
+$p = 'local_offthejobadmin';
 if($_SESSION['otj_adminreport']){
     if($_POST['type']){
         $type = $_POST['type'];
         if(!in_array($type, ['ac', 'lwis', 'lwcs', 'lbt', 'ldms', 'lwap'])){
-            $returnText->error = 'Invalid type provided.';
+            $returnText->error = get_string('invalid_tp', $p);
         } else {
             $return = '';
             $tableclass = 'class="table table-bordered table-striped table-hover"';
+            $title = '';
             if($type === 'ac'){
+                $title = get_string('all_ac', $p);
                 $array = $lib->get_all_apprentice_courses();
-                $return .= '<h4>All Apprenticeship Courses</h4>
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Course</th>
-                            <th>Total Enrolled Learners</th>
+                            <th>'.get_string('course', $p).'</th>
+                            <th>'.get_string('total_el', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,15 +37,15 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'all apprenticeship courses'))->trigger();
             } elseif($type === 'lwis'){
                 $array = $lib->get_users_incomplete_setup();
-                $return .= '<h4>Learners With Incomplete Setup</h4>
+                $title = get_string('learners_wis', $p);
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Learner</th>
-                            <th>Course</th>
+                            <th>'.get_string('learner', $p).'</th>
+                            <th>'.get_string('course', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,80 +59,86 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners with incomplete setup'))->trigger();
             } elseif($type === 'lwcs'){
                 $array = $lib->get_users_complete_setup();
-                $return .= '<h4>Learners With Complete Setup</h4>
+                $title = get_string('learners_wcs', $p);
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Learner</th>
-                            <th>Course</th>
-                            <th>Training Plan Used</th>
-                            <th>Activity Reports Used</th>
-                            <th>Hours Log Used</th>
+                            <th>'.get_string('learner', $p).'</th>
+                            <th>'.get_string('course', $p).'</th>
+                            <th>'.get_string('training_pu', $p).'</th>
+                            <th>'.get_string('activity_ru', $p).'</th>
+                            <th>'.get_string('hours_lu', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>
                 ';
+                $noTxt = get_string('no', $p);
+                $yesTxt = get_string('yes', $p);
                 foreach($array as $arr){
                     $return .= "
                         <tr>
                             <td>$arr[0]</td>
                             <td>$arr[1]</td>
                     ";
-                    $return .= ($arr[2]) ? '<td class="bg-green">Yes</td>' : '<td class="bg-red">No</td>';
-                    $return .= ($arr[3]) ? '<td class="bg-green">Yes</td>' : '<td class="bg-red">No</td>';
-                    $return .= ($arr[4]) ? '<td class="bg-green">Yes</td>' : '<td class="bg-red">No</td>';
+                    $return .= ($arr[2]) ? '<td class="bg-green">'.$yesTxt.'</td>' : '<td class="bg-red">'.$noTxt.'</td>';
+                    $return .= ($arr[3]) ? '<td class="bg-green">'.$yesTxt.'</td>' : '<td class="bg-red">'.$noTxt.'</td>';
+                    $return .= ($arr[4]) ? '<td class="bg-green">'.$yesTxt.'</td>' : '<td class="bg-red">'.$noTxt.'</td>';
                     $return .= "
                         </tr>
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners with complete setup'))->trigger();
             } elseif($type === 'lbt'){
                 $array = $lib->get_users_behind_target();
-                $return .= '<h4>Learners Behind Target</h4>
+                $title = get_string('learners_bt', $p);
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Learner</th>
-                            <th>Course</th>
-                            <th>Hours Log</th>
-                            <th>Course Completion</th>
+                            <th>'.get_string('learner', $p).'</th>
+                            <th>'.get_string('course', $p).'</th>
+                            <th>'.get_string('hours_l', $p).'</th>
+                            <th>'.get_string('course_comp', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>
                 ';
+                $ontTxt = get_string('on_t', $p);
+                $behindtTxt = get_string('behind_t', $p);
                 foreach($array as $arr){
                     $return .= "
                         <tr>
                             <td>$arr[0]</td>
                             <td>$arr[1]</td>
                     ";
-                    $return .= ($arr[2]) ? '<td class="bg-green">On Target</td>' : '<td class="bg-red">Behind Target</td>';
-                    $return .= ($arr[3]) ? '<td class="bg-green">On Target</td>' : '<td class="bg-red">Behind Target</td>';
+                    $return .= ($arr[2]) ? '<td class="bg-green">'.$ontTxt.'</td>' : '<td class="bg-red">'.$behindtTxt.'</td>';
+                    $return .= ($arr[3]) ? '<td class="bg-green">'.$ontTxt.'</td>' : '<td class="bg-red">'.$behindtTxt.'</td>';
                     $return .= "
                         </tr>
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners behind target'))->trigger();
             } elseif($type === 'ldms'){
                 $array = $lib->get_nosign_ar();
-                $return .= '<h4>Learner Documents Missing Signature(s)</h4>
+                $title = get_string('learner_dms', $p);
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Learner</th>
-                            <th>Course</th>
-                            <th>Review Date</th>
-                            <th>Coach Signed</th>
-                            <th>Learner Signed</th>
+                            <th>'.get_string('learner', $p).'</th>
+                            <th>'.get_string('course', $p).'</th>
+                            <th>'.get_string('review_date', $p).'</th>
+                            <th>'.get_string('coach_sd', $p).'</th>
+                            <th>'.get_string('learner_sd', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>  
                 ';
+                $signTxt = get_string('signed', $p);
+                $notTxt = get_string('not_s', $p);
                 foreach($array as $arr){
                     $return .= "
                         <tr>
@@ -137,22 +146,22 @@ if($_SESSION['otj_adminreport']){
                             <td>$arr[1]</td>
                             <td>$arr[2]</td>
                     ";
-                    $return .= ($arr[3]) ? '<td class="bg-green">Signed</td>' : '<td class="bg-red">Not Signed</td>';
-                    $return .= ($arr[4]) ? '<td class="bg-green">Signed</td>' : '<td class="bg-red">Not Signed</td>';
+                    $return .= ($arr[3]) ? '<td class="bg-green">'.$signTxt.'</td>' : '<td class="bg-red">'.$notTxt.'</td>';
+                    $return .= ($arr[4]) ? '<td class="bg-green">'.$signTxt.'</td>' : '<td class="bg-red">'.$notTxt.'</td>';
                     $return .= "
                         </tr>
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learner documents missing signature(s)'))->trigger();
             } elseif($type === 'lwap'){
                 $array = $lib->get_noplan_learners();
-                $return .= '<h4>Learners Without A Plan</h4>
+                $title = get_string('learners_wap', $p);
+                $return .= '<h4>'.$title.'</h4>
                     <table '.$tableclass.'>
                     <thead>
                         <tr>
-                            <th>Learner</th>
-                            <th>Course</th>
+                            <th>'.get_string('learner', $p).'</th>
+                            <th>'.get_string('course', $p).'</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -166,14 +175,14 @@ if($_SESSION['otj_adminreport']){
                     ";
                 }
                 $return .= '</tbody></table>';
-                \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => 'learners without a plan'))->trigger();
             }
+            \local_offthejobadmin\event\viewed_reports_table::create(array('context' => \context_system::instance(), 'other' => strtolower($title)))->trigger();
             $returnText->return = str_replace("  ","",$return);
         }
     } else {
-        $returnText->error = 'No type specified.';
+        $returnText->error = get_string('no_tp', $p);
     }
 } else {
-    $returnText->error = 'Error Loading data.';
+    $returnText->error = get_string('error_ld', $p);
 }
 echo(json_encode($returnText));
