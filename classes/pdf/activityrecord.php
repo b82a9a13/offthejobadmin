@@ -11,6 +11,7 @@ $context = context_system::instance();
 require_capability('local/offthejobadmin:admin', $context);
 use local_offthejobadmin\lib;
 $lib = new lib;
+$p = 'local_offthejobadmin';
 
 $id = $_GET['id'];
 $cid = $_GET['cid'];
@@ -54,19 +55,19 @@ if($errorTxt != ''){
     $pdf = new MYPDF('P', 'mm', 'A4', true, 'UTF-8', false);
     $coursename = $lib->get_course_fullname($cid);
     $pdf->addPage('P', 'A4');
-    $pdf->Cell(0, 0, "Activity Record - $fullname - $coursename", 0, 0, 'C', 0, '', 0);
+    $pdf->Cell(0, 0, get_string('activity_rec', $p)." - $fullname - $coursename", 0, 0, 'C', 0, '', 0);
     $pdf->Ln();
     $data = $lib->get_activityrecord_data($cid, $uid, $id);
     $html = '
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Apprentice</b></th>
-                    <th><b>Review Date</b></th>
-                    <th><b>Standard</b></th>
-                    <th><b>Employer or Store</b></th>
-                    <th><b>Coach</b></th>
-                    <th><b>Manager or Mentor</b></th>
+                    <th><b>'.get_string('apprentice', $p).'</b></th>
+                    <th><b>'.get_string('review_date', $p).'</b></th>
+                    <th><b>'.get_string('standard', $p).'</b></th>
+                    <th><b>'.get_string('employer_os', $p).'</b></th>
+                    <th><b>'.get_string('coach', $p).'</b></th>
+                    <th><b>'.get_string('manager_om', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -82,28 +83,29 @@ if($errorTxt != ''){
         </table>
     ';
     $pdf->writeHTML($html, true, false, false, false, '');
+    $commentsTxt = get_string('comments', $p);
     $html = '
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th colspan="24"><b>Summary of progress</b></th>
+                    <th colspan="24"><b>'.get_string('summary_op', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th colspan="3"><b>Course % Progress to date</b></th>
+                    <th colspan="3"><b>'.get_string('course_ptd', $p).'</b></th>
                     <td colspan="3">'.$data[6].'</td>
-                    <th colspan="3"><b>Course % Expected Progress according to Training Plan</b></th>
+                    <th colspan="3"><b>'.get_string('course_epattp', $p).'</b></th>
                     <td colspan="3">'.$data[7].'</td>
-                    <th colspan="3"><b>Comments</b></th>
+                    <th colspan="3"><b>'.$commentsTxt.'</b></th>
                     <td colspan="9">'.$data[8].'</td>
                 </tr>
                 <tr>
-                    <th colspan="3"><b>OTJH Completed</b></th>
+                    <th colspan="3"><b>'.get_string('otjh_c', $p).'</b></th>
                     <td colspan="3">'.$data[9].'</td>
-                    <th colspan="3"><b>Expected OTJH as per Training Plan</b></th>
+                    <th colspan="3"><b>'.get_string('expected_otjh_aptp', $p).'</b></th>
                     <td colspan="3">'.$data[10].'</td>
-                    <th colspan="3"><b>Comments</b></th>
+                    <th colspan="3"><b>'.$commentsTxt.'</b></th>
                     <td colspan="9">'.$data[11].'</td>
                 </tr>
             </tbody>
@@ -114,7 +116,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>E & D, H & S, Safeguarding & Learner Welfare (LDC to check understanding & link to a vocational context. Any issues must be actioned accordingly)</b></th>
+                    <th><b>'.get_string('safeguarding_title', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -125,12 +127,13 @@ if($errorTxt != ''){
         </table>
     ';
     $pdf->writeHTML($html, true, false, false, false, '');
+    $impactTxt = get_string('impact_title', $p);
     $html = '
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Recap on actions from last month</b></th>
-                    <th><b>What impact has this had in your current job role/situation</b></th>
+                    <th><b>'.get_string('recap_title', $p).'</b></th>
+                    <th><b>'.$impactTxt.'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -146,8 +149,8 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Details of Teaching & Learning activity undertaken today (include reference to modules and knowledge, skills & behaviours)</b></th>
-                    <th><b>Modules and K,S,B</b></th>
+                    <th><b>'.get_string('details_title', $p).'</b></th>
+                    <th><b>'.get_string('modules_askb', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -163,7 +166,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>What impact will this have in your job role/situation</b></th>
+                    <th><b>'.$impactTxt.'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -178,22 +181,22 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th colspan="3"><b>Functional Skills Progress</b></th>
+                    <th colspan="3"><b>'.get_string('functional_sp', $p).'</b></th>
                 </tr>
                 <tr>
                     <th></th>
-                    <th><b>Learning today</b></th>
-                    <th><b>Target for next visit</b></th>
+                    <th><b>'.get_string('learning_t', $p).'</b></th>
+                    <th><b>'.get_string('target_title', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th><b>Math</b></th>
+                    <th><b>'.get_string('math', $p).'</b></th>
                     <td>'.$data[17].'</td>
                     <td>'.$data[18].'</td>
                 </tr>
                 <tr>
-                    <th><b>English</b></th>
+                    <th><b>'.get_string('english', $p).'</b></th>
                     <td>'.$data[19].'</td>
                     <td>'.$data[20].'</td>
                 </tr>
@@ -205,7 +208,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>ALN (Additional Learner Needs) Suppot delivered today</b></th>
+                    <th><b>'.get_string('aln_title', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -220,7 +223,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Agreed actions & future skills development activity</b></th>
+                    <th><b>'.get_string('agreed_title', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -235,7 +238,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Coach/Tutor Feedback</b></th>
+                    <th><b>'.get_string('coach_feedback', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -250,7 +253,7 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Apprentice Comments regarding their learning journey</b></th>
+                    <th><b>'.get_string('apprentice_ct', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
@@ -264,7 +267,7 @@ if($errorTxt != ''){
     $html = '
         <table border="1" cellpadding="2">
             <tr>
-                <th><b>Employer comment on progress</b></th>
+                <th><b>'.get_string('employer_comment', $p).'</b></th>
                 <td>MonthlyActivityRecord-'.str_replace(' ','_',$fullname).'-'.str_replace(' ','_',$coursename).'-'.$data[1].'-EmployerComment.pdf</td>
             </tr>
         </table>
@@ -273,11 +276,11 @@ if($errorTxt != ''){
     $html = '
         <table border="1" cellpadding="2">
             <tr>
-                <th><b>Date & time of next planned review</b></th>
+                <th><b>'.get_string('date_onpr', $p).'</b></th>
                 <td>'.date('H:m d-m-Y',(new DateTime($data[31]))->format('U')).'</td>
             </tr>
             <tr>
-                <th><b>Remote / Face to Face</b></th>
+                <th><b>'.get_string('remote_ftf', $p).'</b></th>
                 <td>'.$data[32].'</td>
             </tr>
         </table>
@@ -287,8 +290,8 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>Learner Signature</b></th>
-                    <th><b>Coach Signature</b></th>
+                    <th><b>'.get_string('learner_s', $p).'</b></th>
+                    <th><b>'.get_string('coach_s', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>';

@@ -5,7 +5,6 @@
  * @author      Robert Tyrone Cullen
  */
 //A
-    $string['activity_records'] = 'Activity Records';
     $string['apprentice'] = 'Apprentice';
     $string['aln_title'] = 'ALN (Additional Learner Needs) Suppot delivered today';
     $string['agreed_title'] = 'Agreed actions & future skills development activity';
@@ -23,6 +22,7 @@
     $string['add_nr'] = 'Add New Record';
     $string['additional_sa'] = 'Additional Support Arrangements';
     $string['activity_r'] = 'Activity Records';
+    $string['activity_rec'] = 'Activity Record';
     $string['aln'] = 'ALN';
     $string['agreed_a'] = 'Agreed actions';
     $string['apprentice_c'] = 'Apprentice Comments';
@@ -58,6 +58,7 @@
     $string['choose_apdf'] = 'Choose a PDF';
     $string['choose_ls'] = 'Choose Learning Style';
     $string['changes_log_title'] = 'Changes Log (to be used as an ongoing journal to record any changes to original plan throughout the apprenticeship)';
+    $string['changes_log'] = 'Changes Log';
     $string['complete'] = 'Complete';
     $string['completion_p'] = 'Completion Progress';
     $string['choose_ac'] = 'Choose a course';
@@ -183,6 +184,7 @@
     $string['pluginname'] = 'Off The Job Admin';
     $string['progress'] = 'Progress';
     $string['progress_r'] = 'Progress Reviews';
+    $string['progress_r_short'] = 'Progress Review';
     $string['print_t'] = 'Print Table';
     $string['pick_alac'] = 'Pick a Learner and Course';
     $string['planned_ed'] = 'Planned End Date';
@@ -201,12 +203,14 @@
     $string['reset'] = 'Reset';
     $string['reset_p'] = 'Reset page';
     $string['recognition_title'] = 'Recognition of Prior Learning (use this section to describe and evidence any prior learning, qualifications, work experience etc)';
+    $string['recognition_opl'] = 'Recognition of Prior Learning';
     $string['revised_sd'] = 'Revised Start Date';
     $string['revised_ed'] = 'Revised End Date';
     $string['required_fs'] = 'Required functional skills?';
     $string['remove_r'] = 'Remove Record';
     $string['reset_setup_text'] = 'Are you sure you want to reset this initial setup? (This will remove all off the job data for the the user which they have for the course)';
     $string['reset_plan_text'] = 'Are you sure you want to reset this training plan?';
+    $string['row'] = 'Row';
 //S
     $string['standard'] = 'Standard';
     $string['summary_op'] = 'Summary of progress';
