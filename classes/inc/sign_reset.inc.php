@@ -13,6 +13,11 @@ if($_SESSION['otj_adminuser'] && $_SESSION['otj_adminuser_cid'] && $_SESSION['ot
         } else {
             if($lib->sign_reset($_SESSION['otj_adminuser_cid'], $_SESSION['otj_adminuser_uid'], $type)){
                 $returnText->return = true;
+                if($type === 'learn'){
+                    \local_offthejobadmin\event\deleted_user_sign_learn::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid']))->trigger();
+                } elseif($type === 'coach'){
+                    \local_offthejobadmin\event\deleted_user_sign_coach::create(array('context' => \context_course::instance($_SESSION['otj_adminuser_cid']), 'courseid' => $_SESSION['otj_adminuser_cid'], 'relateduserid' => $_SESSION['otj_adminuser_uid']))->trigger();
+                }
             } else {
                 $returnText->return = false;
             }

@@ -12,6 +12,7 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
     } else {
         if($lib->delete_activityrecord($_SESSION['otj_actrec_cid'], $_SESSION['otj_actrec_uid'], $id)){
             $returnText->return = true;
+            \local_offthejobadmin\event\deleted_user_activityrecord::create(array('context' => \context_course::instance($_SESSION['otj_actrec_cid']), 'courseid' => $_SESSION['otj_actrec_cid'], 'relateduserid' => $_SESSION['otj_actrec_uid'], 'other' => $id))->trigger();
         } else {
             $returnText->return = false;
         }

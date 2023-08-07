@@ -116,12 +116,57 @@ if($errorTxt != ''){
         <table border="1" cellpadding="2">
             <thead>
                 <tr>
-                    <th><b>'.get_string('safeguarding_title', $p).'</b></th>
+                    <th><b>'.get_string('safeguarding', $p).'</b></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>'.$data[23].'</td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    $pdf->writeHTML($html, true, false, false, false, '');
+    $html = '
+        <table border="1" cellpadding="2">
+            <thead>
+                <tr>
+                    <th><b>'.get_string('health_as', $p).'</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>'.$data[33].'</td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    $pdf->writeHTML($html, true, false, false, false, '');
+    $html = '
+        <table border="1" cellpadding="2">
+            <thead>
+                <tr>
+                    <th><b>'.get_string('equality_ad', $p).'</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>'.$data[34].'</td>
+                </tr>
+            </tbody>
+        </table>
+    ';
+    $pdf->writeHTML($html, true, false, false, false, '');
+    $html = '
+        <table border="1" cellpadding="2">
+            <thead>
+                <tr>
+                    <th><b>'.get_string('information_aag', $p).'</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>'.$data[35].'</td>
                 </tr>
             </tbody>
         </table>
@@ -177,33 +222,45 @@ if($errorTxt != ''){
         </table>
     ';
     $pdf->writeHTML($html, true, false, false, false, '');
-    $html = '
-        <table border="1" cellpadding="2">
-            <thead>
-                <tr>
-                    <th colspan="3"><b>'.get_string('functional_sp', $p).'</b></th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th><b>'.get_string('learning_t', $p).'</b></th>
-                    <th><b>'.get_string('target_title', $p).'</b></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th><b>'.get_string('math', $p).'</b></th>
-                    <td>'.$data[17].'</td>
-                    <td>'.$data[18].'</td>
-                </tr>
-                <tr>
-                    <th><b>'.get_string('english', $p).'</b></th>
-                    <td>'.$data[19].'</td>
-                    <td>'.$data[20].'</td>
-                </tr>
-            </tbody>
-        </table>
-    ';
-    $pdf->writeHTML($html, true, false, false, false, '');
+    if($data[17] != '' || $data[18] != '' || $data[19] != '' || $data[20] != ''){
+        $html = '
+            <table border="1" cellpadding="2">
+                <thead>
+                    <tr>
+                        <th colspan="3"><b>'.get_string('functional_sp', $p).'</b></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th><b>'.get_string('learning_t', $p).'</b></th>
+                        <th><b>'.get_string('target_title', $p).'</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+        ';
+        if($data[17] != '' || $data[18] != ''){
+            $html .= '
+                    <tr>
+                        <th><b>Math</b></th>
+                        <td>'.$data[17].'</td>
+                        <td>'.$data[18].'</td>
+                    </tr>
+            ';
+        }
+        if($data[19] != '' || $data[20] != ''){
+            $html .= '
+                    <tr>
+                        <th><b>English</b></th>
+                        <td>'.$data[19].'</td>
+                        <td>'.$data[20].'</td>
+                    </tr>
+            ';
+        }
+        $html .= '
+                </tbody>
+            </table>
+        ';
+        $pdf->writeHTML($html, true, false, false, false, '');
+    }
     $html = '
         <table border="1" cellpadding="2">
             <thead>

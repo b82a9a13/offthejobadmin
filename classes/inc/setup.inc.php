@@ -56,6 +56,7 @@ if($_SESSION['otj_adminsetup'] && $_SESSION['otj_adminsetup_cid'] && $_SESSION['
         $update = $lib->update_setup_data([$totalmonths, $totalhours, $eors, $coach, $morm, $startdate, $hpw, $alw, $trainplan, $option], $_SESSION['otj_adminsetup_cid'], $_SESSION['otj_adminsetup_uid']);
         if($update){
             $returnText->return = true;
+            \local_offthejobadmin\event\updated_user_setup::create(array('context' => \context_course::instance($_SESSION['otj_adminsetup_cid']), 'courseid' => $_SESSION['otj_adminsetup_cid'], 'relateduserid' => $_SESSION['otj_adminsetup_uid']))->trigger();
         } else {
             $returnText->return = false;
         }

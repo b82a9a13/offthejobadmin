@@ -1025,7 +1025,10 @@ class lib{
             str_replace(" ","+",$record->learnsign),
             str_replace(" ","+",$record->ntasign),
             date('Y-m-d H:m',$record->nextdate),
-            $record->nexttype
+            $record->nexttype,
+            $record->healthandsafety,
+            $record->equalityad,
+            $record->informationaag
         ];
         return $array;
     }
@@ -1082,6 +1085,9 @@ class lib{
         $record->apprenticecomment = $data[26];
         $record->nextdate = $data[27];
         $record->nexttype = $data[28];
+        $record->healthandsafety = $data[29];
+        $record->equalityad = $data[30];
+        $record->informationaag = $data[31];
         if($DB->update_record('activityrecord_docs_info', $record, true)){
             return true;
         } else {

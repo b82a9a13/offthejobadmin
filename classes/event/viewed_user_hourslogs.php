@@ -9,16 +9,16 @@ namespace local_offthejobadmin\event;
 use core\event\base;
 defined('MOODLE_INTERNAL') || die();
 
-class viewed_user_hourslog extends base {
+class viewed_user_hourslogs extends base {
     protected function init(){
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
     public static function get_name(){
-        return "User hours log viewed";
+        return "User hours logs viewed";
     }
     public function get_description(){
-        return "The user with id '".$this->userid."' viewed the user's hours log with the id '".$this->other."' and for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
+        return "The user with id '".$this->userid."' viewed the user's hours logs for the user with id '".$this->relateduserid."' and for the course with id '".$this->courseid."'.";
     }
     public function get_url(){
         return new \moodle_url('/local/offthejobadmin/admin_hourslog.php?uid='.$this->relateduserid.'&cid='.$this->courseid);

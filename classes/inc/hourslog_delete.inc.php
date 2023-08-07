@@ -17,6 +17,7 @@ if(!isset($_SESSION['otj_hourslog']) || !isset($_SESSION['otj_hourslog_cid']) ||
             $returnText->error = get_string('invalid_ip', $p);
         } else {
             $returnText->return = $lib->delete_hourslog($_SESSION['otj_hourslog_cid'], $_SESSION['otj_hourslog_uid'], $id);
+            \local_offthejobadmin\event\deleted_user_hourslog::create(array('context' => \context_course::instance($_SESSION['otj_hourslog_cid']), 'courseid' => $_SESSION['otj_hourslog_cid'], 'relateduserid' => $_SESSION['otj_hourslog_uid'], 'other' => $id))->trigger();
         }
     }
 }

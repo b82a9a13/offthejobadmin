@@ -53,6 +53,7 @@ if(isset($_POST['id'])){
                 ";
                 $returnText->return = str_replace("  ","",$html);
                 $_SESSION['otj_hourslog_rid'] = $id;
+                \local_offthejobadmin\event\viewed_user_hourslog::create(array('context' => \context_course::instance($_SESSION['otj_hourslog_cid']), 'courseid' => $_SESSION['otj_hourslog_cid'], 'relateduserid' => $_SESSION['otj_hourslog_uid'], 'other' => $id))->trigger();
             } else {
                 $returnText->return = false;
             }

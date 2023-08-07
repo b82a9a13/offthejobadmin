@@ -44,6 +44,7 @@ if(!isset($_SESSION['otj_hourslog']) || !isset($_SESSION['otj_hourslog_cid']) ||
     if($errorarray != []){
         $returnText->error = $errorarray;
     } else {
+        $rid = $_SESSION['otj_hourslog_rid'];
         $returnText->return = $lib->update_hourslog($_SESSION['otj_hourslog_cid'], $_SESSION['otj_hourslog_uid'], $_SESSION['otj_hourslog_rid'], [
             $date,
             $activity,
@@ -51,6 +52,7 @@ if(!isset($_SESSION['otj_hourslog']) || !isset($_SESSION['otj_hourslog_cid']) ||
             $impact,
             $duration
         ]);
+        \local_offthejobadmin\event\updated_user_hourslog::create(array('context' => \context_course::instance($_SESSION['otj_hourslog_cid']), 'courseid' => $_SESSION['otj_hourslog_cid'], 'relateduserid' => $_SESSION['otj_hourslog_uid'], 'other' => $rid))->trigger();
     }
 }
 

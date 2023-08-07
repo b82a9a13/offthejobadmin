@@ -45,7 +45,10 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
                 ['ar_sign_div', 'flex'],
                 ['filesrc', "./classes/pdf/activityrecord_employercomment_include.php?id=".$id],
                 ['nextdate', $data[31]],
-                ['remotef2f', $data[32]]
+                ['remotef2f', $data[32]],
+                ['hands', $data[33]],
+                ['eandd', $data[34]],
+                ['iaag', $data[35]]
             ];
             if($data[27] != '1970-01-01'){
                 array_push($array, ['coachsigndate', $data[27]]);

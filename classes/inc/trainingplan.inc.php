@@ -338,6 +338,7 @@ if($errorArray != []){
     ], $modArray, $fsValues, $prArray, [$cldate, $cllog]);
     if($creation){
         $returnText->return = true;
+        \local_offthejobadmin\event\updated_user_trainingplan::create(array('context' => \context_course::instance($_SESSION['otj_adminplan_cid']), 'courseid' => $_SESSION['otj_adminplan_cid'], 'relateduserid' => $_SESSION['otj_adminplan_uid']))->trigger();
     } else{
         $returnText->return = false;
     }
