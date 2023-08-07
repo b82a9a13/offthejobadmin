@@ -19,35 +19,35 @@ $uid = $_GET['uid'];
 $fullname = '';
 if($_GET['cid']){
     if(!preg_match("/^[0-9]*$/", $cid) || empty($cid)){
-        $errorTxt = 'Invalid course id provided.';
+        $errorTxt = get_string('invalid_cip', $p);
     } else {
         if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
-            $errorTxt = 'Invalid user id provided.';
+            $errorTxt = get_string('invalid_uid', $p);
         } else {
             //Check if the user is enrolled as a learner in the course selected
             $fullname = $lib->check_learner_enrolment($cid, $uid);
             if($fullname == false){
-                $errorTxt = 'Selected user is not enrolled as a learner in the course selected.';
+                $errorTxt = get_string('selected_uneal', $p);
             } else {
                 //Check if the user has a initial setup complete
                 if(!$lib->check_setup_exists($cid, $uid)){
-                    $errorTxt = 'Initial setup does not exist for the user id and course id provided.';
+                    $errorTxt = get_string('initial_sdne', $p);
                 } else {
                     if(!$lib->check_activityrecord_exists($cid, $uid)){
-                        $errorTxt = 'No activity records available.';
+                        $errorTxt = get_string('no_ara', $p);
                     }
                 }
             }
         }
     }
 } else {
-    $errorTxt = 'No course id provided';
+    $errorTxt = get_string('no_cip', $p);
 }
 
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/offthejobadmin/admin.php'));
-$PAGE->set_title('Admin - Activity Records');
-$PAGE->set_heading('Admin - Activity Records');
+$PAGE->set_title(get_string('admin_ar', $p));
+$PAGE->set_heading(get_string('admin_ar', $p));
 $PAGE->set_pagelayout('admin');
 
 echo $OUTPUT->header();
@@ -76,7 +76,7 @@ if($errorTxt != ''){
         'comments' => get_string('comments', $p),
         'otjh_c' => get_string('otjh_c', $p),
         'expected_otjh_aptp' => get_string('expected_otjh_aptp', $p),
-        'safeguarding_title' => get_string('safeguarding_title', $p),
+        'safeguarding_title' => get_string('safeguarding', $p),
         'recap_title' => get_string('recap_title', $p),
         'impact_title' => get_string('impact_title', $p),
         'details_title' => get_string('details_title', $p),
@@ -97,6 +97,9 @@ if($errorTxt != ''){
         'learner_s' => get_string('learner_s', $p),
         'coach_s' => get_string('coach_s', $p),
         'submit' => get_string('submit', $p),
+        'health_as' => get_string('health_as', $p),
+        'equality_ad' => get_string('equality_ad', $p),
+        'information_aag' => get_string('information_aag', $p),
         'fullname' => $fullname,
         'coursename' => $lib->get_course_fullname($cid),
         'records' => array_values($lib->get_activityrecord_list($cid, $uid)),

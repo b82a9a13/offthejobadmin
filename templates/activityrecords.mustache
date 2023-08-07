@@ -91,6 +91,42 @@
         <table class='table table-bordered table-striped table-hover'>
             <thead>
                 <tr>
+                    <th class='text-center'>{{health_as}}*</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="td_hands"><textarea class='w-100' id="hands" required></textarea></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class='table table-bordered table-striped table-hover'>
+            <thead>
+                <tr>
+                    <th class='text-center'>{{equality_ad}}*</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="td_eandd"><textarea class='w-100' id="eandd" required></textarea></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class='table table-bordered table-striped table-hover'>
+            <thead>
+                <tr>
+                    <th class='text-center'>{{information_aag}}*</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="td_iaag"><textarea class='w-100' id='iaag' required></textarea></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class='table table-bordered table-striped table-hover'>
+            <thead>
+                <tr>
                     <th class='text-center'>{{recap_title}}</th>
                     <th class='text-center'>{{impact_title}}</th>
                 </tr>
@@ -128,27 +164,27 @@
                 </tr>
             </tbody>
         </table>
-        <table class='table table-bordered table-striped table-hover'>
+        <table class='table table-bordered table-striped table-hover' id="func_div" style='display:none;'>
             <thead>
                 <tr>
                     <th colspan='3' class='text-center'>{{functional_sp}}</th>
                 </tr>
                 <tr>
                     <th></th>
-                    <th class='text-center'>{{learning_t}}*</th>
-                    <th class='text-center'>{{target_title}}*</th>
+                    <th class='text-center' id="func_title0" style='display:none;'>{{learning_t}}*</th>
+                    <th class='text-center' id="func_title1" style='display:none;'>{{target_title}}*</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th class='text-center'>{{math}}*</th>
-                    <td id="td_mathtoday"><textarea class='w-100' id="mathtoday" required></textarea></td>
-                    <td id="td_mathnext"><textarea class='w-100' id="mathnext" required></textarea></td>
+                    <th class='text-center' id="math_title">{{math}}*</th>
+                    <td id="td_mathtoday"><textarea class='w-100' id="mathtoday" disabled style='display:none;'></textarea></td>
+                    <td id="td_mathnext"><textarea class='w-100' id="mathnext" disabled style='display:none;'></textarea></td>
                 </tr>
                 <tr>
-                    <th class='text-center'>{{english}}*</th>
-                    <td id="td_engtoday"><textarea class='w-100' id="engtoday" required></textarea></td>
-                    <td id="td_engnext"><textarea class='w-100' id="engnext" required></textarea></td>
+                    <th class='text-center' id="eng_title">{{english}}*</th>
+                    <td id="td_engtoday"><textarea class='w-100' id="engtoday" disabled style='display:none;'></textarea></td>
+                    <td id="td_engnext"><textarea class='w-100' id="engnext" disabled style='display:none;'></textarea></td>
                 </tr>
             </tbody>
         </table>

@@ -28,6 +28,10 @@
     $string['apprentice_c'] = 'Apprentice Comments';
     $string['all_ac'] = 'All Apprenticeship Courses';
     $string['activity_ru'] = 'Activity Reports Used';
+    $string['admin_tp'] = 'Admin - Training Plan';
+    $string['admin_is'] = 'Admin - Initial Setup';
+    $string['admin_hl'] = 'Admin - Hours Log';
+    $string['admin_ar'] = 'Admin - Activity Records';
 //B
     $string['btm'] = 'Back to menu';
     $string['btmm'] = 'Back to main menu';
@@ -91,6 +95,7 @@
     $string['error_ld'] = 'Error loading data';
     $string['error_ud'] = 'Error updating data';
     $string['error_rd'] = 'Error resetting data';
+    $string['equality_ad'] = 'Equality and Diversity';
 //F
     $string['functional_s'] = 'Functional Skills';
     $string['functional_sp'] = 'Functional Skills Progress';
@@ -111,6 +116,7 @@
     $string['hours_l'] = 'Hours Logs';
     $string['hours_lt'] = 'Hours Log Target';
     $string['hours_lu'] = 'Hours Log Used';
+    $string['health_as'] = 'Health and Safety';
 //I
     $string['impact_title'] = 'What impact has this had in your current job role/situation';
     $string['incomplete'] = 'Incomplete';
@@ -119,6 +125,7 @@
     $string['initials'] = 'Initials';
     $string['innovate'] = 'Innovate';
     $string['initial_a'] = 'Initial Assessment';
+    $string['initial_sdne'] = 'Intial setup does not exist for the user id and course id provided';
     $string['iag_title'] = 'IAG (Information, Advice, Guidance)';
     $string['initial_s'] = 'Initial Setup';
     $string['invalid_ap'] = 'Invalid action provided';
@@ -126,6 +133,8 @@
     $string['invalid_ip'] = 'Invalid id provided';
     $string['invalid_tp'] = 'Invalid type provided';
     $string['invalid_cip'] = 'Invalid course id provided';
+    $string['invalid_uid'] = 'Invalid user id provided';
+    $string['information_aag'] = 'Information Advice and Guidance';
 //J
 //K
     $string['kinaesthetic'] = 'Kinaesthetic';
@@ -167,6 +176,9 @@
     $string['no_tp'] = 'No type provided';
     $string['no_ip'] = 'No id provided';
     $string['not_s'] = 'Not Signed';
+    $string['no_cip'] = 'No course id provided';
+    $string['no_hlra'] = 'No hours log records available';
+    $string['no_ara'] = 'No activity records available';
 //O
     $string['otjh_c'] = 'OTJH Completed';
     $string['otjh_com'] = 'OTJH Comments';
@@ -179,6 +191,8 @@
     $string['option'] = 'Option';
     $string['otjh'] = 'OTJH';
     $string['on_t'] = 'On target';
+    $string['otj_admin_r'] = 'Off The Job - Admin Reports';
+    $string['otj_admin'] = 'Off The Job - Admin';
 //P
     $string['pdf'] = 'PDF';
     $string['pluginname'] = 'Off The Job Admin';
@@ -230,6 +244,7 @@
     $string['select_ac'] = 'Select a course to filter by or select show all';
     $string['signed'] = 'Signed';
     $string['sign_reset_text'] = 'Are you sure you want to reset this signature?';
+    $string['selected_uneal'] = 'Selected user is not enrolled as a learner in the course selected';
 //T
     $string['target_title'] = 'Target for next visit';
     $string['total_el'] = 'Total Enrolled Learners';
@@ -244,6 +259,7 @@
     $string['totals'] = 'Totals';
     $string['type_or'] = 'Type of Review';
     $string['training_pu'] = 'Training Plan Used';
+    $string['training_pdne'] = 'Training plan does not exist';
 //U
     $string['update_r'] = 'Update Record';
     $string['update'] = 'Update';

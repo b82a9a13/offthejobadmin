@@ -15,8 +15,8 @@ $p = 'local_offthejobadmin';
 
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/offthejobadmin/admin_reports.php'));
-$PAGE->set_title('Off The Job - Admin Reports');
-$PAGE->set_heading('Off The Job - Admin Reports');
+$PAGE->set_title(get_string('otj_admin_r', $p));
+$PAGE->set_heading(get_string('otj_admin_r', $p));
 $PAGE->set_pagelayout('admin');
 
 echo $OUTPUT->header();

@@ -11,7 +11,10 @@ function getrecord(id){
         'otjhc',
         'otjhe',
         'nextdate',
-        'remotef2f'
+        'remotef2f',
+        'hands',
+        'eandd',
+        'iaag'
     ];
     const innerArray = [
         'coursecomment',
@@ -71,6 +74,7 @@ function getrecord(id){
     const errorTxt = document.getElementById('get_error');
     errorTxt.style.display = 'none';
     document.getElementById('ar_sign_div').style.display = 'none';
+    let fsTotal = [0,0];
     const params = `id=${id}`;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/activityrecords_getrecord.inc.php', true);
@@ -88,6 +92,11 @@ function getrecord(id){
                             document.getElementById(item[0]).value = item[1];
                         } else if(innerArray.includes(item[0])){
                             document.getElementById(item[0]).innerHTML = item[1];
+                            if(['mathtoday','mathnext'].includes(item[0]) && item[1] != ''){
+                                fsTotal[0]++;
+                            } else if(['engtoday','engnext'].includes(item[0]) && item[1] != ''){
+                                fsTotal[1]++;
+                            }
                         } else if(srcArray.includes(item[0])){
                             document.getElementById(item[0]).src = item[1];
                         } else if(displayArray.includes(item[0])){
@@ -102,6 +111,29 @@ function getrecord(id){
                             document.getElementById('recapimpact').required = true;
                         }
                     })
+                    if(fsTotal[0] > 0 || fsTotal[1] > 0){
+                        $(`#func_div`)[0].style.display = '';
+                        let tmpVals = ['none','none',true];
+                        if(fsTotal[0] > 0){
+                            tmpVals = ['', 'block', false];
+                        }
+                        $(`#func_title0`)[0].style.display = tmpVals[0];
+                        $(`#math_title`)[0].style.display = tmpVals[0];
+                        $(`#mathtoday`)[0].style.display = tmpVals[1];
+                        $(`#mathtoday`)[0].disabled = tmpVals[2];
+                        $(`#mathnext`)[0].style.display = tmpVals[1];
+                        $(`#mathnext`)[0].disabled = tmpVals[2];
+                        tmpVals = ['none', 'none', true];
+                        if(fsTotal[1] > 0){
+                            tmpVals = ['', 'block', false];
+                        }
+                        $(`#func_title1`)[0].style.display = tmpVals[0];
+                        $(`#eng_title`)[0].style.display = tmpVals[0];
+                        $(`#engtoday`)[0].style.display = tmpVals[1];
+                        $(`#engtoday`)[0].disabled = tmpVals[2];
+                        $(`#engnext`)[0].style.display = tmpVals[1];
+                        $(`#engnext`)[0].disabled = tmpVals[2];
+                    }
                     contentDiv.style.display = 'block';
                 }
             }
@@ -178,7 +210,10 @@ document.getElementById('activityrecord_content_div').addEventListener('submit',
         'agreedact',
         'apprencom',
         'nextdate',
-        'remotef2f'
+        'remotef2f',
+        'hands',
+        'eandd',
+        'iaag'
     ];
     const errorTxt = document.getElementById('ar_error');
     errorTxt.style.display = 'none';

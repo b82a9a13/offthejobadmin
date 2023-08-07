@@ -19,35 +19,35 @@ $uid = $_GET['uid'];
 $fullname = '';
 if($_GET['cid']){
     if(!preg_match("/^[0-9]*$/", $cid) || empty($cid)){
-        $errorTxt = 'Invalid course id provided.';
+        $errorTxt = get_string('invalid_cip', $p);
     } else {
         if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
-            $errorTxt = 'Invalid user id provided.';
+            $errorTxt = get_string('invalid_uid', $p);
         } else {
             //Check if the user is enrolled as a learner in the course selected
             $fullname = $lib->check_learner_enrolment($cid, $uid);
             if($fullname == false){
-                $errorTxt = 'Selected user is not enrolled as a learner in the course selected.';
+                $errorTxt = get_string('selected_uneal', $p);
             } else {
                 //Check if the user has a initial setup complete
                 if(!$lib->check_setup_exists($cid, $uid)){
-                    $errorTxt = 'Initial setup does not exist for the user id and course id provided.';
+                    $errorTxt = get_string('initial_sdne', $p);
                 } else {
                     if(!$lib->check_hourslog_exists($cid, $uid)){
-                        $errorTxt = 'No hours log records available.';
+                        $errorTxt = get_string('no_hlra', $p);
                     }
                 }
             }
         }
     }
 } else {
-    $errorTxt = 'No course id provided';
+    $errorTxt = get_string('no_cip', $p);
 }
 
 $PAGE->set_context($context);
 $PAGE->set_url(new moodle_url('/local/offthejobadmin/admin.php'));
-$PAGE->set_title('Admin - Hours Log');
-$PAGE->set_heading('Admin - Hours Log');
+$PAGE->set_title(get_string('admin_hl', $p));
+$PAGE->set_heading(get_string('admin_hl', $p));
 $PAGE->set_pagelayout('admin');
 
 echo $OUTPUT->header();
@@ -92,6 +92,6 @@ if($errorTxt != ''){
     $_SESSION['otj_hourslog'] = true;
     $_SESSION['otj_hourslog_cid'] = $cid;
     $_SESSION['otj_hourslog_uid'] = $uid;
-    \local_offthejobadmin\event\viewed_user_hourslog::create(array('context' => \context_course::instance($cid), 'relateduserid' => $uid, 'courseid' => $cid))->trigger();
+    \local_offthejobadmin\event\viewed_user_hourslogs::create(array('context' => \context_course::instance($cid), 'relateduserid' => $uid, 'courseid' => $cid))->trigger();
 }
 echo $OUTPUT->footer();
