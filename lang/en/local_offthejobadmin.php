@@ -75,7 +75,7 @@
     $string['delete_r'] = 'Delete Record';
     $string['date'] = 'Date';
     $string['duration_title'] = 'Duration (hours spent)';
-    $string['dws'] = 'DSW';
+    $string['dsw'] = 'DSW';
     $string['date_oc'] = 'Date of Change';
     $string['duration'] = 'Duration';
 //E
@@ -85,6 +85,7 @@
     $string['expected_otjh_aptp'] = 'Expected OTJH as per Training Plan';
     $string['english'] = 'English';
     $string['employer_comment'] = 'Employer comment on progress';
+    $string['employer_cde'] = "Employer comment doesn't exist";
     $string['employer'] = 'Employer';
     $string['expected'] = 'Expected';
     $string['epao'] = 'EPAO';
@@ -177,6 +178,7 @@
     $string['no_ip'] = 'No id provided';
     $string['not_s'] = 'Not Signed';
     $string['no_cip'] = 'No course id provided';
+    $string['no_uip'] = 'No user id provided';
     $string['no_hlra'] = 'No hours log records available';
     $string['no_ara'] = 'No activity records available';
 //O

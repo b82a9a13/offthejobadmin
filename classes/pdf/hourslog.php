@@ -13,25 +13,33 @@ use local_offthejobadmin\lib;
 $lib = new lib;
 $p = 'local_offthejobadmin';
 
-$cid = $_GET['cid'];
-$uid = $_GET['uid'];
-$numMatch = "/^[0-9]*$/";
+$cid = null;
+$uid = null;
+$errorTxt = '';
 $fullname = '';
-if(!preg_match($numMatch, $cid) || empty($cid)){
-    $errorTxt = 'Invalid course id provided.';
-} elseif(!preg_match($numMatch, $uid) || empty($uid)){
-    $errorTxt = 'Invalid user id provided.';
+if(!isset($_GET['cid'])){
+    $errorTxt = get_string('no_cip', $p);
+} elseif(!isset($_GET['uid'])){
+    $errorTxt = get_string('no_uip', $p);
 } else {
-    $fullname = $lib->check_learner_enrolment($cid, $uid);
-    if($fullname == false){
-        $errorTxt = 'Selected user is not enrolled as a learner in the course selected.';
+    $cid = $_GET['cid'];
+    $uid = $_GET['uid'];
+    $numMatch = "/^[0-9]*$/";
+    if(!preg_match($numMatch, $cid) || empty($cid)){
+        $errorTxt = get_string('invalid_cip', $p);
+    } elseif(!preg_match($numMatch, $uid) || empty($uid)){
+        $errorTxt = get_string('invalid_uid', $p);
     } else {
-        if(!$lib->check_setup_exists($cid, $uid)){
-            $errorTxt = 'Initial setup does not exist for the user id and course id provided.';
+        $fullname = $lib->check_learner_enrolment($cid, $uid);
+        if($fullname == false){
+            $errorTxt = get_string('selected_uneal', $p);
         } else {
-            if(!$lib->check_hourslog_exists($cid, $uid)){
-                $errorTxt = 'No hours log records available.';
-                
+            if(!$lib->check_setup_exists($cid, $uid)){
+                $errorTxt = get_string('initial_sdne', $p);
+            } else {
+                if(!$lib->check_hourslog_exists($cid, $uid)){
+                    $errorTxt = get_string('no_hlra', $p);
+                }
             }
         }
     }

@@ -134,7 +134,7 @@ class lib{
     //Get activity record id for a specific course id and user id
     private function get_activityrecord_id($cid, $uid){
         global $DB;
-        return $DB->get_record_sql('SELECT id FROM {activityrecord_docs} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id;
+        return ($DB->record_exists('activityrecord_docs', [$DB->sql_compare_text('courseid') => $cid, $DB->sql_compare_text('userid') => $uid])) ? $DB->get_record_sql('SELECT id FROM {activityrecord_docs} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id : null;
     }
 
     //Check if a activity record exists for a specific user id and course id
@@ -155,7 +155,7 @@ class lib{
     //Get hours log id from a course id and user id
     public function get_hours_id($cid, $uid){
         global $DB;
-        return $DB->get_record_sql('SELECT id FROM {hourslog_hours} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id;
+        return ($DB->record_exists('hourslog_hours', [$DB->sql_compare_text('courseid') => $cid, $DB->sql_compare_text('userid') => $uid])) ? $DB->get_record_sql('SELECT id FROM {hourslog_hours} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id : null;
     }
 
     //Check if a hours log exists for a specific user id and course id
@@ -705,7 +705,7 @@ class lib{
     public function get_hourslog_info_table_data($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours, hoursperweek, totalmonths, annuallw FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
             INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
             WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
         [$cid, $uid]);
@@ -883,7 +883,7 @@ class lib{
     }
 
     //Submit training plan data for a specific course id and user id
-    public function submit_trainplan($cid, $uid, $allArray, $modArray, $fsValues, $prArray, $logArray){
+    public function submit_trainplan($cid, $uid, $allArray, $modArray, $fsArray, $prArray, $logArray){
         global $DB;
         $planid = $this->get_trainplan_id($cid, $uid);
         $record = new stdClass();
@@ -1129,7 +1129,7 @@ class lib{
     public function get_hourslog_progress_info($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours, totalmonths, startdate FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
             INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
             WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
         [$cid, $uid]);

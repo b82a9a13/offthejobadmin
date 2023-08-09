@@ -14,24 +14,30 @@ $lib = new lib;
 $p = 'local_offthejobadmin';
 
 $errorTxt = '';
-$cid = $_GET['cid'];
-$uid = $_GET['uid'];
+$cid = null;
+$uid = null;
 $fullname = '';
-if($_GET['cid']){
+if(isset($_GET['cid'])){
+    $cid = $_GET['cid'];
     if(!preg_match("/^[0-9]*$/", $cid) || empty($cid)){
         $errorTxt = get_string('invalid_cip', $p);
     } else {
-        if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
-            $errorTxt = get_string('invalid_uid', $p);
+        if(!isset($_GET['uid'])){
+            $errorTxt = get_string('no_uip', $p);
         } else {
-            //Check if the user is enrolled as a learner in the course selected
-            $fullname = $lib->check_learner_enrolment($cid, $uid);
-            if($fullname == false){
-                $errorTxt = get_string('selected_uneal', $p);
+            $uid = $_GET['uid'];
+            if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
+                $errorTxt = get_string('invalid_uid', $p);
             } else {
-                //Check if the user has a initial setup complete
-                if(!$lib->check_setup_exists($cid, $uid)){
-                    $errorTxt = get_string('initial_sdne', $p);
+                //Check if the user is enrolled as a learner in the course selected
+                $fullname = $lib->check_learner_enrolment($cid, $uid);
+                if($fullname == false){
+                    $errorTxt = get_string('selected_uneal', $p);
+                } else {
+                    //Check if the user has a initial setup complete
+                    if(!$lib->check_setup_exists($cid, $uid)){
+                        $errorTxt = get_string('initial_sdne', $p);
+                    }
                 }
             }
         }

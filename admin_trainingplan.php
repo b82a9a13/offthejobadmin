@@ -14,27 +14,33 @@ $lib = new lib;
 $p = 'local_offthejobadmin';
 
 $errorTxt = '';
-$cid = $_GET['cid'];
-$uid = $_GET['uid'];
+$cid = null;
+$uid = null;
 $fullname = '';
-if($_GET['cid']){
+if(isset($_GET['cid'])){
+    $cid = $_GET['cid'];
     if(!preg_match("/^[0-9]*$/", $cid) || empty($cid)){
         $errorTxt = get_string('invalid_cip', $p);
     } else {
-        if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
-            $errorTxt = get_string('invalid_uid', $p);
+        if(!isset($_GET['uid'])){
+            $errorTxt = get_string('no_uip', $p);
         } else {
-            //Check if the user is enrolled as a learner in the course selected
-            $fullname = $lib->check_learner_enrolment($cid, $uid);
-            if($fullname == false){
-                $errorTxt = get_string('selected_uneal', $p);
+            $uid = $_GET['uid'];
+            if(!preg_match("/^[0-9]*$/", $uid) || empty($uid)){
+                $errorTxt = get_string('invalid_uid', $p);
             } else {
-                //Check if the user has a initial setup complete
-                if(!$lib->check_setup_exists($cid, $uid)){
-                    $errorTxt = get_string('initial_sdne', $p);
+                //Check if the user is enrolled as a learner in the course selected
+                $fullname = $lib->check_learner_enrolment($cid, $uid);
+                if($fullname == false){
+                    $errorTxt = get_string('selected_uneal', $p);
                 } else {
-                    if(!$lib->check_trainplan_exists($cid, $uid)){
-                        $errorTxt = get_string('training_pdne', $p);
+                    //Check if the user has a initial setup complete
+                    if(!$lib->check_setup_exists($cid, $uid)){
+                        $errorTxt = get_string('initial_sdne', $p);
+                    } else {
+                        if(!$lib->check_trainplan_exists($cid, $uid)){
+                            $errorTxt = get_string('training_pdne', $p);
+                        }
                     }
                 }
             }
@@ -72,7 +78,7 @@ if($errorTxt != ''){
         'fr_awards' => get_string('fr_awards', $p),
         'c_and_g' => get_string('c_and_g', $p),
         'innovate_txt' => get_string('innovate', $p),
-        'dsw_txt' => get_string('dsw_txt', $p),
+        'dsw_txt' => get_string('dsw', $p),
         'nocn_txt' => get_string('nocn', $p),
         'choose_fs' => get_string('choose_fs', $p),
         'contrib_five' => get_string('contrib_five', $p),
@@ -157,25 +163,31 @@ if($errorTxt != ''){
         'modarray' => $data[1][0],
         'total_mw' => $data[1][1][0],
         'total_otjh' => $data[1][1][1],
-        'mathfs' => $data[2][0][1],
-        'mathlevel' => $data[2][0][2],
-        'mathmod' => $data[2][0][3],
-        'mathsd' => $data[2][0][4],
-        'mathped' => $data[2][0][5],
-        'mathaed' => $data[2][0][6],
-        'mathaead' => $data[2][0][7],
-        'engfs' => $data[2][1][1],
-        'englevel' => $data[2][1][2],
-        'engmod' => $data[2][1][3],
-        'engsd' => $data[2][1][4],
-        'engped' => $data[2][1][5],
-        'engaed' => $data[2][1][6],
-        'engaead' => $data[2][1][7],
         'prarray' => $data[3],
         'addsa' => $data[0][22],
         'logarray' => array_values($data[4]),
         'prbtns' => [[]]
     ];
+    if(count($data[2]) > 0){
+        $tmpTemplate = (Object)[
+            'mathfs' => $data[2][0][1],
+            'mathlevel' => $data[2][0][2],
+            'mathmod' => $data[2][0][3],
+            'mathsd' => $data[2][0][4],
+            'mathped' => $data[2][0][5],
+            'mathaed' => $data[2][0][6],
+            'mathaead' => $data[2][0][7],
+            'engfs' => $data[2][1][1],
+            'englevel' => $data[2][1][2],
+            'engmod' => $data[2][1][3],
+            'engsd' => $data[2][1][4],
+            'engped' => $data[2][1][5],
+            'engaed' => $data[2][1][6],
+            'engaead' => $data[2][1][7],
+            'fsarray' => [[]]
+        ];
+        $template = (object)array_merge((array)$template, (array)$tmpTemplate);
+    }
     echo $OUTPUT->render_from_template('local_offthejobadmin/trainingplan', $template);
     $_SESSION['otj_adminplan'] = true;
     $_SESSION['otj_adminplan_uid'] = $uid;
