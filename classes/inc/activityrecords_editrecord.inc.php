@@ -123,30 +123,33 @@ if($_SESSION['otj_actrec'] && $_SESSION['otj_actrec_cid'] && $_SESSION['otj_actr
     if(!preg_match($textarea, $agreedact) || empty($agreedact)){
         array_push($errorarray, ['agreedact', get_string('agreed_a', $p).':'.preg_replace($textareaReplace,'', $agreedact)]);
     }
-    $file = $_FILES['file'];
     $fileArr = [];
-    if(!empty($file['name'])){
-        $filename = $file['name'];
-        $filetmpname = $file['tmp_name'];
-        $filesize = $file['size'];
-        $fileerror = $file['error'];
-        $filetype = $file['type'];
-        $fileext = strtolower((pathinfo($filename))['extension']);
-        if(in_array($fileext, ['pdf'])){
-            if($fileerror === 0){
-                if($filesize < 2500000){
-                    $filenamenew = uniqid().''.uniqid().'.pdf';
-                    $filedestination = '../../../activityrecord/classes/pdf/employercomment/'.$filenamenew;
-                    $fileArr = [$filetmpname, $filedestination];
-                    $file = $filenamenew;
+    $file = null;
+    if(isset($_FILES['file'])){
+        $file = $_FILES['file'];
+        if(!empty($file['name'])){
+            $filename = $file['name'];
+            $filetmpname = $file['tmp_name'];
+            $filesize = $file['size'];
+            $fileerror = $file['error'];
+            $filetype = $file['type'];
+            $fileext = strtolower((pathinfo($filename))['extension']);
+            if(in_array($fileext, ['pdf'])){
+                if($fileerror === 0){
+                    if($filesize < 2500000){
+                        $filenamenew = uniqid().''.uniqid().'.pdf';
+                        $filedestination = '../../../activityrecord/classes/pdf/employercomment/'.$filenamenew;
+                        $fileArr = [$filetmpname, $filedestination];
+                        $file = $filenamenew;
+                    } else {
+                        array_push($errorarray, ['file', get_string('file_ms', $p)]);
+                    }
                 } else {
-                    array_push($errorarray, ['file', get_string('file_ms', $p)]);
+                    array_push($errorarray, ['file', get_string('file_i', $p)]);
                 }
             } else {
-                array_push($errorarray, ['file', get_string('file_i', $p)]);
+                array_push($errorarray, ['file', get_string('file_po', $p)]);
             }
-        } else {
-            array_push($errorarray, ['file', get_string('file_po', $p)]);
         }
     }
     $apprencom = $_POST['apprencom'];

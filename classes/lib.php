@@ -30,7 +30,7 @@ class lib{
     //Get all users which have a intial setup
     public function get_setted_users(){
         global $DB;
-        $records = $DB->get_records_sql('SELECT {trainingplan_setup}.userid as userid, {trainingplan_setup}.courseid as courseid, {course}.fullname as fullname, {user}.firstname as firstname, {user}.lastname as lastname FROM {trainingplan_setup}
+        $records = $DB->get_records_sql('SELECT {trainingplan_setup}.id as id, {trainingplan_setup}.userid as userid, {trainingplan_setup}.courseid as courseid, {course}.fullname as fullname, {user}.firstname as firstname, {user}.lastname as lastname FROM {trainingplan_setup}
             INNER JOIN {user} ON {user}.id = {trainingplan_setup}.userid
             INNER JOIN {course} ON {course}.id = {trainingplan_setup}.courseid');
         $array = [];
@@ -71,7 +71,7 @@ class lib{
     //Get All Apprentice Courses and the total enrolled learners
     public function get_all_apprentice_courses(){
         global $DB;
-        $records = $DB->get_records_sql('SELECT {user}.id as id, {course}.fullname as fullname, {course}.id as cid FROM {user_enrolments}
+        $records = $DB->get_records_sql('SELECT {user_enrolments}.id as id, {user}.id as uid, {course}.fullname as fullname, {course}.id as cid FROM {user_enrolments}
             INNER JOIN {enrol} ON {enrol}.id = {user_enrolments}.enrolid
             INNER JOIN {context} ON {context}.instanceid = {enrol}.courseid
             INNER JOIN {role_assignments} ON {role_assignments}.contextid = {context}.id
@@ -93,7 +93,7 @@ class lib{
     //Get all learners who are enrolled as a learner in the apprenticeship category and return (userid, courseid, course full name, user fistname, user lastname)
     private function get_learners_data(){
         global $DB;
-        return $DB->get_records_sql('SELECT {user}.id as id, {course}.fullname as fullname, {course}.id as cid, {user}.firstname as firstname, {user}.lastname as lastname FROM {user_enrolments}
+        return $DB->get_records_sql('SELECT {user_enrolments}.id as id, {user}.id as uid, {course}.fullname as fullname, {course}.id as cid, {user}.firstname as firstname, {user}.lastname as lastname FROM {user_enrolments}
             INNER JOIN {enrol} ON {enrol}.id = {user_enrolments}.enrolid
             INNER JOIN {context} ON {context}.instanceid = {enrol}.courseid
             INNER JOIN {role_assignments} ON {role_assignments}.contextid = {context}.id
@@ -110,7 +110,7 @@ class lib{
         if(count($records) > 0){
             $array = [];
             foreach($records as $record){
-                if(!$this->check_setup_exists($record->cid, $record->id)){
+                if(!$this->check_setup_exists($record->cid, $record->uid)){
                     array_push($array, [$record->firstname.' '.$record->lastname, $record->fullname]);
                 }
             }
@@ -180,13 +180,13 @@ class lib{
         if(count($records) > 0){
             $array = [];
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
+                if($this->check_setup_exists($record->cid, $record->uid)){
                     array_push($array, [
                         $record->firstname.' '.$record->lastname, 
                         $record->fullname,
-                        $this->check_trainplan_exists($record->cid, $record->id),
-                        $this->check_activityrecord_exists($record->cid, $record->id),
-                        $this->check_hourslog_exists($record->cid, $record->id)
+                        $this->check_trainplan_exists($record->cid, $record->uid),
+                        $this->check_activityrecord_exists($record->cid, $record->uid),
+                        $this->check_hourslog_exists($record->cid, $record->uid)
                     ]);
                 }
             }
@@ -202,7 +202,7 @@ class lib{
         global $DB;
         $id = $this->get_hours_id($cid, $uid);
         if($id != null && $id != ''){
-            $records = $DB->get_records_sql('SELECT duration FROM {hourslog_hours_info} WHERE hoursid = ?',[$id]);
+            $records = $DB->get_records_sql('SELECT id, duration FROM {hourslog_hours_info} WHERE hoursid = ?',[$id]);
             $hours = 0;
             foreach($records as $rec){
                 $hours += $rec->duration;
@@ -277,9 +277,9 @@ class lib{
         if(count($records) > 0){
             $array = [];
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
-                    $logtarget = $this->check_user_hourslog_target($record->cid, $record->id);
-                    $coursetarget = $this->check_user_coursecomp_target($record->cid, $record->id);
+                if($this->check_setup_exists($record->cid, $record->uid)){
+                    $logtarget = $this->check_user_hourslog_target($record->cid, $record->uid);
+                    $coursetarget = $this->check_user_coursecomp_target($record->cid, $record->uid);
                     if($logtarget == false || $coursetarget == false){
                         array_push($array, [
                             $record->firstname.' '.$record->lastname,
@@ -300,7 +300,7 @@ class lib{
     //Get all activity records which are missing a signature or multiple signatures
     public function get_nosign_ar(){
         global $DB;
-        $records = $DB->get_records_sql('SELECT docsid, ntasign, learnsign, reviewdate FROM {activityrecord_docs_info} WHERE learnsign IS NULL OR ntasign IS NULL');
+        $records = $DB->get_records_sql('SELECT id, docsid, ntasign, learnsign, reviewdate FROM {activityrecord_docs_info} WHERE learnsign IS NULL OR ntasign IS NULL');
         $array = [];
         foreach($records as $record){
             $coachsign = ($record->ntasign != null) ? true : false;
@@ -321,7 +321,7 @@ class lib{
     //Get all learners which don't have a training plan
     public function get_noplan_learners(){
         global $DB;
-        $records = $DB->get_records_sql('SELECT userid, courseid FROM {trainingplan_setup}');
+        $records = $DB->get_records_sql('SELECT id, userid, courseid FROM {trainingplan_setup}');
         $array = [];
         foreach($records as $record){
             if(!$DB->record_exists('trainingplan_plans', [$DB->sql_compare_text('userid') => $record->userid, $DB->sql_compare_text('courseid') => $record->courseid])){
@@ -342,8 +342,8 @@ class lib{
             $ontarget = 0;
             $notontarget = 0;
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
-                    if($this->check_user_hourslog_target($record->cid, $record->id)){
+                if($this->check_setup_exists($record->cid, $record->uid)){
+                    if($this->check_user_hourslog_target($record->cid, $record->uid)){
                         $ontarget++;
                     } else {
                         $notontarget++;
@@ -363,8 +363,8 @@ class lib{
             $ontarget = 0;
             $notontarget = 0;
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
-                    if($this->check_user_coursecomp_target($record->cid, $record->id)){
+                if($this->check_setup_exists($record->cid, $record->uid)){
+                    if($this->check_user_coursecomp_target($record->cid, $record->uid)){
                         $ontarget++;
                     } else {
                         $notontarget++;
@@ -380,11 +380,11 @@ class lib{
     //Get the total number of learners with a setup complete for their course
     public function get_setupcomp_totals(){
         $records = $this->get_learners_data();        
-        if(count($records > 0)){
+        if(count($records) > 0){
             $complete = 0;
             $incomplete = 0;
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
+                if($this->check_setup_exists($record->cid, $record->uid)){
                     $complete++;
                 } else {
                     $incomplete++;
@@ -399,12 +399,12 @@ class lib{
     //Get the total number of learners which have a training plan
     public function get_tplan_totals(){
         $records = $this->get_learners_data();
-        if(count($records > 0)){
+        if(count($records) > 0){
             $used = 0;
             $notused = 0;
             foreach($records as $record){
-                if($this->check_setup_exists($record->cid, $record->id)){
-                    if($this->check_trainplan_exists($record->cid, $record->id)){
+                if($this->check_setup_exists($record->cid, $record->uid)){
+                    if($this->check_trainplan_exists($record->cid, $record->uid)){
                         $used++;
                     } else {
                         $notused++;
@@ -433,7 +433,6 @@ class lib{
     private function get_hours_expected($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours, totalmonths, startdate FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $percent = floatval(number_format(($hours / $record->otjhours) * 100, 0, '.',' '));
         $expected = floatval(
             number_format((($record->otjhours / $record->totalmonths) / 4) *
             (round((date('U') - $record->startdate) / 604800) / $record->otjhours) * 100, 0, '.',' ')
@@ -490,7 +489,7 @@ class lib{
     public function get_otj_progress_data_all(){
         global $DB;
         $courses = $this->get_courses_array();
-        if(count($courses > 0)){
+        if(count($courses) > 0){
             $array = [];
             foreach($courses as $course){
                 $coursearray = $this->get_otj_progress_data($course[1]);
@@ -604,7 +603,7 @@ class lib{
         }
         $id = $this->get_activityrecord_id($cid, $uid);
         if($id != null && $id != ''){
-            $records = $DB->get_records_sql('SELECT employercomment FROM {activityrecord_docs_info} WHERE docsid = ?',[$id]);
+            $records = $DB->get_records_sql('SELECT id, employercomment FROM {activityrecord_docs_info} WHERE docsid = ?',[$id]);
             foreach($records as $record){
                 unlink('../../../activityrecord/classes/pdf/employercomment/'.$record->employercomment);
             }
@@ -682,7 +681,7 @@ class lib{
         $record->annuallw = $data[7];
         $record->planfilename = $data[8];
         $record->option = $data[9];
-        if(count($DB->update_record('trainingplan_setup', $record, false)) > 0){
+        if($DB->update_record('trainingplan_setup', $record, false)){
             return true;
         } else {
             return false;
@@ -705,7 +704,7 @@ class lib{
     public function get_hourslog_info_table_data($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours, hoursperweek, totalmonths, annuallw FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id as id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
             INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
             WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
         [$cid, $uid]);
@@ -1129,7 +1128,7 @@ class lib{
     public function get_hourslog_progress_info($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours, totalmonths, startdate FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id as id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
             INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
             WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
         [$cid, $uid]);
@@ -1155,7 +1154,7 @@ class lib{
     public function get_hourslog_otjh_left($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT otjhours FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
-        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
+        $records = $DB->get_records_sql('SELECT {hourslog_hours_info}.id as id, {hourslog_hours_info}.duration as duration FROM {hourslog_hours}
             INNER JOIN {hourslog_hours_info} ON {hourslog_hours_info}.hoursid = {hourslog_hours}.id
             WHERE {hourslog_hours}.courseid = ? AND {hourslog_hours}.userid = ?',
         [$cid, $uid]);
