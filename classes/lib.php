@@ -590,7 +590,7 @@ class lib{
 
     private function get_trainplan_id($cid, $uid){
         global $DB;
-        return $DB->get_record_sql('SELECT id FROM {trainingplan_plans} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id;
+        return ($DB->record_exists('trainingplan_plans', [$DB->sql_compare_text('courseid') => $cid, $DB->sql_compare_text('userid') => $uid])) ? $DB->get_record_sql('SELECT id FROM {trainingplan_plans} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id : null;
     }
 
     //Reset all data for a specific course id and user id
