@@ -11,8 +11,8 @@ $plugin->component = 'local_offthejobadmin';
 $plugin->version = 20;
 $plugin->requires = 2016052314;
 $plugin->dependencies = [
-    'local_trainingplan' => 20,
-    'local_hourslog' => 12,
-    'local_modulecompletion' => 6,
-    'local_activityrecord' => 12
+    'local_trainingplan' => 23,
+    'local_hourslog' => 15,
+    'local_modulecompletion' => 7,
+    'local_activityrecord' => 17
 ];
