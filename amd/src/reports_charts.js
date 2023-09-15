@@ -1,12 +1,12 @@
 function charts_btn_clicked(type){
-    const btn = document.getElementById(`${type}_btn`);
-    const div = document.getElementById(`chart_div`);
+    const btn = $(`#${type}_btn`)[0];
+    const div = $(`#chart_div`)[0];
     if(btn.innerHTML.includes('Show')){
         ['hlt', 'cct', 'sc', 'pu'].forEach((item)=>{
-            document.getElementById(`${item}_btn`).innerHTML = document.getElementById(`${item}_btn`).innerHTML.replace('Hide', 'Show');
+            $(`#${item}_btn`)[0].innerHTML = $(`#${item}_btn`)[0].innerHTML.replace('Hide', 'Show');
         });
         btn.innerHTML = btn.innerHTML.replace('Show', 'Hide');
-        const errorTxt = document.getElementById('chart_error');
+        const errorTxt = $('#chart_error')[0];
         errorTxt.style.display = 'none';
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './classes/inc/reports_charts_render.inc.php', true);

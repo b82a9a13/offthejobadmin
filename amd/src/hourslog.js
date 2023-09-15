@@ -1,8 +1,8 @@
 let logType = 'none';
 function reset_log_ids(){
     update_delete();
-    document.getElementById('lt_success').style.display = 'none';
-    document.getElementById('lt_error').style.display = 'none';
+    $('#lt_success')[0].style.display = 'none';
+    $('#lt_error')[0].style.display = 'none';
     const ids = document.querySelectorAll('.logs-btns');
     ids.forEach(function(item){
         item.className = 'logs-btns btn';
@@ -11,8 +11,8 @@ function reset_log_ids(){
     logType = 'none';
 }
 function update_log_ids(){
-    document.getElementById('lt_success').style.display = 'none';
-    document.getElementById('lt_error').style.display = 'none';
+    $('#lt_success')[0].style.display = 'none';
+    $('#lt_error')[0].style.display = 'none';
     const ids = document.querySelectorAll('.logs-btns');
     ids.forEach(function(item){
         item.className = 'logs-btns btn btn-primary';
@@ -21,8 +21,8 @@ function update_log_ids(){
     logType = 'update';
 }
 function delete_log_ids(){
-    document.getElementById('lt_success').style.display = 'none';
-    document.getElementById('lt_error').style.display = 'none';
+    $('#lt_success')[0].style.display = 'none';
+    $('#lt_error')[0].style.display = 'none';
     const ids = document.querySelectorAll('.logs-btns');
     ids.forEach(function(item){
         item.className = 'logs-btns btn btn-danger';
@@ -31,8 +31,8 @@ function delete_log_ids(){
     logType = 'delete';
 }
 function clicked_log_id(id){
-    document.getElementById('lt_success').style.display = 'none';
-    const errorTxt = document.getElementById('lt_error');
+    $('#lt_success')[0].style.display = 'none';
+    const errorTxt = $('#lt_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `./classes/inc/hourslog_${logType}.inc.php`, true);
@@ -45,7 +45,7 @@ function clicked_log_id(id){
                     errorTxt.innerText = text['error'];
                     errorTxt.style.display = 'block';
                 } else if(text['return']){
-                    const urDiv = document.getElementById('update_record_div');
+                    const urDiv = $('#update_record_div')[0];
                     urDiv.innerHTML = text['return'];
                     const script = document.createElement('script');
                     script.src = './amd/min/hourslog_update_data.min.js';
@@ -71,7 +71,7 @@ function clicked_log_id(id){
                     update_table();
                     refresh_it();
                     refresh_bar();
-                    let success = document.getElementById('lt_success');
+                    let success = $('#lt_success')[0];
                     success.innerText = 'Deletion Success';
                     success.style.display = 'block';
                     success.scrollIntoView();
@@ -88,7 +88,7 @@ function clicked_log_id(id){
     xhr.send(`id=${id}`);
 }
 function update_table(){
-    const errorTxt = document.getElementById('ut_error');
+    const errorTxt = $('#ut_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/hourslog_update_table.inc.php', true);
@@ -97,7 +97,7 @@ function update_table(){
         if(this.status == 200){
             const text = JSON.parse(this.responseText);
             if(text['return']){
-                let tbody = document.getElementById('logs_table_tbody');
+                let tbody = $('#logs_table_tbody')[0];
                 tbody.innerHTML = '';
                 text['return'].forEach(function(item){
                     let tr = document.createElement('tr');
@@ -144,7 +144,7 @@ function refresh_it(){
     xhr.onload = function(){
         const text = JSON.parse(this.responseText);
         if(text['return']){
-            document.getElementById('it_total_left').innerText = text['return'];
+            $('#it_total_left')[0].innerText = text['return'];
         }
     }
     xhr.send();
@@ -160,16 +160,16 @@ function refresh_bar(){
             if(text['return']){
                 const progress = text['return'][0];
                 const expected = (progress >= text['return'][1]) ? 0 : text['return'][1];
-                document.getElementById('otjh_prog_progress_p').innerText = `: ${progress}%`;
-                document.getElementById('otjh_prog_expected_p').innerText = `: ${expected}%`;
-                document.getElementById('otjh_prog_incomplete_p').innerText = `: ${100 - progress}%`;
-                const progressbar = document.getElementById('progressbar');
+                $('#otjh_prog_progress_p')[0].innerText = `: ${progress}%`;
+                $('#otjh_prog_expected_p')[0].innerText = `: ${expected}%`;
+                $('#otjh_prog_incomplete_p')[0].innerText = `: ${100 - progress}%`;
+                const progressbar = $('#progressbar')[0];
                 if(progress >= expected){
                     progressbar.style = `width: ${progress}%; height: 25px; background-color: green;`;
-                    document.getElementById('expectedbar').style = `width: 0%; height: 25px; background-color: orange;`
+                    $('#expectedbar')[0].style = `width: 0%; height: 25px; background-color: orange;`
                 } else {
                     progressbar.style = `width: ${progress}%; height: 25px; background-color: green;`;
-                    document.getElementById('expectedbar').style = `width: ${expect}%; height: 25px; background-color: orange;`
+                    $('#expectedbar')[0].style = `width: ${expect}%; height: 25px; background-color: orange;`
                 }
             }
         }
@@ -177,5 +177,5 @@ function refresh_bar(){
     xhr.send();
 }
 function update_delete(){
-    document.getElementById('update_record_div').innerHTML = '';
+    $('update_record_div')[0].innerHTML = '';
 }

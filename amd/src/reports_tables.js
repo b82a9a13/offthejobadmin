@@ -1,12 +1,12 @@
 function table_btn_clicked(type){
-    const btn = document.getElementById(`${type}_btn`);
-    const div = document.getElementById(`table_div`);
+    const btn = $(`#${type}_btn`)[0];
+    const div = $(`#table_div`)[0];
     if(btn.innerHTML.includes('Show')){
         ['ac', 'lwis', 'lwcs', 'lbt', 'ldms', 'lwap'].forEach((item)=>{
-            document.getElementById(`${item}_btn`).innerHTML = document.getElementById(`${item}_btn`).innerHTML.replace('Hide', 'Show');
+            $(`#${item}_btn`)[0].innerHTML = $(`#${item}_btn`)[0].innerHTML.replace('Hide', 'Show');
         })
         btn.innerHTML = btn.innerHTML.replace('Show', 'Hide');
-        const errorTxt = document.getElementById('table_error');
+        const errorTxt = $('#table_error')[0];
         errorTxt.style.display = 'none';
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './classes/inc/reports_tables_render.inc.php', true);

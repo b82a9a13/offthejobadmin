@@ -1,12 +1,12 @@
-document.getElementById('hourslog_form_u').addEventListener('submit', (e)=>{
+$('#hourslog_form_u')[0].addEventListener('submit', (e)=>{
     e.preventDefault();
     const idsArray = ['date', 'activity', 'whatlink', 'impact', 'duration'];
-    const errorTxt = document.getElementById('hl_error_u');
+    const errorTxt = $('#hl_error_u')[0];
     errorTxt.style.display = 'none';
     let params = '';
     idsArray.forEach((item)=>{
-        document.getElementById("td_"+item+"_u").style.background = '';
-        params += item + '=' + document.getElementById(item+"_u").value + '&';
+        $(`#td_${item}_u`)[0].style.background = '';
+        params += item + '=' + $(`#${item}_u`)[0].value + '&';
     });
     params = params.slice(0, -1);
     const xhr = new XMLHttpRequest();
@@ -19,7 +19,7 @@ document.getElementById('hourslog_form_u').addEventListener('submit', (e)=>{
                 errorTxt.innerText = 'Invalid values: ';
                 text['error'].forEach(function(item){
                     if(idsArray.includes(item[0])){
-                        document.getElementById(`td_${item[0]}_u`).style.background = 'red';
+                        $(`#td_${item[0]}_u`)[0].style.background = 'red';
                         errorTxt.innerText += `${item[1]}|`;
                     }
                 });
@@ -29,7 +29,7 @@ document.getElementById('hourslog_form_u').addEventListener('submit', (e)=>{
                 update_table();
                 refresh_it();
                 refresh_bar();
-                let success = document.getElementById('lt_success');
+                let success = $('#lt_success')[0];
                 success.innerText = 'Update Success';
                 success.style.display = 'block';
                 success.scrollIntoView();

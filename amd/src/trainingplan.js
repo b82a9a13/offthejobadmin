@@ -1,4 +1,4 @@
-document.getElementById('plan_form').addEventListener('submit', (e)=>{
+$('#plan_form')[0].addEventListener('submit', (e)=>{
     e.preventDefault();
     const idsArray = [
         'name',
@@ -27,7 +27,7 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
         'cl_daterequired',
         'cl_logrequired'
     ];
-    if(document.getElementById('mathaed') !== null){
+    if($('#mathaed')[0] !== null){
         idsArray.push(
             'mathfs',
             'mathlevel',
@@ -65,9 +65,9 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
     ];
     let params = '';
     idsArray.forEach(function(arr){
-        console.log(document.getElementById(arr).value);
-        params += `${arr}=${document.getElementById(arr).value.replaceAll('&','($)')}&`;
-        document.getElementById('td_'+arr).style.background = '';
+        console.log($(`#${arr}`)[0].value);
+        params += `${arr}=${$(`#${arr}`)[0].value.replaceAll('&','($)')}&`;
+        $(`#td_${arr}`)[0].style.background = '';
     });
     let total = 0;
     classArray[0].forEach(function(arr){
@@ -93,7 +93,7 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
         pos++;
     })
     params += `pr-total=${total}`;
-    const errorTxt = document.getElementById('tp_error');
+    const errorTxt = $('#tp_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/trainingplan.inc.php', true);
@@ -105,7 +105,7 @@ document.getElementById('plan_form').addEventListener('submit', (e)=>{
                 errorTxt.innerText = 'Invalid values: ';
                 text['error'].forEach(function(item){
                     if(idsArray.includes(item[0])){
-                        document.getElementById("td_"+item[0]).style.background = 'red';
+                        $(`#td_${item[0]}`)[0].style.background = 'red';
                     } else if(classArray[0].includes(item[0])){
                         document.querySelectorAll(".td-"+item[0])[item[2]].style.background = 'red';
                     } else if (classArray[1].includes(item[0])){
@@ -132,8 +132,8 @@ function addprRecord(){
     const tr = document.createElement('tr');
     tr.className = 'tr-td-pr tr-td-pr-new';
     tr.innerHTML = html;
-    document.getElementById('pr_tbody').appendChild(tr);
-    document.getElementById('pr_removerecord').disabled = false;
+    $('#pr_tbody')[0].appendChild(tr);
+    $('#pr_removerecord')[0].disabled = false;
 }
 function removeprRecord(){
     const tr = document.querySelectorAll('.tr-td-pr-new');
@@ -141,7 +141,7 @@ function removeprRecord(){
     if(length > 0){
         tr[length - 1].remove();
         if(length == 1){
-            document.getElementById('pr_removerecord').disabled = true;
+            $('#pr_removerecord')[0].disabled = true;
         }
     }
 }

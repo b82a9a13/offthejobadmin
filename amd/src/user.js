@@ -1,6 +1,6 @@
-const div = document.getElementById('modal_div');
+const div = $('#modal_div')[0];
 function sign_btn_clicked(type, action){
-    const errorTxt = document.getElementById(`${type}_error`);
+    const errorTxt = $(`#${type}_error`)[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/sign_render.inc.php', true);
@@ -23,10 +23,10 @@ function sign_btn_clicked(type, action){
     xhr.send(`type=`+type+`&action=${action}`);
 }
 function close_modal_div(){
-    document.getElementById('modal_div').style.display = 'none';
+    $('#modal_div')[0].style.display = 'none';
 }
 function reset_sign(type){
-    const errorTxt = document.getElementById('modal_error');
+    const errorTxt = $('#modal_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/sign_reset.inc.php', true);
@@ -52,7 +52,7 @@ function reset_sign(type){
     xhr.send(`type=${type}`);
 }
 function setup_reset_btn_clicked(){
-    const errorTxt = document.getElementById('initial_error');
+    const errorTxt = $('#initial_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/intial_reset_render.inc.php', true);
@@ -75,7 +75,7 @@ function setup_reset_btn_clicked(){
     xhr.send();
 }
 function setup_reset_clicked(){
-    const errorTxt = document.getElementById('reset_error');
+    const errorTxt = $('#reset_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/intial_reset.inc.php', true);
@@ -100,7 +100,7 @@ function setup_reset_clicked(){
     xhr.send();
 }
 function plan_reset_btn_clicked(){
-    const errorTxt = document.getElementById('plan_error');
+    const errorTxt = $('#plan_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/trainingplan_reset_render.inc.php', true);
@@ -123,7 +123,7 @@ function plan_reset_btn_clicked(){
     xhr.send();
 }
 function plan_reset_clicked(){
-    const errorTxt = document.getElementById('reset_error');
+    const errorTxt = $('#reset_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/trainingplan_reset.inc.php', true);

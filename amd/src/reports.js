@@ -1,6 +1,6 @@
-const tablediv = document.getElementById('tables_div_content');
+const tablediv = $('#tables_div_content')[0];
 let tablescript = false
-document.getElementById('tables_div').addEventListener('click', ()=>{
+$('#tables_div')[0].addEventListener('click', ()=>{
     if(tablediv.style.display === 'none'){
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './classes/inc/reports_tables.inc.php', true);
@@ -26,9 +26,9 @@ document.getElementById('tables_div').addEventListener('click', ()=>{
         tablescript = true;
     }
 });
-const chartsdiv = document.getElementById('charts_div_content');
+const chartsdiv = $('#charts_div_content')[0];
 let chartsscript = false;
-document.getElementById('charts_div').addEventListener('click', ()=>{
+$('#charts_div')[0].addEventListener('click', ()=>{
     if(chartsdiv.style.display === 'none'){
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './classes/inc/reports_charts.inc.php', true);
@@ -59,9 +59,9 @@ document.getElementById('charts_div').addEventListener('click', ()=>{
         document.body.appendChild(link);
     }
 });
-const progdiv = document.getElementById('progress_div_content');
+const progdiv = $('#progress_div_content')[0];
 let progscript = false;
-document.getElementById('progress_div').addEventListener('click', ()=>{
+$('#progress_div')[0].addEventListener('click', ()=>{
     if(progdiv.style.display === 'none'){
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './classes/inc/reports_progress.inc.php', true);

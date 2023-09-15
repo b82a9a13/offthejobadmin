@@ -50,30 +50,30 @@ function getrecord(id){
         'learnsignimg'
     ];
     inputArray.forEach(function(item){
-        document.getElementById(item).value = '';
+        $(`#${item}`)[0].value = '';
     });
     innerArray.forEach(function(item){
-        document.getElementById(item).innerText = '';
+        $(`#${item}`)[0].innerText = '';
     });
     srcArray.forEach(function(item){
-        document.getElementById(item).src = '';
+        $(`#${item}`)[0].src = '';
     });
     displayArray.forEach(function(item){
-        document.getElementById(item).style.display = 'none';
+        $(`#${item}`)[0].style.display = 'none';
     });
     signArray.forEach(function(item){
-        document.getElementById(item).value = '';
-        document.getElementById(item).style.display = 'none';
+        $(`#${item}`)[0].value = '';
+        $(`#${item}`)[0].style.display = 'none';
     });
     imgsrcArray.forEach(function(item){
-        document.getElementById(item).src = '';
-        document.getElementById(item).style.display = 'none';
+        $(`#${item}`)[0].src = '';
+        $(`#${item}`)[0].style.display = 'none';
     });
-    const contentDiv = document.getElementById('activityrecord_content_div');
+    const contentDiv = $(`#activityrecord_content_div`)[0];
     contentDiv.style.display = 'none';
-    const errorTxt = document.getElementById('get_error');
+    const errorTxt = $(`#get_error`)[0];
     errorTxt.style.display = 'none';
-    document.getElementById('ar_sign_div').style.display = 'none';
+    $(`#ar_sign_div`)[0].style.display = 'none';
     let fsTotal = [0,0];
     const params = `id=${id}`;
     const xhr = new XMLHttpRequest();
@@ -89,26 +89,26 @@ function getrecord(id){
                 if(text['return']){
                     text['return'].forEach(function(item){
                         if(inputArray.includes(item[0])){
-                            document.getElementById(item[0]).value = item[1];
+                            $(`#${item[0]}`)[0].value = item[1];
                         } else if(innerArray.includes(item[0])){
-                            document.getElementById(item[0]).innerHTML = item[1];
+                            $(`#${item[0]}`)[0].innerHTML = item[1];
                             if(['mathtoday','mathnext'].includes(item[0]) && item[1] != ''){
                                 fsTotal[0]++;
                             } else if(['engtoday','engnext'].includes(item[0]) && item[1] != ''){
                                 fsTotal[1]++;
                             }
                         } else if(srcArray.includes(item[0])){
-                            document.getElementById(item[0]).src = item[1];
+                            $(`#${item[0]}`)[0].src = item[1];
                         } else if(displayArray.includes(item[0])){
-                            document.getElementById(item[0]).style.display = item[1];
+                            $(`#${item[0]}`)[0].style.display = item[1];
                         } else if(signArray.includes(item[0])){
-                            document.getElementById(item[0]).value = item[1];
-                            document.getElementById(item[0]).style.display = 'block';
+                            $(`#${item[0]}`)[0].value = item[1];
+                            $(`#${item[0]}`)[0].style.display = 'block';
                         } else if(imgsrcArray.includes(item[0])){
-                            document.getElementById(item[0]).src = item[1];
-                            document.getElementById(item[0]).style.display = 'block';
+                            $(`#${item[0]}`)[0].src = item[1];
+                            $(`#${item[0]}`)[0].style.display = 'block';
                         } else if(item[0] == 'impact_required'){
-                            document.getElementById('recapimpact').required = true;
+                            $('#recapimpact')[0].required = true;
                         }
                     })
                     if(fsTotal[0] > 0 || fsTotal[1] > 0){
@@ -145,11 +145,11 @@ function getrecord(id){
     xhr.send(params);
 }
 function delrecord(id){
-    const modaldiv = document.getElementById(`modal_${id}`);
+    const modaldiv = $(`#modal_${id}`)[0];
     if(modaldiv.style.display == 'none'){
         modaldiv.style.display = 'block';
     } else if(modaldiv.style.display == 'block'){
-        const modalError = document.getElementById(`modal_${id}_error`);
+        const modalError = $(`#modal_${id}_error`)[0];
         modalError.innerText = '';
         modalError.style.display = 'none';
         const xhr = new XMLHttpRequest();
@@ -178,9 +178,9 @@ function delrecord(id){
     }
 }
 function closedelrecord(id){
-    document.getElementById(`modal_${id}`).style.display = 'none';
+    $(`#modal_${id}`)[0].style.display = 'none';
 }
-document.getElementById('activityrecord_content_div').addEventListener('submit', (e)=>{
+$('#activityrecord_content_div')[0].addEventListener('submit', (e)=>{
     e.preventDefault();
     const idsArray = [
         'apprentice',
@@ -215,17 +215,17 @@ document.getElementById('activityrecord_content_div').addEventListener('submit',
         'eandd',
         'iaag'
     ];
-    const errorTxt = document.getElementById('ar_error');
+    const errorTxt = $('#ar_error')[0];
     errorTxt.style.display = 'none';
     let formData = new FormData();
-    const file = document.getElementById('file').files[0];
+    const file = $('#file')[0].files[0];
     if(file != null){
         formData.append('file', file);
     }
-    document.getElementById('td_file').style.background = '';
+    $('#td_file')[0].style.background = '';
     idsArray.forEach(function(arr){
-        formData.append(arr, document.getElementById(arr).value.replaceAll('&', '($)'));
-        document.getElementById('td_'+arr).style.background = '';
+        formData.append(arr, $(`#${arr}`)[0].value.replaceAll('&', '($)'));
+        $(`#td_${arr}`)[0].style.background = '';
     });
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/activityrecords_editrecord.inc.php', true);
@@ -236,7 +236,7 @@ document.getElementById('activityrecord_content_div').addEventListener('submit',
                 errorTxt.innerText = 'Invalid values: ';
                 text['error'].forEach(function(item){
                     if(idsArray.includes(item[0]) || item[0] == 'file'){
-                        document.getElementById("td_"+item[0]).style.background = 'red';
+                        $(`#td_${item[0]}`)[0].style.background = 'red';
                         errorTxt.innerText += item[1] + '|';
                     }
                 });

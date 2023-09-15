@@ -1,20 +1,20 @@
-document.getElementById('setup_form').addEventListener('submit', (e)=>{
+$('#setup_form')[0].addEventListener('submit', (e)=>{
     e.preventDefault();
-    const success = document.getElementById('setup_success');
+    const success = $('#setup_success')[0];
     success.style.display = 'none';
-    const error = document.getElementById('setup_error');
+    const error = $('#setup_error')[0];
     error.style.display = 'none';
     error.innerText = '';
-    const totalmonths = document.getElementById('totalmonths').value;
-    const totalhours = document.getElementById('totalhours').value;
-    const eors = document.getElementById('eors').value;
-    const coach = document.getElementById('coach').value;
-    const morm = document.getElementById('morm').value;
-    const startdate = document.getElementById('startdate').value;
-    const hpw = document.getElementById('hpw').value;
-    const alw = document.getElementById('alw').value;
-    const trainplan = document.getElementById('trainplan').value;
-    const option = document.getElementById('option').value;
+    const totalmonths = $('#totalmonths')[0].value;
+    const totalhours = $('#totalhours')[0].value;
+    const eors = $('#eors')[0].value;
+    const coach = $('#coach')[0].value;
+    const morm = $('#morm')[0].value;
+    const startdate = $('#startdate')[0].value;
+    const hpw = $('#hpw')[0].value;
+    const alw = $('#alw')[0].value;
+    const trainplan = $('#trainplan')[0].value;
+    const option = $('#option')[0].value;
     const params = `totalmonths=${totalmonths}&totalhours=${totalhours}&eors=${eors}&coach=${coach}&morm=${morm}&startdate=${startdate}&hpw=${hpw}&alw=${alw}&trainplan=${trainplan}&option=${option}`;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/setup.inc.php', true);
@@ -52,10 +52,10 @@ document.getElementById('setup_form').addEventListener('submit', (e)=>{
     xhr.send(params);
 });
 function plan_clicked(){
-    const select = document.getElementById('option');
-    const td = document.getElementById('option_td');
-    const th = document.getElementById('option_th');
-    const int = document.getElementById("option_"+document.getElementById('trainplan').value).getAttribute('options');
+    const select = $('#option')[0];
+    const td = $('#option_td')[0];
+    const th = $('#option_th')[0];
+    const int = $(`#option_${$('#trainplan')[0].value}`)[0].getAttribute('options');
     select.innerHTML = '';
     let option = document.createElement('option');
     option.value = '';

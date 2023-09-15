@@ -1,14 +1,14 @@
 function progress_select(){
-    const value = document.getElementById('progress_select');
+    const value = $('#progress_select')[0];
     progress_request(`cid=${value.value}`);
 }
 function progress_all(){
     progress_request(``);
 }
 function progress_request(params){
-    const div = document.getElementById('progress_content_div');
+    const div = $('#progress_content_div')[0];
     div.style.display = 'none';
-    const errorTxt = document.getElementById('progress_error');
+    const errorTxt = $('#progress_error')[0];
     errorTxt.style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open('POST', './classes/inc/reports_progress_render.inc.php', true);
@@ -36,7 +36,7 @@ function progress_request(params){
     xhr.send(params);
 }
 function create_prog_circle(id, progress, expect){
-    const canvas = document.getElementById(`prog_canvas_${id}`);
+    const canvas = $(`#prog_canvas_${id}`)[0];
     const ctx = canvas.getContext('2d');
     const int = 2;
     const complete = int * (progress / 100);

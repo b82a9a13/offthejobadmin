@@ -9,7 +9,7 @@ use stdClass;
 
 class lib{
     //Get user full name from a specific id
-    public function get_user_fullname($id){
+    private function get_user_fullname($id){
         global $DB;
         $record = $DB->get_record_sql('SELECT firstname, lastname FROM {user} WHERE id = ?',[$id]);
         return $record->firstname.' '.$record->lastname;
@@ -153,7 +153,7 @@ class lib{
     }
 
     //Get hours log id from a course id and user id
-    public function get_hours_id($cid, $uid){
+    private function get_hours_id($cid, $uid){
         global $DB;
         return ($DB->record_exists('hourslog_hours', [$DB->sql_compare_text('courseid') => $cid, $DB->sql_compare_text('userid') => $uid])) ? $DB->get_record_sql('SELECT id FROM {hourslog_hours} WHERE courseid = ? AND userid = ?',[$cid, $uid])->id : null;
     }
@@ -198,7 +198,7 @@ class lib{
     }
 
     //Get the hours log current and expected progress from a specific userid and courseid
-    public function get_hourslog_progexpect($cid, $uid){
+    private function get_hourslog_progexpect($cid, $uid){
         global $DB;
         $id = $this->get_hours_id($cid, $uid);
         if($id != null && $id != ''){
@@ -223,7 +223,7 @@ class lib{
     }
 
     //Check if hours log for a specific user id and course id is on target
-    public function check_user_hourslog_target($cid, $uid){
+    private function check_user_hourslog_target($cid, $uid){
         global $DB;
         $values = $this->get_hourslog_progexpect($cid, $uid);
         if($values){
@@ -238,7 +238,7 @@ class lib{
     }
 
     //Get the current and expected course completion for a specific user id and course id
-    public function get_user_coursecomp($cid, $uid){
+    private function get_user_coursecomp($cid, $uid){
         global $DB;
         $record = $DB->get_record_sql('SELECT totalmonths, startdate FROM {trainingplan_setup} WHERE courseid = ? AND userid = ?',[$cid, $uid]);
         $complete = $DB->get_record_sql('SELECT count(*) as total FROM {course_modules}
@@ -258,7 +258,7 @@ class lib{
     }
 
     //Check if module completion for a specific user id and course id is on target
-    public function check_user_coursecomp_target($cid, $uid){
+    private function check_user_coursecomp_target($cid, $uid){
         $values = $this->get_user_coursecomp($cid, $uid);
         if($values){
             if($values[0] < $values[1]){
